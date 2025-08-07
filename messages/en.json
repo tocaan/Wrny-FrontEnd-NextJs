@@ -1,0 +1,33 @@
+{
+    "nav": {
+        "home": "Home",
+        "about": "About Us",
+        "categories": "Categories",
+        "companies": "Companies",
+        "events": "Events",
+        "contact": "Contact Us",
+        "login": "Login",
+        "register": "Register"
+    },
+    "hero": {
+        "title": "Explore the Best Destinations and Activities in Kuwait",
+        "explore": "Explore Now",
+        "description": "Experience a complete journey in discovering tourist spots and cultural activities in all parts of Kuwait."
+    },
+    "categories": {
+        "title": "Categories",
+        "all": "All Categories"
+    },
+    "companies": {
+        "title": "Companies"
+    },
+    "events": {
+        "title": "Events",
+        "all": "All Events"
+    },
+    "regions": {
+        "title": "Regions",
+        "all": "All Regions"
+    },
+    "view_all": "View All"
+}
