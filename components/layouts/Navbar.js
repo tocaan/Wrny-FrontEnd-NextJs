@@ -29,7 +29,6 @@ export default function Navbar() {
         return false;
     };
 
-    // 🔹 للتحكم في حالة الـ sticky
     const [isSticky, setIsSticky] = useState(false);
 
     useEffect(() => {
