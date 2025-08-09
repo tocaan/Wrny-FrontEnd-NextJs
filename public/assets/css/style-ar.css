@@ -176,6 +176,7 @@ h5.card-title {
 
 .tiny-slider {
     direction: ltr;
+    overflow: hidden;
 }
 
 [dir='rtl'] #tns2-mw {
