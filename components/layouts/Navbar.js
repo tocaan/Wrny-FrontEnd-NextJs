@@ -1,23 +1,23 @@
-"use client";
+'use client';
 
-import { useState, useEffect, useMemo } from "react";
-import LanguageSwitcher from "../LanguageSwitcher";
-import { usePathname } from "@/i18n/routing";
-import { useLocale, useTranslations } from "next-intl";
-import { Link } from "@/i18n/routing";
-import { LogIn, Search, UserRound } from "lucide-react";
+import { useState, useEffect, useMemo } from 'react';
+import LanguageSwitcher from '../LanguageSwitcher';
+import { usePathname } from '@/i18n/routing';
+import { useLocale, useTranslations } from 'next-intl';
+import { Link } from '@/i18n/routing';
+import { LogIn, Search, UserRound } from 'lucide-react';
 
 function normalize(path) {
-    if (!path) return "/";
-    let p = path.split("#")[0].split("?")[0];
-    if (p !== "/" && p.endsWith("/")) p = p.slice(0, -1);
-    return p || "/";
+    if (!path) return '/';
+    let p = path.split('#')[0].split('?')[0];
+    if (p !== '/' && p.endsWith('/')) p = p.slice(0, -1);
+    return p || '/';
 }
 
 export default function Navbar() {
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const locale = useLocale();
-    const t = useTranslations("navbar");
+    const t = useTranslations('navbar');
     const pathnameRaw = usePathname();
     const pathname = useMemo(() => normalize(pathnameRaw), [pathnameRaw]);
 
@@ -25,7 +25,7 @@ export default function Navbar() {
         const target = normalize(href);
         if (exact) return pathname === target;
         if (pathname === target) return true;
-        if (target !== "/" && pathname.startsWith(`${target}/`)) return true;
+        if (target !== '/' && pathname.startsWith(`${target}/`)) return true;
         return false;
     };
 
@@ -40,16 +40,13 @@ export default function Navbar() {
             }
         };
 
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
     return (
         <>
-            <header
-                className={`navbar-light header-sticky ${isSticky ? "header-sticky-on" : ""
-                    }`}
-            >
+            <header className={`navbar-light header-sticky ${isSticky ? 'header-sticky-on' : ''}`}>
                 <nav className="navbar navbar-expand-xl">
                     <div className="container">
                         <Link className="navbar-brand" href="/">
@@ -78,56 +75,50 @@ export default function Navbar() {
                             <ul className="navbar-nav navbar-nav-scroll mx-auto">
                                 <li className="nav-item">
                                     <Link
-                                        className={`nav-link ${isActive("/", { exact: true }) ? "active" : ""
-                                            }`}
+                                        className={`nav-link ${isActive('/', { exact: true }) ? 'active' : ''}`}
                                         href="/"
                                     >
-                                        {t("home")}
+                                        {t('home')}
                                     </Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link
-                                        className={`nav-link ${isActive("/about", { exact: true }) ? "active" : ""
-                                            }`}
+                                        className={`nav-link ${isActive('/about', { exact: true }) ? 'active' : ''}`}
                                         href="/about"
                                     >
-                                        {t("about")}
+                                        {t('about')}
                                     </Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link
-                                        className={`nav-link ${isActive("/categories") ? "active" : ""
-                                            }`}
+                                        className={`nav-link ${isActive('/categories') ? 'active' : ''}`}
                                         href="/categories"
                                     >
-                                        {t("categories")}
+                                        {t('categories')}
                                     </Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link
-                                        className={`nav-link ${isActive("/companies") ? "active" : ""
-                                            }`}
+                                        className={`nav-link ${isActive('/companies') ? 'active' : ''}`}
                                         href="/companies"
                                     >
-                                        {t("companies")}
+                                        {t('companies')}
                                     </Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link
-                                        className={`nav-link ${isActive("/events") ? "active" : ""
-                                            }`}
+                                        className={`nav-link ${isActive('/events') ? 'active' : ''}`}
                                         href="/events"
                                     >
-                                        {t("events")}
+                                        {t('events')}
                                     </Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link
-                                        className={`nav-link ${isActive("/contact", { exact: true }) ? "active" : ""
-                                            }`}
+                                        className={`nav-link ${isActive('/contact', { exact: true }) ? 'active' : ''}`}
                                         href="/contact"
                                     >
-                                        {t("contact")}
+                                        {t('contact')}
                                     </Link>
                                 </li>
                             </ul>
@@ -160,7 +151,7 @@ export default function Navbar() {
                                     <Search size={22} />
                                 </a>
                                 <div
-                                    className={`dropdown-menu dropdown-menu-end shadow rounded p-2 ${isSearchOpen ? "show" : ""
+                                    className={`dropdown-menu dropdown-menu-end shadow rounded p-2 ${isSearchOpen ? 'show' : ''
                                         }`}
                                     aria-labelledby="navSearch"
                                 >
@@ -179,16 +170,13 @@ export default function Navbar() {
                             </li>
                             {/* Login */}
                             <li className="nav-item ms-2 d-none d-sm-block">
-                                <Link
-                                    href="/login"
-                                    className="btn btn-sm btn-primary-soft mb-0"
-                                >
+                                <Link href="/login" className="btn btn-sm btn-primary-soft mb-0">
                                     <LogIn
-                                        className={`${locale === "ar" ? "ms-2" : "me-2"}`}
+                                        className={`${locale === 'ar' ? 'ms-2' : 'me-2'}`}
                                         size={16}
                                         absoluteStrokeWidth={true}
                                     />
-                                    {t("login")}
+                                    {t('login')}
                                 </Link>
                             </li>
                         </ul>
@@ -196,11 +184,7 @@ export default function Navbar() {
                 </nav>
             </header>
 
-            <div
-                id="sticky-space"
-                style={{ height: isSticky ? "100px" : "0px" }}
-                className={`${isSticky ? "active" : ""}`}
-            ></div>
+            <div id="sticky-space" style={{ height: isSticky ? '100px' : '0px' }} className={`${isSticky ? 'active' : ''}`}></div>
         </>
     );
 }

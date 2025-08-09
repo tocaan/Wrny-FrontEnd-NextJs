@@ -41,3 +41,13 @@
     animation: shimmer var(--animation-duration) infinite;
     animation-timing-function: var(--animation-timing-function);
 }
+
+.header-sticky {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    inset-inline: 0;
+    z-index: 1030;
+    background-color: var(--bs-body-bg, #fff);
+    transition: background-color .2s ease, box-shadow .2s ease, height .2s ease;
+}

@@ -21787,7 +21787,7 @@ a.badge:hover {
 
 @media(min-width:1200px) {
     header.header-sticky-on {
-        position: fixed;
+        /* position: fixed; */
         z-index: 1040;
         top: 0;
         left: 0;
