@@ -1,13 +1,13 @@
-import EventsClientPage from "./page.client";
 import { createPageMetadata } from "@/utils/metadata";
+import ContactClientPage from "./page.client";
 
 export async function generateMetadata(props) {
     const { locale } = await props.params;
-    return createPageMetadata(locale, 'events');
+    return createPageMetadata(locale, 'contact');
 }
-export default function EventsPage() {
+export default function ContactPage() {
 
     return (
-        <EventsClientPage />
+        <ContactClientPage />
     );
 }

@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../utils/api';
 
-export const fetchCompanies = createAsyncThunk(
-    'companies/fetchCompanies',
-    async (page = 1, { rejectWithValue }) => {
+export const fetchCompanyBranches = createAsyncThunk(
+    'branches/fetchCompanyBranches',
+    async ({ companyId, page = 1 }, { rejectWithValue }) => {
         try {
-            const response = await api.get('/companies/all', {
+            const response = await api.get(`/companies/${companyId}/branches`, {
                 params: { page }
             });
             return response.data;
@@ -16,7 +16,7 @@ export const fetchCompanies = createAsyncThunk(
 );
 
 const initialState = {
-    companies: [],
+    branches: [],
     loading: false,
     error: null,
     pagination: {
@@ -27,12 +27,12 @@ const initialState = {
     },
 };
 
-const companiesSlice = createSlice({
-    name: 'companies',
+const branchesSlice = createSlice({
+    name: 'branches',
     initialState,
     reducers: {
-        clearCompanies: (state) => {
-            state.companies = [];
+        clearBranches: (state) => {
+            state.branches = [];
             state.pagination = initialState.pagination;
         },
         clearError: (state) => {
@@ -41,13 +41,13 @@ const companiesSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchCompanies.pending, (state) => {
+            .addCase(fetchCompanyBranches.pending, (state) => {
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(fetchCompanies.fulfilled, (state, action) => {
+            .addCase(fetchCompanyBranches.fulfilled, (state, action) => {
                 state.loading = false;
-                state.companies = action.payload.data;
+                state.branches = action.payload.data;
                 state.pagination = {
                     current_page: action.payload.meta.current_page,
                     last_page: action.payload.meta.last_page,
@@ -55,12 +55,12 @@ const companiesSlice = createSlice({
                     per_page: action.payload.meta.per_page,
                 };
             })
-            .addCase(fetchCompanies.rejected, (state, action) => {
+            .addCase(fetchCompanyBranches.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
-            })
+            });
     },
 });
 
-export const { clearCompanies, clearError } = companiesSlice.actions;
-export default companiesSlice.reducer;
+export const { clearBranches, clearError } = branchesSlice.actions;
+export default branchesSlice.reducer;

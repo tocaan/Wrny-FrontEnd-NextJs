@@ -1,19 +1,44 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import LanguageSwitcher from '../LanguageSwitcher';
 import { usePathname } from '@/i18n/routing';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
+import { IoLogIn } from "react-icons/io5";
+import { LogIn, Search, UserRound, X } from 'lucide-react';
+
+function normalize(path) {
+    if (!path) return '/';
+    let p = path.split('#')[0].split('?')[0];
+    if (p !== '/' && p.endsWith('/')) p = p.slice(0, -1);
+    return p || '/';
+}
 
 export default function Navbar() {
     const [isSearchOpen, setIsSearchOpen] = useState(false);
-    const pathname = usePathname();
     const locale = useLocale();
-    const t = useTranslations('nav');
+    const t = useTranslations('navbar');
 
-    const isActive = (href) => {
-        return pathname === `/${locale}${href}` || pathname.startsWith(`/${locale}${href}/`);
+    const pathnameRaw = usePathname();
+    const pathname = useMemo(() => normalize(pathnameRaw), [pathnameRaw]);
+
+    const isActive = (href, { exact = false } = {}) => {
+        const target = normalize(href);
+
+        if (exact) return pathname === target;
+
+        if (pathname === target) return true;
+        if (target !== '/' && pathname.startsWith(`${target}/`)) return true;
+
+        return false;
+    };
+
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setIsOpen(!isOpen);
     };
 
     return (
@@ -28,9 +53,8 @@ export default function Navbar() {
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target="#navbarCollapse"
-                        aria-controls="navbarCollapse"
                         aria-expanded="false"
-                        aria-label="Toggle navigation"
+                        aria-controls="navbarCollapse"
                     >
                         <span className="navbar-toggler-animation">
                             <span></span>
@@ -41,12 +65,12 @@ export default function Navbar() {
                     <div className="navbar-collapse collapse" id="navbarCollapse">
                         <ul className="navbar-nav navbar-nav-scroll mx-auto">
                             <li className="nav-item">
-                                <Link className={`nav-link ${isActive('') ? 'active' : ''}`} href="/">
+                                <Link className={`nav-link ${isActive('/', { exact: true }) ? 'active' : ''}`} href="/">
                                     {t('home')}
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link className={`nav-link ${isActive('/about') ? 'active' : ''}`} href="/about">
+                                <Link className={`nav-link ${isActive('/about', { exact: true }) ? 'active' : ''}`} href="/about">
                                     {t('about')}
                                 </Link>
                             </li>
@@ -66,13 +90,12 @@ export default function Navbar() {
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link className={`nav-link ${isActive('/contact') ? 'active' : ''}`} href="/contact">
+                                <Link className={`nav-link ${isActive('/contact', { exact: true }) ? 'active' : ''}`} href="/contact">
                                     {t('contact')}
                                 </Link>
                             </li>
                         </ul>
                     </div>
-
                     <ul className="nav flex-row align-items-center list-unstyled mx-xl-auto d-none d-sm-flex">
                         {/* Language */}
                         <li className="nav-item ms-2 d-none d-sm-block">
@@ -81,7 +104,7 @@ export default function Navbar() {
                         {/* Account Profile */}
                         <li className="nav-item ms-2 d-none d-sm-block">
                             <Link className="nav-link mb-0 py-0" href="/account">
-                                <i className="bi bi-person-circle fs-5"></i>
+                                <UserRound size={22} className='fs-5' />
                             </Link>
                         </li>
                         {/* Search */}
@@ -97,7 +120,7 @@ export default function Navbar() {
                                 data-bs-display="static"
                                 onClick={() => setIsSearchOpen(!isSearchOpen)}
                             >
-                                <i className="bi bi-search fs-5"> </i>
+                                <Search size={22} />
                             </a>
                             <div className={`dropdown-menu dropdown-menu-end shadow rounded p-2 ${isSearchOpen ? 'show' : ''}`} aria-labelledby="navSearch">
                                 <form className="input-group">
@@ -111,13 +134,14 @@ export default function Navbar() {
                         {/* Sign In button */}
                         <li className="nav-item ms-2 d-none d-sm-block">
                             <Link href="/login" className="btn btn-sm btn-primary-soft mb-0">
-                                <i className="fa-solid fa-right-to-bracket mx-2"></i>
-                                تسجيل دخول
+                                {/* <i className="fa-solid fa-right-to-bracket mx-2"></i> */}
+                                <LogIn className={`${locale === 'ar' ? 'ms-2' : 'me-2'}`} size={16} absoluteStrokeWidth={true} />
+                                {t('login')}
                             </Link>
                         </li>
                     </ul>
                 </div>
             </nav>
-        </header>
+        </header >
     );
 }

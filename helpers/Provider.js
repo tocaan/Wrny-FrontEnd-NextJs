@@ -19,21 +19,21 @@ export default function Providers({ children }) {
 
     // const dir = getDirection(locale);
 
-	// useEffect(() => {
-	// 	document.documentElement.dir = dir;
-	// }, [dir]);
+    // useEffect(() => {
+    // 	document.documentElement.dir = dir;
+    // }, [dir]);
 
     useEffect(() => {
 
         const lang = localStorage.getItem('LANG');
 
-        if(lang){
+        if (lang) {
             router.push(`/${lang}/${pathname.slice(3)}`);
-        }else{
+        } else {
             localStorage.setItem('LANG', locale);
         }
-    
-      },[])
+
+    }, [])
 
     return <Provider store={store}>{children}</Provider>;
 }

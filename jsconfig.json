@@ -1,7 +1,13 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./*"]
-    }
-  }
+    },
+    "checkJs": false,
+    "skipLibCheck": true,
+    "plugins": [{ "name": "next" }]
+  },
+  "include": ["**/*.js", "**/*.jsx", "next-env.d.ts"],
+  "exclude": ["node_modules"]
 }

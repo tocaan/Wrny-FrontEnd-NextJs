@@ -1,33 +1,117 @@
 {
-    "nav": {
-        "home": "Home",
-        "about": "About Us",
+    "app": {
+        "title": "Wrny",
+        "description": "An app to explore Wrny and discover the best companies and events"
+    },
+    "page_titles": {
+        "home": "Discover the Best Destinations and Activities",
         "categories": "Categories",
         "companies": "Companies",
         "events": "Events",
+        "regions": "Regions",
+        "about": "About Us",
         "contact": "Contact Us",
         "login": "Login",
-        "register": "Register"
+        "register": "Create Account",
+        "account": "Profile",
+        "category_detail": "{category} - Categories",
+        "company_detail": "{company} - Companies",
+        "event_detail": "{event} - Events",
+        "region_detail": "{region} - Regions",
+        "search_results": "Search Results: {query}",
+        "not_found": "Page Not Found"
     },
-    "hero": {
-        "title": "Explore the Best Destinations and Activities in Kuwait",
-        "explore": "Explore Now",
-        "description": "Experience a complete journey in discovering tourist spots and cultural activities in all parts of Kuwait."
+    "navbar": {
+        "home": "Home",
+        "categories": "Categories",
+        "companies": "Companies",
+        "events": "Events",
+        "regions": "Regions",
+        "about": "About Us",
+        "contact": "Contact Us",
+        "login": "Login",
+        "register": "Register",
+        "account": "Profile",
+        "logout": "Logout",
+        "language": "العربية"
     },
-    "categories": {
-        "title": "Categories",
-        "all": "All Categories"
+    "breadcrumb": {
+        "home": "Home",
+        "categories": "Categories",
+        "companies": "Companies",
+        "events": "Events",
+        "regions": "Regions",
+        "about": "About Us"
     },
-    "companies": {
-        "title": "Companies"
+    "pages": {
+        "home": {
+            "title": "Home",
+            "hero": {
+                "title": "Explore the Best Destinations and Activities in Wrny",
+                "description": "Experience a complete journey in discovering tourist spots and cultural activities in all parts of Wrny.",
+                "explore_button": "Explore Now"
+            }
+        },
+        "categories": {
+            "title": "Categories",
+            "page_title": "Browse Categories",
+            "all_categories": "All Categories",
+            "view_all": "View All Categories"
+        },
+        "companies": {
+            "title": "Companies",
+            "page_title": "Discover Companies",
+            "all_companies": "All Companies",
+            "view_all": "View All Companies"
+        },
+        "events": {
+            "title": "Events",
+            "page_title": "Upcoming Events",
+            "all_events": "All Events",
+            "view_all": "View All Events"
+        },
+        "regions": {
+            "title": "Regions",
+            "page_title": "Explore Regions",
+            "all_regions": "All Regions",
+            "view_all": "View All Regions"
+        },
+        "about": {
+            "title": "About Us",
+            "page_title": "About Wrny",
+            "description": "Learn more about our platform and mission",
+            "lead": "We are a leading platform in exploring local destinations and activities",
+            "introHeading": "Our Vision and Mission",
+            "introBold": "We strive to connect people with the best destinations and experiences in their area",
+            "introText": "Wrny platform is your ideal destination to discover everything new and distinctive in your area. We provide you with a comprehensive guide to companies, events, and tourist attractions, with updated and reliable information to help you make better decisions and have an enjoyable time."
+        },
+        "contact": {
+            "title": "Don't hesitate to contact us",
+            "page_title": "Contact Us",
+            "subtitle": "We are always here to help — feel free to reach out for any inquiries or assistance",
+            "call_us": "Call Us",
+            "call_us_text": "Your question matters – call us and we will answer",
+            "email_us": "Email Us",
+            "email_us_text": "Email is the fastest way to reach us",
+            "follow_us": "Follow Us",
+            "follow_us_text": "Don't miss any updates — follow our official accounts",
+            "form_title": "Send us a message",
+            "form_name": "Your Name *",
+            "form_email": "Email *",
+            "form_phone": "Phone Number *",
+            "form_message": "Message *",
+            "form_terms": "By sending this form, you agree to",
+            "terms_and_conditions": "our Terms & Conditions",
+            "send_message": "Send Message"
+        }
     },
-    "events": {
-        "title": "Events",
-        "all": "All Events"
-    },
-    "regions": {
-        "title": "Regions",
-        "all": "All Regions"
-    },
-    "view_all": "View All"
+    "common": {
+        "view_all": "View All",
+        "load_more": "Load More",
+        "search": "Search",
+        "filter": "Filter",
+        "sort": "Sort",
+        "no_results": "No results found",
+        "loading": "Loading..."
+    }
 }

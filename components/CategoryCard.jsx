@@ -1,3 +1,5 @@
+import { Link } from "@/i18n/routing";
+
 export default function CategoryCard({ category }) {
     const isAllCategories = category.id === "all";
 
@@ -12,12 +14,12 @@ export default function CategoryCard({ category }) {
                 />
             </div>
             <h6 className="mb-0">
-                <a
+                <Link
                     href={isAllCategories ? "/categories" : `/categories/${category.id}`}
                     className="stretched-link ff-l"
                 >
                     {category.name}
-                </a>
+                </Link>
             </h6>
         </div>
     );

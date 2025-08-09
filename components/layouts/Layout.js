@@ -2,15 +2,17 @@
 
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-
+import { IconContext } from "react-icons";
 
 
 export default function Layout({ children }) {
     return (
-        <div>
+        <IconContext.Provider value={{ color: "blue", className: "global-class-name" }}>
             <Navbar />
-            {children}
+            <main>
+                {children}
+            </main>
             <Footer />
-        </div>
+        </IconContext.Provider>
     );
 }

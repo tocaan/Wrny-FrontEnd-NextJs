@@ -2,21 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 const LanguageSwitcher = () => {
     const { locale } = useParams();
-
-    const [lang, setLang] = useState('en');
-
-    useEffect(() => {
-        const storedLang = localStorage.getItem('LANG');
-        if (storedLang === 'ar') {
-            setLang('ar');
-        } else {
-            setLang('en');
-        }
-    }, []);
-
+    const t = useTranslations('navbar');
     const toggleLanguage = (e) => {
         e.preventDefault();
         const newLang = locale === 'ar' ? 'en' : 'ar';
@@ -31,7 +21,7 @@ const LanguageSwitcher = () => {
             href="#"
             onClick={toggleLanguage}
         >
-            <i className="bi bi-translate fs-5"></i> {lang === 'ar' ? 'English' : 'العربية'}
+            <i className="bi bi-translate fs-5"></i> {t('language')}
         </a>
     );
 };
