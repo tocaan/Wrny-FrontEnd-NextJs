@@ -34,7 +34,7 @@ export default async function RootLayout({ children, params }) {
         <Providers>
             <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} className={almarai.variable} suppressHydrationWarning={true}>
                 <body className='has-navbar-mobile' suppressHydrationWarning={true}>
-                    <GlobalLoader />
+                    {/* <GlobalLoader /> */}
                     <BootstrapClient />
                     <NextIntlClientProvider messages={messages}>
                         <Layout>
