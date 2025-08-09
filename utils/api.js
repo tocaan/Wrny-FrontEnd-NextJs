@@ -5,7 +5,7 @@ const api = axios.create({
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Accept-Language': (typeof window !== 'undefined' && localStorage.getItem('LANG')) || "en",
+        'Accept-Language': (typeof window !== 'undefined' && localStorage.getItem('LANG')) || "ar",
     },
 });
 
