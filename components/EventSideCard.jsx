@@ -27,10 +27,10 @@ export default function EventSideCard({ event, eventType }) {
                             {event.name}
                         </Link>
                     </h5>
-                    <p class="mb-1 d-flex gap-2"><i class="bi bi-geo-alt text-primary"></i><span>{event.address}</span></p>
+                    <p className="mb-1 d-flex gap-2"><i className="bi bi-geo-alt text-primary"></i><span>{event.address}</span></p>
                     {
                         event.start_date && (
-                            <p class="mb-1 d-flex gap-2"><i class="bi bi-calendar2-plus text-primary"></i><span>{event.start_date}</span></p>
+                            <p className="mb-1 d-flex gap-2"><i className="bi bi-calendar2-plus text-primary"></i><span>{event.start_date}</span></p>
                         )
                     }
                 </div>

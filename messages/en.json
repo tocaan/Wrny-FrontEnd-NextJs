@@ -113,5 +113,57 @@
         "sort": "Sort",
         "no_results": "No results found",
         "loading": "Loading..."
+    },
+    "auth": {
+        "register": {
+            "title": "إنشاء حساب جديد",
+            "have_account": "هل أنت عضو بالفعل؟"
+        },
+        "login": {
+            "title": "مرحبًا بعودتك",
+            "new_here": "زائر جديد هنا؟"
+        },
+        "forgot": {
+            "title": "هل نسيت كلمة المرور؟",
+            "subtitle_phone": "أدخل رقم الهاتف المرتبط بالحساب",
+            "sent_success": "تم إرسال الكود إلى هاتفك",
+            "back_to": "العودة إلى"
+        },
+        "labels": {
+            "name": "Full Name",
+            "email": "البريد الإلكتروني",
+            "phone": "رقم الهاتف",
+            "password": "كلمة المرور",
+            "password_confirmation": "تأكيد كلمة المرور",
+            "remember_me": "أبقني مسجلاً",
+            "remember_me_q": "تذكرني؟"
+        },
+        "buttons": {
+            "register": "تسجيل جديد",
+            "login": "تسجيل دخول",
+            "reset_password": "إعادة تعيين كلمة المرور"
+        },
+        "links": {
+            "login": "تسجيل دخول",
+            "register": "إنشاء حساب",
+            "forgot_password": "هل نسيت كلمة المرور؟"
+        },
+        "placeholders": {
+            "phone": "10xxxxxxxx"
+        },
+        "validation": {
+            "required": "هذا الحقل إجباري",
+            "email": "البريد الإلكتروني غير صالح",
+            "phone": "رقم الهاتف غير صالح",
+            "min_chars": "يجب ألا يقل الطول عن {count} أحرف",
+            "password_mismatch": "كلمتا المرور غير متطابقتين"
+        },
+        "misc": {
+            "loading": "جاري التحميل...",
+            "or": "أو"
+        },
+        "errors": {
+            "countries_failed": "فشل تحميل الدول"
+        }
     }
 }

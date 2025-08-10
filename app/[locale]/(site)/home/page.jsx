@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/Skeletons';
 import EventsSection from '@/components/sections/EventsSection';
 import CompaniesSection from '@/components/sections/CompaniesSection';
+import EventsRegionSection from '@/components/sections/EventsRegionSection';
 
 export default function HomePage() {
     const dispatch = useDispatch();
@@ -102,7 +103,7 @@ export default function HomePage() {
             )}
 
             {companiesData?.records?.length > 0 && <CompaniesSection companiesData={companiesData} />}
-            {eventsRegionsData?.records?.length > 0 && <EventsSection eventsData={eventsRegionsData} />}
+            {eventsRegionsData?.records?.length > 0 && <EventsRegionSection eventsData={eventsRegionsData} type={'reg'} />}
             {eventsData?.records?.length > 0 && <EventsSection eventsData={eventsData} />}
         </div>
     );

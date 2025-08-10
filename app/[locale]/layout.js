@@ -4,9 +4,11 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import Layout from '@/components/layouts/Layout';
 import BootstrapClient from '@/helpers/bootstrap-client';
-import 'tiny-slider/dist/tiny-slider.css';
 import GlobalLoader from '@/components/GlobalLoader';
-import PageHead from '@/components/Head';
+import { Toaster } from 'react-hot-toast';
+// import { Toaster } from 'sonner';
+import 'tiny-slider/dist/tiny-slider.css';
+
 
 async function loadLocaleStyles(locale) {
     if (locale === 'ar') {
@@ -34,15 +36,15 @@ export default async function RootLayout({ children, params }) {
         <Providers>
             <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} className={almarai.variable} suppressHydrationWarning={true}>
                 <body className='has-navbar-mobile' suppressHydrationWarning={true}>
+                    <Toaster position={locale === "ar" ? "top-left" : "top-right"} />
                     {/* <GlobalLoader /> */}
                     <BootstrapClient />
                     <NextIntlClientProvider messages={messages}>
-                        <Layout>
-                            {children}
-                        </Layout>
+                        {children}
                     </NextIntlClientProvider>
                 </body>
             </html>
+            {/* <Toaster position={locale === "ar" ? "top-right" : "top-left"} /> */}
         </Providers>
     );
 }

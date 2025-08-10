@@ -8,8 +8,7 @@ export async function generateMetadata(props) {
     return createPageMetadata(locale, 'about');
 }
 
-export default async function AboutPage({ params }) {
-    const locale = params?.locale || 'ar';
+export default async function AboutPage() {
     const t = await getTranslations();
 
     const title = t('pages.about.page_title');

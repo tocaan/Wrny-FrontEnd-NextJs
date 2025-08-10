@@ -23,10 +23,7 @@ export default function HeroSection({ slides = [] }) {
                             backgroundSize: 'cover',
                         }}
                     >
-                        {/* Background dark overlay */}
                         <div className="bg-overlay bg-dark opacity-6" />
-
-                        {/* Card image overlay */}
                         <div className="card-img-overlay d-flex align-items-center">
                             <div className="container w-100 my-auto">
                                 <div className="row justify-content-center">

@@ -23188,7 +23188,8 @@ body.dashboard main {
         display: flex;
         -webkit-box-pack: justify !important;
         -ms-flex-pack: justify !important;
-        justify-content: space-between !important
+        justify-content: space-between !important;
+        margin-bottom: 20px;
     }
 
     .navbar-mobile .nav-item {
@@ -24477,13 +24478,13 @@ button.text-primary-hover:hover {
     will-change: scroll-position
 }
 
-html[dir=rtl] .choices,
+/* html[dir=rtl] .choices,
 html[dir=rtl] select option,
 html[dir=rtl] .choices__input {
     direction: rtl;
     unicode-bidi: bidi-override;
     text-align: left
-}
+} */
 
 [dir=rtl] .choices__list--dropdown .choices__item--selectable {
     padding-left: 10px;

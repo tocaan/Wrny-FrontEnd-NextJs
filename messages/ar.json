@@ -12,6 +12,9 @@
         "about": "من نحن",
         "contact": "اتصل بنا",
         "login": "تسجيل الدخول",
+        "forgot_password": "هل نسيت كلمة المرور؟",
+        "reset_password": "إسترجاع كلمة المرور",
+        "verify": "تأكيد الهاتف",
         "register": "إنشاء حساب",
         "account": "الملف الشخصي",
         "category_detail": "{category} - الفئات",
@@ -117,5 +120,120 @@
         "loading": "جاري التحميل...",
         "opened": "مفتوح",
         "closed": "مغلق"
+    },
+    "account": {
+        "nav": {
+            "profile": "الملف الشخصي",
+            "wishlist": "المفضلة",
+            "delete": "حذف الحساب",
+            "logout": "الخروج",
+            "menu": "القائمة"
+        },
+        "profile": {
+            "title": "البيانات الأساسية"
+        },
+        "labels": {
+            "name": "الاسم",
+            "email": "البريد الإلكتروني",
+            "phone": "رقم الهاتف"
+        },
+        "buttons": {
+            "save_changes": "حفظ التغيير"
+        },
+        "placeholders": {
+            "name": "الاسم",
+            "email": "example@email.com"
+        },
+        "misc": {
+            "guest": "مستخدم"
+        },
+        "toasts": {
+            "saved": "تم حفظ التغييرات بنجاح",
+            "something_wrong": "حدث خطأ، حاول مرة أخرى",
+            "logged_out": "تم تسجيل الخروج"
+        },
+        "validation": {
+            "required": "هذا الحقل إجباري",
+            "email": "البريد الإلكتروني غير صالح",
+            "phone": "رقم الهاتف غير صالح",
+            "min_chars": "يجب ألا يقل الطول عن {count} أحرف"
+        }
+    },
+    "auth": {
+        "register": {
+            "title": "إنشاء حساب جديد",
+            "have_account": "هل أنت عضو بالفعل؟"
+        },
+        "login": {
+            "title": "مرحبًا بعودتك",
+            "new_here": "زائر جديد هنا؟"
+        },
+        "forgot": {
+            "title": "هل نسيت كلمة المرور؟",
+            "subtitle_phone": "أدخل رقم الهاتف المرتبط بالحساب",
+            "sent_success": "تم إرسال الكود إلى هاتفك",
+            "back_to": "العودة إلى"
+        },
+        "labels": {
+            "name": "الأسم بالكامل",
+            "email": "البريد الإلكتروني",
+            "phone": "رقم الهاتف",
+            "password": "كلمة المرور",
+            "password_confirmation": "تأكيد كلمة المرور",
+            "remember_me": "أبقني مسجلاً",
+            "remember_me_q": "تذكرني؟",
+            "code": "رمز التفعيل",
+            "new_password": "كلمة المرور الجديدة",
+            "device_id": "معرّف الجهاز"
+        },
+        "buttons": {
+            "register": "تسجيل جديد",
+            "login": "تسجيل دخول",
+            "reset_password": "إعادة تعيين كلمة المرور",
+            "verify": "تأكيد",
+            "resend_code": "إعادة إرسال الكود",
+            "resend_code_in": "يمكنك إعادة الإرسال بعد",
+            "seconds": "ثانية"
+        },
+        "links": {
+            "login": "تسجيل دخول",
+            "register": "إنشاء حساب",
+            "forgot_password": "هل نسيت كلمة المرور؟"
+        },
+        "placeholders": {
+            "phone": "10xxxxxxxx"
+        },
+        "validation": {
+            "required": "هذا الحقل إجباري",
+            "email": "البريد الإلكتروني غير صالح",
+            "phone": "رقم الهاتف غير صالح",
+            "min_chars": "يجب ألا يقل الطول عن {count} أحرف",
+            "password_mismatch": "كلمتا المرور غير متطابقتين",
+            "fill_phone_first": "الرجاء إدخال رقم الهاتف أولاً"
+        },
+        "misc": {
+            "loading": "جاري التحميل...",
+            "or": "أو"
+        },
+        "errors": {
+            "countries_failed": "فشل تحميل الدول"
+        },
+        "reset": {
+            "title": "إعادة تعيين كلمة المرور",
+            "subtitle": "أدخل رقم هاتفك والكود ثم كلمة المرور الجديدة"
+        },
+        "verify": {
+            "title": "تأكيد رقم الهاتف",
+            "subtitle": "أدخل رقم هاتفك ورمز التفعيل لإكمال التسجيل",
+            "back_to": "العودة إلى"
+        },
+        "toasts": {
+            "login_success": "تم تسجيل الدخول بنجاح",
+            "account_created": "تم إنشاء الحساب بنجاح",
+            "code_sent": "تم إرسال الكود إلى هاتفك",
+            "phone_verified": "تم تأكيد رقم الهاتف بنجاح",
+            "password_changed": "تم تغيير كلمة السر بنجاح",
+            "something_wrong": "حدث خطأ، حاول مرة أخرى"
+        }
     }
 }

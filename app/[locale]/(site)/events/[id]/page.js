@@ -10,6 +10,7 @@ import Slider from '@/components/ui/Slider';
 import Breadcrumb from '@/components/Breadcrumb';
 import { useTranslations } from 'next-intl';
 import { usePathname } from '@/i18n/routing';
+import GlobalLoader from '@/components/GlobalLoader';
 
 export default function EventDetailsClient() {
     const pathname = usePathname();
@@ -79,8 +80,10 @@ export default function EventDetailsClient() {
         };
     }, [coverImages]);
 
-    if (loading && !event) return <div className="py-5 text-center">جاري التحميل…</div>;
-    if (error) return <div className="py-5 text-center text-danger">حدث خطأ: {error}</div>;
+    if (loading && !event) return <GlobalLoader />;
+    if (error) {
+        return <div className="text-center py-5 text-danger">Error: {error}</div>;
+    }
     if (!event) return null;
 
     return (
@@ -158,16 +161,6 @@ export default function EventDetailsClient() {
                                         <button className="btn btn-sm btn-white px-2" type="button">
                                             <i className={`bi fa-fw ${event.is_favorited ? 'bi-heart-fill text-danger' : 'bi-heart'}`}></i>
                                         </button>
-                                    </li>
-                                    <li className="list-inline-item dropdown">
-                                        <button className="btn btn-sm btn-white px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i className="fa-solid fa-fw fa-share-alt"></i>
-                                        </button>
-                                        <ul className="dropdown-menu min-w-auto shadow rounded">
-                                            <li><a className="dropdown-item" href="#"><i className="bi bi-twitter-x mx-2"></i>Twitter X</a></li>
-                                            <li><a className="dropdown-item" href="#"><i className="bi bi-facebook mx-2"></i>Facebook</a></li>
-                                            <li><a className="dropdown-item" href="#"><i className="bi bi-linkedin mx-2"></i>LinkedIn</a></li>
-                                        </ul>
                                     </li>
                                 </ul>
                             </div>

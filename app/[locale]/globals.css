@@ -51,3 +51,8 @@
     background-color: var(--bs-body-bg, #fff);
     transition: background-color .2s ease, box-shadow .2s ease, height .2s ease;
 }
+
+
+[dir='ltr'] .text-end {
+    text-align: start !important;
+}

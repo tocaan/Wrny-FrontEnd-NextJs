@@ -6,7 +6,7 @@ import { usePathname } from '@/i18n/routing';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { LogIn, Search, UserRound } from 'lucide-react';
-
+import { isUserLoggedIn } from '@/utils/auth';
 function normalize(path) {
     if (!path) return '/';
     let p = path.split('#')[0].split('?')[0];
@@ -42,6 +42,12 @@ export default function Navbar() {
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        setIsLoggedIn(isUserLoggedIn());
     }, []);
 
     return (
@@ -130,11 +136,13 @@ export default function Navbar() {
                                 <LanguageSwitcher />
                             </li>
                             {/* Account */}
-                            <li className="nav-item ms-2 d-none d-sm-block">
-                                <Link className="nav-link mb-0 py-0" href="/account">
-                                    <UserRound size={22} className="fs-5" />
-                                </Link>
-                            </li>
+                            {isLoggedIn && (
+                                <li className="nav-item ms-2 d-none d-sm-block">
+                                    <Link className="nav-link mb-0 py-0" href="/profile">
+                                        <UserRound size={22} className="fs-5" />
+                                    </Link>
+                                </li>
+                            )}
                             {/* Search */}
                             <li className="nav-item dropdown nav-search mx-2 d-none d-sm-flex">
                                 <a
@@ -169,16 +177,18 @@ export default function Navbar() {
                                 </div>
                             </li>
                             {/* Login */}
-                            <li className="nav-item ms-2 d-none d-sm-block">
-                                <Link href="/login" className="btn btn-sm btn-primary-soft mb-0">
-                                    <LogIn
-                                        className={`${locale === 'ar' ? 'ms-2' : 'me-2'}`}
-                                        size={16}
-                                        absoluteStrokeWidth={true}
-                                    />
-                                    {t('login')}
-                                </Link>
-                            </li>
+                            {!isLoggedIn && (
+                                <li className="nav-item ms-2 d-none d-sm-block">
+                                    <Link href="/login" className="btn btn-sm btn-primary-soft mb-0">
+                                        <LogIn
+                                            className={`${locale === 'ar' ? 'ms-2' : 'me-2'}`}
+                                            size={16}
+                                            absoluteStrokeWidth={true}
+                                        />
+                                        {t('login')}
+                                    </Link>
+                                </li>
+                            )}
                         </ul>
                     </div>
                 </nav>
