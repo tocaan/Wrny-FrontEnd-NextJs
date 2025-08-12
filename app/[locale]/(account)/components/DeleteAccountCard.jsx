@@ -1,4 +1,3 @@
-// app/[locale]/(account)/components/DeleteAccountCard.jsx
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -26,7 +25,7 @@ export default function DeleteAccountCard() {
         try {
             clearAuthArtifacts();
         } catch {
-            // no-op
+
         }
         dispatch(resetAccount());
         goLogin();

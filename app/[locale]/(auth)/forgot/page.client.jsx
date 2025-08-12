@@ -9,8 +9,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
 import { forgotThunk } from "@/store/slices/authThunks";
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/routing";
+import RHFPhoneField from "../components/RHFPhoneField";
 
 const makeForgotSchema = (t) =>
     z.object({
@@ -24,10 +25,14 @@ export default function ForgotClientPage() {
     const router = useRouter();
     const { loading, error } = useSelector((s) => s.auth);
     const [sent, setSent] = useState(false);
-    const { register, handleSubmit, formState: { errors }, getValues } = useForm({
-        resolver: zodResolver(makeForgotSchema(t)),
-        defaultValues: { country_code: "+965" },
-    });
+    const locale = useLocale();
+
+    const { register, handleSubmit, formState: { errors }, setValue,
+        setError,
+        clearErrors, getValues } = useForm({
+            resolver: zodResolver(makeForgotSchema(t)),
+            defaultValues: { country_code: "+965" },
+        });
 
     const onSubmit = async (data) => {
         if (loading) return;
@@ -48,7 +53,23 @@ export default function ForgotClientPage() {
             <p className="mb-0">{t("forgot.subtitle_phone")}</p>
 
             <form className="mt-4 text-end" onSubmit={handleSubmit(onSubmit)}>
-                <PhoneField register={register} errors={errors} />
+                <div className="mb-3 d-flex flex-column">
+                    <label className="form-label">
+                        {t("labels.phone")} <span className="text-danger">*</span>
+                    </label>
+                    {/* <PhoneField register={register} errors={errors} /> */}
+                    <RHFPhoneField
+                        setValue={setValue}
+                        setError={setError}
+                        clearErrors={clearErrors}
+                        lang={locale}
+                        placeholder={locale === "ar" ? "اكتب رقم هاتفك" : "Enter phone number"}
+                        required
+                    />
+
+                    <input type="hidden" {...register("country_code")} />
+                    <input type="hidden" {...register("phone")} />
+                </div>
 
                 {error && <div className="alert alert-danger">{error}</div>}
                 {sent && <div className="alert alert-success">{t("forgot.sent_success")}</div>}

@@ -10,8 +10,10 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
 import { registerThunk } from "@/store/slices/authThunks";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/routing";
+import RHFPhoneField from "../components/RHFPhoneField";
+import { useMemo } from "react";
 
 const makeRegisterSchema = (t) =>
     z.object({
@@ -32,17 +34,23 @@ export default function RegisterClientPage() {
     const dispatch = useDispatch();
     const router = useRouter();
     const { loading } = useSelector((s) => s.auth);
-
-    const { register, handleSubmit, control, formState: { errors } } = useForm({
-        resolver: zodResolver(makeRegisterSchema(t)),
-        defaultValues: { country_code: "+966", remember: true },
-    });
+    const locale = useLocale();
+    const { register, handleSubmit, control, setValue,
+        setError,
+        clearErrors, formState: { errors } } = useForm({
+            resolver: zodResolver(makeRegisterSchema(t)),
+            defaultValues: { country_code: "+966", remember: true },
+        });
 
     const onSubmit = async (data) => {
         if (loading) return;
         const res = await dispatch(registerThunk({ ...data, type: "individual" }));
         if (res?.meta?.requestStatus === "fulfilled") {
-            router.push("/verify-phone");
+            const queryParams = new URLSearchParams({
+                country_code: data.country_code,
+                phone: data.phone
+            });
+            router.push(`/verify-phone?${queryParams.toString()}`);
         }
     };
 
@@ -66,7 +74,24 @@ export default function RegisterClientPage() {
                     {errors.email && <small className="text-danger">{errors.email.message}</small>}
                 </div>
 
-                <PhoneField register={register} errors={errors} defaultCode="+966" />
+                {/* <PhoneField register={register} errors={errors} defaultCode="+966" /> */}
+                <div className="mb-3 d-flex flex-column">
+                    <label className="form-label">
+                        {t("labels.phone")} <span className="text-danger">*</span>
+                    </label>
+                    {/* <PhoneField register={register} errors={errors} /> */}
+                    <RHFPhoneField
+                        setValue={setValue}
+                        setError={setError}
+                        clearErrors={clearErrors}
+                        lang={locale}
+                        placeholder={locale === "ar" ? "اكتب رقم هاتفك" : "Enter phone number"}
+                        required
+                    />
+
+                    <input type="hidden" {...register("country_code")} />
+                    <input type="hidden" {...register("phone")} />
+                </div>
                 <PasswordField label={t("labels.password")} name="password" register={register} errors={errors} />
                 <PasswordField label={t("labels.password_confirmation")} name="password_confirmation" register={register} errors={errors} />
                 <SubmitButton loading={loading} label={t("buttons.register")} />

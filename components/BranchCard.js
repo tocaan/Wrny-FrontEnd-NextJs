@@ -29,7 +29,7 @@ export default function BranchCard({ branch, companyId }) {
                     </span>
                 </div>
                 <h5 className="card-title mb-2">
-                    <Link href={`/companies/${companyId}/branches/${branch.id}`} className="stretched-link">
+                    <Link href={`/branches/${branch.id}`} className="stretched-link">
                         {branch.name}
                     </Link>
                 </h5>
@@ -40,7 +40,7 @@ export default function BranchCard({ branch, companyId }) {
                     </p>
                 </div>
                 <div className="mt-2 mt-sm-0 text-center">
-                    <Link href={`/companies/${companyId}/branches/${branch.id}`} className="btn btn-sm btn-primary mb-0 stretched-link">
+                    <Link href={`/branches/${branch.id}`} className="btn btn-sm btn-primary mb-0 stretched-link">
                         تفاصيل الفرع
                     </Link>
                 </div>

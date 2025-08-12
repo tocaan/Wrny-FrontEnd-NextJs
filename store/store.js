@@ -7,6 +7,7 @@ import eventsReducer from './slices/eventsSlice';
 import companyReducer from './slices/companySlice';
 import eventReducer from './slices/eventSlice';
 import branchesReducer from './slices/branchesSlice';
+import branchReducer from './slices/branchSlice';
 import authReducer from "./slices/authSlice";
 import accountReducer from "./slices/accountSlice";
 import toast from "react-hot-toast";
@@ -45,6 +46,7 @@ export const store = configureStore({
         events: eventsReducer,
         event: eventReducer,
         branches: branchesReducer,
+        branch: branchReducer,
         auth: authReducer,
         account: accountReducer,
     },

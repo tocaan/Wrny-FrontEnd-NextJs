@@ -13,6 +13,8 @@ import { useState, useEffect } from "react";
 import { Link, useRouter } from "@/i18n/routing";
 import toast from "react-hot-toast";
 import { getDeviceId } from "@/utils/device";
+import RHFPhoneField from "../components/RHFPhoneField";
+import { useSearchParams } from "next/navigation";
 
 const makeVerifySchema = (t) =>
     z.object({
@@ -29,21 +31,24 @@ export default function VerifyPhoneClientPage() {
     const dispatch = useDispatch();
     const { loading, error, info } = useSelector((s) => s.auth);
     const router = useRouter();
+    const locale = useLocale();
+    const searchParams = useSearchParams();
+    const phoneFromUrl = searchParams?.get("phone") || "";
+    const countryCodeFromUrl = searchParams?.get("country_code") || "+966";
 
-    const { register, handleSubmit, control, formState: { errors }, getValues, setValue } = useForm({
-        resolver: zodResolver(makeVerifySchema(t)),
-        defaultValues: { country_code: "+966", device_id: "" },
-    });
+    const { register, handleSubmit, control, formState: { errors }, getValues, setError,
+        clearErrors, setValue } = useForm({
+            resolver: zodResolver(makeVerifySchema(t)),
+            defaultValues: { country_code: "+965", device_id: "" },
+        });
 
     const [seconds, setSeconds] = useState(0);
 
-    // جهّز device_id مخفيًا
     useEffect(() => {
         const id = getDeviceId();
         setValue("device_id", id, { shouldValidate: true });
     }, [setValue]);
 
-    // مؤقت إعادة الإرسال
     useEffect(() => {
         const expiresAt = localStorage.getItem(TIMER_KEY);
         if (expiresAt) {
@@ -59,11 +64,20 @@ export default function VerifyPhoneClientPage() {
         return () => clearTimeout(timer);
     }, [seconds]);
 
+    useEffect(() => {
+        if (phoneFromUrl) {
+            setValue("phone", phoneFromUrl);
+        }
+        if (countryCodeFromUrl) {
+            setValue("country_code", countryCodeFromUrl);
+        }
+    }, [phoneFromUrl, countryCodeFromUrl, setValue]);
+
     const onSubmit = async (data) => {
         if (loading) return;
         const res = await dispatch(verifyPhoneThunk(data));
         if (res?.meta?.requestStatus === "fulfilled") {
-            router.push("/login"); // أو وجهه حيث تريد بعد التفعيل
+            router.push("/login");
         } else {
             toast.error(res?.payload?.msg || t("toasts.something_wrong"));
         }
@@ -90,7 +104,24 @@ export default function VerifyPhoneClientPage() {
             <p className="mb-0">{t("verify.subtitle")}</p>
 
             <form className="mt-4 text-end" onSubmit={handleSubmit(onSubmit)}>
-                <PhoneField register={register} errors={errors} control={control} defaultCode="+966" />
+                {/* <PhoneField register={register} errors={errors} control={control} defaultCode="+966" /> */}
+                <div className="mb-3 d-flex flex-column">
+                    <label className="form-label">
+                        {t("labels.phone")} <span className="text-danger">*</span>
+                    </label>
+                    {/* <PhoneField register={register} errors={errors} /> */}
+                    <RHFPhoneField
+                        setValue={setValue}
+                        setError={setError}
+                        clearErrors={clearErrors}
+                        lang={locale}
+                        placeholder={locale === "ar" ? "اكتب رقم هاتفك" : "Enter phone number"}
+                        required
+                    />
+
+                    <input type="hidden" {...register("country_code")} />
+                    <input type="hidden" {...register("phone")} />
+                </div>
 
                 <div className="mb-3">
                     <label className="form-label">{t("labels.code")}</label>

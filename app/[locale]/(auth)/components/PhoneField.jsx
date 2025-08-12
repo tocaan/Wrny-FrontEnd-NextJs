@@ -14,31 +14,27 @@ export default function PhoneField({
     register,
     errors,
     defaultCode = "+965",
-    setValue,       // من RHF
-    watch,          // من RHF (لازم تبعته)
+    setValue,
+    watch,
 }) {
     const t = useTranslations("auth");
     const { countries, loading, err } = useCountries();
     const [mounted, setMounted] = useState(false);
     useEffect(() => setMounted(true), []);
 
-    // القائمة (fallback أولاً)
     const baseList = useMemo(
         () => (countries?.length ? countries : QUICK_DEFAULTS),
         [countries]
     );
 
-    // القيمة الحالية من RHF (قد تكون +966 من reset(profile))
     const currentCode = normalizeCode(
         typeof watch === "function" ? watch("country_code") : defaultCode,
         defaultCode
     );
 
-    // لو currentCode مش موجودة ضمن الخيارات، نضيف لها option مؤقت
     const listWithSelected = useMemo(() => {
         const exists = baseList?.some((c) => `+${c.key}` === currentCode);
         if (exists) return baseList;
-        // أضف option ظلّ علشان تمنع الفلاش
         const shadow = { id: "__selected", key: currentCode.slice(1) };
         return [shadow, ...baseList];
     }, [baseList, currentCode]);
@@ -56,12 +52,10 @@ export default function PhoneField({
         [listWithSelected]
     );
 
-    // عيّن قيمة ابتدائية فقط لو الحقل فاضي (مرة واحدة)
     const initialSynced = useRef(false);
     useEffect(() => {
         if (!mounted || initialSynced.current) return;
         if (typeof setValue === "function") {
-            // لو قيمة RHF فاضية، استخدم defaultCode
             const raw = typeof watch === "function" ? watch("country_code") : "";
             const normalized = normalizeCode(raw, "");
             if (!normalized) {
@@ -83,7 +77,6 @@ export default function PhoneField({
                 <select
                     className="form-control"
                     style={{ maxWidth: 80 }}
-                    // مفيش defaultValue — RHF ماسك القيمة
                     {...register("country_code")}
                     disabled={!!err}
                     {...(mounted ? { "aria-busy": loading ? "true" : "false" } : {})}

@@ -108,6 +108,14 @@
             "form_terms": "بإرسال هذا النموذج، فإنك توافق على",
             "terms_and_conditions": "الشروط والأحكام",
             "send_message": "إرسال الرسالة"
+        },
+        "branch": {
+            "location": "الموقع",
+            "locationMap": "خريطة موقع الفرع",
+            "contactInfo": "معلومات التواصل",
+            "socialMedia": "التواصل الاجتماعي",
+            "workingHours": "ساعات العمل",
+            "closed": "مغلق"
         }
     },
     "common": {
@@ -234,6 +242,60 @@
             "phone_verified": "تم تأكيد رقم الهاتف بنجاح",
             "password_changed": "تم تغيير كلمة السر بنجاح",
             "something_wrong": "حدث خطأ، حاول مرة أخرى"
+        }
+    },
+    "favorites": {
+        "create_modal": {
+            "title": "إنشاء مجموعة",
+            "name_label": "اسم المجموعة",
+            "type_label": "النوع"
+        },
+        "title": "المجموعات المفضلة",
+        "create_placeholder": "اسم المجموعة (مثال: المفضلة)",
+        "type_companies": "شركات",
+        "type_events": "فعاليات",
+        "create_button": "إنشاء",
+        "no_collections": "لا توجد مجموعات بعد.",
+        "type_label": "النوع",
+        "count_label": "عدد العناصر",
+        "delete_collection": "حذف المجموعة",
+        "company": "شركة",
+        "event": "فعالية",
+        "no_items": "لا توجد عناصر داخل هذه المجموعة.",
+        "remove_item": "إزالة",
+        "modal": {
+            "title": "إضافة إلى المفضلة",
+            "select_collection": "اختر المجموعة",
+            "new_collection_name": "اسم المجموعة الجديدة"
+        },
+        "created_collection": "تم إنشاء المجموعة بنجاح",
+        "toast": {
+            "added": "تمت الإضافة إلى المفضلة",
+            "add_failed": "فشل في الإضافة إلى المفضلة",
+            "removed": "تمت الإزالة من المفضلة",
+            "remove_failed": "فشل في الإزالة من المفضلة"
+        },
+        "actions": {
+            "create_new": "إنشاء مجموعة جديدة",
+            "cancel": "إلغاء",
+            "close": "إغلاق",
+            "add": "إضافة",
+            "back": "رجوع",
+            "create_and_add": "إنشاء وإضافة"
+        },
+        "placeholders": {
+            "collection_name": "مثال: مفضلة الشركات"
+        },
+        "loading": "جارٍ التحميل…",
+        "no_collections_for_type": "لا توجد مجموعات من هذا النوع.",
+        "items": "عنصر",
+        "errors": {
+            "create_failed": "فشل إنشاء المجموعة",
+            "missing_name": "يرجى إدخال اسم المجموعة",
+            "no_collections_for_type": "لا توجد مجموعة متاحة لهذا النوع"
+        },
+        "aria": {
+            "toggle_favorite": "تبديل حالة المفضلة"
         }
     }
 }

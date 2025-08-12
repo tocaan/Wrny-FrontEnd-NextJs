@@ -1,64 +1,120 @@
-// app/[locale]/(account)/components/FavoritesSection.jsx
 "use client";
 
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import {
-    fetchFavoritesThunk,
-    removeFavoriteThunk,
-    clearFavoritesThunk,
+    fetchFavoriteCollectionsThunk,
+    deleteFavoriteCollectionThunk,
+    removeFavoriteItemThunk,
 } from "@/store/slices/accountSlice";
+import FavoriteHeart from "@/components/ui/FavoriteHeart";
+import CreateCollectionModal from "./CreateCollectionModal";
 
 export default function FavoritesSection() {
+    const t = useTranslations("favorites");
     const dispatch = useDispatch();
-    const { items, loading, error } = useSelector((s) => s.account.favorites);
+    const { list, loading, error } = useSelector(s => s.account.favoriteCollections);
 
-    useEffect(() => {
-        dispatch(fetchFavoritesThunk());
-    }, [dispatch]);
+    // نوع افتراضي للإنشاء (لو هتعمل Tabs غيّره حسب التبويب النشط)
+    const [createType, setCreateType] = useState("companies");
+    const [createOpen, setCreateOpen] = useState(false);
+
+    useEffect(() => { dispatch(fetchFavoriteCollectionsThunk()); }, [dispatch]);
+
+    const hasCollections = useMemo(() => Array.isArray(list) && list.length > 0, [list]);
 
     return (
         <div className="card border">
-            <div className="card-header d-flex justify-content-between align-items-center">
-                <h5 className="mb-0">المفضلة</h5>
-                <button
-                    className="btn btn-outline-danger btn-sm"
-                    onClick={() => dispatch(clearFavoritesThunk())}
-                    disabled={loading || !items.length}
-                >
-                    تفريغ الكل
-                </button>
+            <div className="card-header d-flex flex-column flex-md-row gap-2 justify-content-between align-items-md-center">
+                <h5 className="mb-0">{t("title")}</h5>
+
+                <div className="d-flex gap-2">
+                    <button
+                        type="button"
+                        className="btn btn-outline-primary btn-sm"
+                        onClick={() => setCreateOpen(true)}
+                    >
+                        {t("actions.create_new") || "Create new"}
+                    </button>
+                </div>
             </div>
 
             <div className="card-body">
-                {loading && <div>جارٍ التحميل…</div>}
+                {loading && <div>{t("loading")}</div>}
                 {error && <div className="text-danger">{error}</div>}
-                {!loading && !items.length && <div>لا توجد عناصر في المفضلة</div>}
+                {!loading && !hasCollections && <div>{t("no_collections")}</div>}
 
-                {!loading && !!items.length && (
-                    <ul className="list-group">
-                        {items.map((fav) => (
-                            <li
-                                key={fav.id}
-                                className="list-group-item d-flex justify-content-between align-items-center"
-                            >
-                                <div className="me-3">
-                                    {/* بدّل الحقول حسب استجابة API عندك */}
-                                    <div className="fw-bold">{fav.title || fav.name || `#${fav.id}`}</div>
-                                    {fav.type && <small className="text-muted">{fav.type}</small>}
+                {!loading && hasCollections && (
+                    <div className="vstack gap-4">
+                        {list.map((col) => (
+                            <div key={col.id} className="border rounded p-3">
+                                <div className="d-flex justify-content-between align-items-center mb-2">
+                                    <div>
+                                        <div className="fw-bold">{col.name}</div>
+                                        <small className="text-muted">
+                                            {t("type_label")}: {col.type === "companies" ? t("type_companies") : t("type_events")} — {t("count_label")}: {col.items_count ?? (col.data?.length || 0)}
+                                        </small>
+                                    </div>
+                                    <button
+                                        className="btn btn-outline-danger btn-sm"
+                                        onClick={() => dispatch(deleteFavoriteCollectionThunk(col.id))}
+                                        disabled={loading}
+                                    >
+                                        {t("delete_collection")}
+                                    </button>
                                 </div>
 
-                                <button
-                                    className="btn btn-sm btn-outline-secondary"
-                                    onClick={() => dispatch(removeFavoriteThunk(fav.id))}
-                                >
-                                    إزالة
-                                </button>
-                            </li>
+                                {Array.isArray(col.data) && col.data.length > 0 ? (
+                                    <ul className="list-group">
+                                        {col.data.map((item) => (
+                                            <li key={`${col.type}-${item.id}`} className="list-group-item d-flex justify-content-between align-items-center">
+                                                <div className="d-flex align-items-center gap-3">
+                                                    {(item.logo_url || item.cover_url) ? (
+                                                        <img
+                                                            src={item.logo_url || item.cover_url}
+                                                            alt={item.name}
+                                                            width={48}
+                                                            height={48}
+                                                            className="rounded object-fit-cover"
+                                                        />
+                                                    ) : null}
+                                                    <div>
+                                                        <div className="fw-bold">{item.name || `#${item.id}`}</div>
+                                                        <small className="text-muted">{col.type === "companies" ? t("company") : t("event")}</small>
+                                                    </div>
+                                                </div>
+
+                                                <div className="d-flex align-items-center gap-2">
+                                                    <FavoriteHeart type={col.type} itemId={item.id} isFavorited={true} />
+                                                    <button
+                                                        className="btn btn-sm btn-outline-secondary"
+                                                        onClick={() => dispatch(removeFavoriteItemThunk({ type: col.type, id: item.id }))}
+                                                    >
+                                                        {t("remove_item")}
+                                                    </button>
+                                                </div>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                ) : (
+                                    <div className="text-muted">{t("no_items")}</div>
+                                )}
+                            </div>
                         ))}
-                    </ul>
+                    </div>
                 )}
             </div>
+
+            {/* Modal */}
+            <CreateCollectionModal
+                open={createOpen}
+                defaultType={createType}
+                onClose={({ ok }) => {
+                    setCreateOpen(false);
+                    // عند النجاح بيتم التحديث تلقائيًا من الـ thunk (أضف refetch لو Backend ما بيرجعش الزيادة)
+                }}
+            />
         </div>
     );
 }

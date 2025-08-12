@@ -1,8 +1,13 @@
 import { Link } from "@/i18n/routing";
 import { useLocale } from "next-intl";
+import FavoriteHeart from "./ui/FavoriteHeart";
+import { useEffect, useState } from "react";
 
 export default function CompanyCard({ company }) {
     const locale = useLocale();
+    const [c, setC] = useState(company);
+    useEffect(() => setC(company), [company]);
+
     return (
         <div className="card shadow p-2 pb-0 h-100">
             <div className="position-relative arrow-round arrow-xs arrow-dark rounded-2">
@@ -13,10 +18,16 @@ export default function CompanyCard({ company }) {
             </div>
             <div className="card-body px-0 pb-0">
                 <div className="heart-icon position-absolute top-0 end-0 p-3 z-index-9">
-                    <button className="mb-0 btn btn-white btn-round z-index-2">
-                        <i className={`bi fa-fw ${company.is_favorited ? 'bi-heart-fill text-danger' : 'bi-heart'}`}></i>
-                    </button>
+                    <FavoriteHeart
+                        type="companies"
+                        itemId={c.id}
+                        isFavorited={c.is_favorited}
+                        onChange={(val) => {
+                            setC(prev => ({ ...prev, is_favorited: val }));
+                        }}
+                    />
                 </div>
+
                 <div className="d-flex justify-content-between pb-2">
                     <div className={`m-0 ${locale === 'ar' ? 'ms-2' : 'me-2'}`}>
                         <div className="avatar logo-company border border-1 rounded-circle">

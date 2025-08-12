@@ -56,3 +56,14 @@
 [dir='ltr'] .text-end {
     text-align: start !important;
 }
+
+.iti__country-container {
+    left: 0 !important;
+}
+
+.iti input.iti__tel-input,
+.iti input.iti__tel-input[type=text],
+.iti input.iti__tel-input[type=tel] {
+    padding-right: 0 !important;
+    padding-left: 73px !important;
+}

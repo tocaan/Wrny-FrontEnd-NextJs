@@ -1,7 +1,11 @@
 import { Link } from "@/i18n/routing";
+import FavoriteHeart from "./ui/FavoriteHeart";
+import { useEffect, useState } from "react";
 
 export default function EventSideCard({ event, eventType }) {
     const eventImage = event.images && event.images.length > 0 ? event.images[0] : '/assets/images/landmarks/01.jpg';
+    const [c, setC] = useState(event);
+    useEffect(() => setC(event), [event]);
     return (
         <div className="card shadow p-2 pb-0 h-100">
             <div className="position-relative arrow-round arrow-xs arrow-dark rounded-2 overflow-hidden">
@@ -12,9 +16,14 @@ export default function EventSideCard({ event, eventType }) {
             </div>
             <div className="card-body px-3 pb-0">
                 <div className="heart-icon position-absolute top-0 end-0 p-3 z-index-9">
-                    <button className="mb-0 btn btn-white btn-round z-index-2">
-                        <i className={`bi fa-fw ${event.is_favorited ? 'bi-heart-fill text-danger' : 'bi-heart'}`}></i>
-                    </button>
+                    <FavoriteHeart
+                        type="events"
+                        itemId={c.id}
+                        isFavorited={c.is_favorited}
+                        onChange={(val) => {
+                            setC(prev => ({ ...prev, is_favorited: val }));
+                        }}
+                    />
                 </div>
                 <ul>
                     <li className="list-group-item text-primary fw-600">

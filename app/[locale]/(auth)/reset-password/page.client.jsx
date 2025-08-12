@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { Link, useRouter } from "@/i18n/routing";
 import toast from "react-hot-toast";
 import { useSearchParams } from "next/navigation";
+import RHFPhoneField from "../components/RHFPhoneField";
 
 const makeResetSchema = (t) =>
     z.object({
@@ -32,9 +33,9 @@ export default function ResetClientPasswordPage() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
-    // استخراج بيانات الهاتف من query parameters
     const phoneFromUrl = searchParams?.get("phone") || "";
     const countryCodeFromUrl = searchParams?.get("country_code") || "+966";
+    const locale = useLocale();
 
     const {
         register,
@@ -42,6 +43,8 @@ export default function ResetClientPasswordPage() {
         formState: { errors },
         getValues,
         setValue,
+        setError,
+        clearErrors,
     } = useForm({
         resolver: zodResolver(makeResetSchema(t)),
         defaultValues: {
@@ -52,7 +55,6 @@ export default function ResetClientPasswordPage() {
 
     const [seconds, setSeconds] = useState(0);
 
-    // تعيين القيم من URL parameters عند تحميل الصفحة
     useEffect(() => {
         if (phoneFromUrl) {
             setValue("phone", phoneFromUrl);
@@ -113,8 +115,23 @@ export default function ResetClientPasswordPage() {
             <p className="mb-0">{t("reset.subtitle")}</p>
 
             <form className="mt-4 text-end" onSubmit={handleSubmit(onSubmit)}>
-                <PhoneField register={register} errors={errors} />
+                <div className="mb-3 d-flex flex-column">
+                    <label className="form-label">
+                        {t("labels.phone")} <span className="text-danger">*</span>
+                    </label>
+                    {/* <PhoneField register={register} errors={errors} /> */}
+                    <RHFPhoneField
+                        setValue={setValue}
+                        setError={setError}
+                        clearErrors={clearErrors}
+                        lang={locale}
+                        placeholder={locale === "ar" ? "اكتب رقم هاتفك" : "Enter phone number"}
+                        required
+                    />
 
+                    <input type="hidden" {...register("country_code")} />
+                    <input type="hidden" {...register("phone")} />
+                </div>
                 <div className="mb-3">
                     <label className="form-label">{t("labels.code")}</label>
                     <input type="text" className="form-control" {...register("code")} />

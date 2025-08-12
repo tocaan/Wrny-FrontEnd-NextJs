@@ -22,12 +22,10 @@ function InternalChoices({
 
     const normalizedOptions = useMemo(() => options || [], [options]);
 
-    // init once (client only)
     useEffect(() => {
         let destroyed = false;
 
         async function initChoices() {
-            // حمّل السكربت والـ CSS على العميل فقط
             const [{ default: Choices }] = await Promise.all([
                 import("choices.js"),
                 import("choices.js/public/assets/styles/choices.min.css"),
@@ -44,13 +42,11 @@ function InternalChoices({
                 noResultsText,
                 noChoicesText,
                 loadingText,
-                // مهم: كل قيمة هنا لازم تكون "class واحدة" فقط بدون مسافات
                 classNames: {
-                    containerOuter: "choices",     // ✅ كلاس واحد فقط
+                    containerOuter: "choices",
                     containerInner: "choices__inner",
                     input: "choices__input",
                     list: "choices__list",
-                    // … الباقي يفضل تسيبه default
                 },
             });
         }
@@ -110,7 +106,6 @@ function InternalChoices({
         return () => el.removeEventListener("change", handler);
     }, [onChange]);
 
-    // نلف الـ select بلفافة تضيف RTL كلاس — مش داخل classNames
     return (
         <div className={dir === "rtl" ? "choices-rtl" : ""} style={style}>
             <select

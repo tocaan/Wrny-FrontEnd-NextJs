@@ -1,122 +1,177 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import IntlTelInput from "intl-tel-input/react";
-import { useTranslations } from "next-intl";
-import IntlTelCssImport from "./IntlTelCssImport"; // حمّل CSS في العميل
+import { useLayoutEffect, useMemo, useRef } from "react";
+import intlTelInput from "intl-tel-input";
+import "intl-tel-input/build/css/intlTelInput.css";
+
+const ERROR_MAP_EN = { 0: "", 1: "Invalid country code", 2: "Too short", 3: "Too long", 4: "Invalid number" };
+const ERROR_MAP_AR = { 0: "", 1: "كود الدولة غير صالح", 2: "الرقم قصير جدًا", 3: "الرقم طويل جدًا", 4: "رقم غير صالح" };
 
 export default function PhoneFieldIntl({
-    countries,     // من useCountries(): [{id,name,key:'965',flag:'...'}, ...]
-    load,          // ملاحظة: عندك اسمها load مش loading
-    err,
-    register,      // RHF
-    setValue,      // RHF
-    errors,        // RHF
-    defaultDial = "+965",
-    defaultIso2Fallback = "kw",
+    value = "",
+    onChange,
+    onValidChange,
+    defaultCountry = "kw",
+    preferredCountries = ["kw"],
+    dir = "ltr",
+    lang = "ar",
+    name = "phone",
+    allowedCountries = ["kw"],
+    placeholder = "Enter phone number",
+    required = false,
+    className = "form-control",
 }) {
-    const t = useTranslations("auth");
+    const inputRef = useRef(null);
     const itiRef = useRef(null);
-    const [mounted, setMounted] = useState(false);
-    const [onlyIso2, setOnlyIso2] = useState([]);  // iso2 المسموح بها
-    const [initialIso2, setInitialIso2] = useState(defaultIso2Fallback);
+    const errRef = useRef(null);
+    const onChangeRef = useRef(onChange);
+    const onValidChangeRef = useRef(onValidChange);
+    const utilsReadyRef = useRef(false);
+    const rafRef = useRef(null);
 
-    // سجل الحقول في RHF واضبط قيمة مبدئية للكود
-    useEffect(() => {
-        register("country_code");
-        register("phone");
-        setValue("country_code", defaultDial);
-    }, [register, setValue, defaultDial]);
+    const ERRORS = useMemo(() => (lang === "ar" ? ERROR_MAP_AR : ERROR_MAP_EN), [lang]);
 
-    useEffect(() => setMounted(true), []);
 
-    // جهّز Set من الأكواد المسموحة: "965","966",...
-    const allowedDialSet = useMemo(() => {
-        if (load || err || !countries?.length) return null;
-        return new Set(countries.map(c => String(c.key)));
-    }, [countries, load, err]);
+    onChangeRef.current = onChange;
+    onValidChangeRef.current = onValidChange;
 
-    // بعد ما يكون mounted و countries جاهزة: ابنِ onlyCountries (iso2)
-    useEffect(() => {
-        if (!mounted) return;
-        if (!allowedDialSet) return; // لسه loading أو error
+    const quickValidate = (iso2, nationalDigits) => {
+        if (!nationalDigits) return false;
 
-        // intlTelInputGlobals متاح بعد أول استخدام للمكتبة (أو بعد تيك)
-        const build = () => {
-            const all = window?.intlTelInputGlobals?.getCountryData?.() || [];
-            // فلترة iso2 حسب dial codes المسموح بها
-            const iso2 = all
-                .filter(c => allowedDialSet.has(String(c.dialCode)))
-                .map(c => c.iso2);
-            console.log(allowedDialSet);
-            setOnlyIso2(iso2);
-
-            // حدّد initial iso2 من defaultDial
-            const target = String(defaultDial).replace(/\D+/g, "");
-            const match = all.find(c => c.dialCode === target && iso2.includes(c.iso2));
-            setInitialIso2(match?.iso2 || iso2[0] || defaultIso2Fallback);
+        const validLengths = {
+            kw: [8],
+            eg: [10, 11],
+            sa: [9, 10],
+            ae: [9, 10],
+            us: [10],
         };
 
-        // في بعض المرات globals بتتسجّل بعد microtask
-        if (window?.intlTelInputGlobals?.getCountryData) {
-            build();
-        } else {
-            setTimeout(build, 0);
+        if (validLengths[iso2]) {
+            return validLengths[iso2].includes(nationalDigits.length);
         }
-    }, [mounted, allowedDialSet, defaultDial, defaultIso2Fallback]);
 
-    if (!mounted) return null;
+        return nationalDigits.length >= 6;
+    };
+
+    const scheduleHandle = () => {
+        if (rafRef.current) cancelAnimationFrame(rafRef.current);
+        rafRef.current = requestAnimationFrame(handleAnyChange);
+    };
+
+    const setErrorText = (txt) => {
+        if (errRef.current) {
+            errRef.current.textContent = txt || "";
+            errRef.current.style.display = txt ? "block" : "none";
+        }
+    };
+    function handleAnyChange() {
+        const input = inputRef.current;
+        const iti = itiRef.current;
+        if (!input || !iti) return;
+
+        const data = iti.getSelectedCountryData() || {};
+        const iso2 = data.iso2 || "";
+        const dialCode = data.dialCode || "";
+        const raw = input.value || "";
+        const nationalDigits = raw.replace(/[^\d]+/g, "");
+
+        let isValid = false;
+        let errorCode = 0;
+        let e164 = raw;
+        let national = raw;
+        let international = raw;
+
+        if (utilsReadyRef.current && window.intlTelInputUtils) {
+            e164 = iti.getNumber(); // E.164
+            isValid = iti.isValidNumber();
+            errorCode = isValid ? 0 : iti.getValidationError();
+            national = iti.getNumber(window.intlTelInputUtils.numberFormat.NATIONAL);
+            international = iti.getNumber(window.intlTelInputUtils.numberFormat.INTERNATIONAL);
+        } else {
+            isValid = quickValidate(iso2, nationalDigits);
+            errorCode = isValid ? 0 : (nationalDigits.length ? 4 : 0);
+        }
+
+        setErrorText(ERRORS[errorCode] || "");
+
+        onChangeRef.current?.({ e164, isValid, national, international, iso2, dialCode, raw });
+        onValidChangeRef.current?.(!!isValid);
+    }
+
+    useLayoutEffect(() => {
+        const input = inputRef.current;
+        if (!input) return;
+
+        itiRef.current = intlTelInput(input, {
+            initialCountry: defaultCountry,
+            preferredCountries,
+            onlyCountries: allowedCountries,
+            separateDialCode: true,
+            nationalMode: true,
+            autoPlaceholder: "polite",
+            formatOnDisplay: true,
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/25.3.2/js/utils.js",
+        });
+
+        let tries = 0;
+        const poll = setInterval(() => {
+            if (typeof window !== "undefined" && window.intlTelInputUtils) {
+                utilsReadyRef.current = true;
+                clearInterval(poll);
+
+                if (value) {
+                    try {
+                        itiRef.current.setNumber(value);
+                    } catch {
+                        input.value = value;
+                    }
+                    scheduleHandle();
+                }
+            } else if (++tries > 120) {
+                clearInterval(poll);
+
+                if (value) {
+                    input.value = value;
+                    scheduleHandle();
+                }
+            }
+        }, 50);
+
+        input.addEventListener("input", scheduleHandle);
+        input.addEventListener("countrychange", scheduleHandle);
+        input.addEventListener("blur", scheduleHandle);
+
+        if (!value) {
+            scheduleHandle();
+        }
+
+        return () => {
+            input.removeEventListener("input", scheduleHandle);
+            input.removeEventListener("countrychange", scheduleHandle);
+            input.removeEventListener("blur", scheduleHandle);
+            if (itiRef.current) { itiRef.current.destroy(); itiRef.current = null; }
+            clearInterval(poll);
+            if (rafRef.current) cancelAnimationFrame(rafRef.current);
+        };
+    }, [defaultCountry, preferredCountries, ERRORS, value]);
 
     return (
-        <div className="mb-3 d-flex flex-column">
-            <IntlTelCssImport />
-            <label className="form-label">{t("labels.phone")}</label>
-
-            <IntlTelInput
-                ref={itiRef}
-                inputClassName={`form-control ${errors?.phone ? "is-invalid" : ""}`}
-                telInputProps={{ ...register("phone"), placeholder: t("placeholders.phone") }}
-                initOptions={{
-                    initialCountry: initialIso2,          // iso2 المحسوبة
-                    onlyCountries: Array.isArray(onlyIso2) ? onlyIso2 : [], // مهم: Array حتى لو فاضي
-                    separateDialCode: true,
-                    nationalMode: true,
-                    // v25: loadUtils Promise
-                    loadUtils: () => import("intl-tel-input/build/js/utils.js"),
-                    // خيارات إضافية لو حبيت:
-                    // formatOnDisplay: true,
-                    // autoPlaceholder: "polite",
-                    // countrySearch: true,
-                }}
-                onChangeNumber={() => {
-                    // حدّث country_code مع كل تغيير (علشان لو الدولة اتغيرت)
-                    const c = itiRef.current?.getSelectedCountryData?.();
-                    if (c?.dialCode) setValue("country_code", `+${c.dialCode}`, { shouldValidate: true });
-                }}
-                onCountryChange={(c) => {
-                    // رفض دول خارج المسموح (لو لأي سبب ظهرت)
-                    if (Array.isArray(onlyIso2) && onlyIso2.length && !onlyIso2.includes(c?.iso2)) {
-                        try {
-                            itiRef.current?.setCountry(initialIso2);
-                            const fb = itiRef.current?.getSelectedCountryData?.();
-                            if (fb?.dialCode) setValue("country_code", `+${fb.dialCode}`, { shouldValidate: true });
-                        } catch { }
-                        return;
-                    }
-                    if (c?.dialCode) setValue("country_code", `+${c.dialCode}`, { shouldValidate: true });
-                }}
+        <div style={{ direction: 'ltr', display: 'contents' }}>
+            <input
+                ref={inputRef}
+                type="tel"
+                name={name}
+                placeholder={placeholder}
+                required={required}
+                className={className}
+                defaultValue={value}
+                autoComplete="tel"
+                inputMode="tel"
             />
-
-            {/* حقل مخفي يمسك كود الدولة */}
-            <input type="hidden" {...register("country_code")} />
-
-            {/* رسائل حالة */}
-            {load && <small className="text-muted mt-1">{t("misc.loading")}</small>}
-            {err && <small className="text-danger mt-1">{t("errors.countries_failed")}</small>}
-
-            {/* أخطاء التحقق */}
-            {errors?.country_code && <small className="text-danger mt-1">{String(errors.country_code.message)}</small>}
-            {errors?.phone && <small className="text-danger">{String(errors.phone.message)}</small>}
+            <small
+                ref={errRef}
+                style={{ color: "crimson", marginTop: 6, display: "block", textAlign: "left" }}
+            />
         </div>
     );
 }

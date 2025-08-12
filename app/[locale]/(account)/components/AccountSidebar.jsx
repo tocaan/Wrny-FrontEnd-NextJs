@@ -7,6 +7,7 @@ import { Link, useRouter } from "@/i18n/routing";
 import toast from "react-hot-toast";
 import api from "@/utils/api";
 import { LogOut } from "lucide-react";
+import Image from "next/image";
 
 export default function AccountSidebar({ active = "profile" }) {
     const t = useTranslations("account");
@@ -46,7 +47,18 @@ export default function AccountSidebar({ active = "profile" }) {
                         <div className="card-body p-3">
                             <div className="text-center mb-3">
                                 <div className="mb-2">
-                                    <i className="bi bi-person-circle fs-3" />
+                                    <Image
+                                        src={user?.image || '/default-avatar.png'}
+                                        width={50}
+                                        height={50}
+                                        alt={user?.name || 'User avatar'}
+                                        style={{
+                                            objectFit: 'cover',
+                                            borderRadius: '50%'
+                                        }}
+                                        priority
+                                    />
+                                    {/* <i className="bi bi-person-circle fs-3" /> */}
                                 </div>
                                 <h6 className="mb-0">{user?.name || t("misc.guest")}</h6>
                                 {user?.email && <span className="small d-block text-muted">{user.email}</span>}
