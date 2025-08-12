@@ -12,8 +12,8 @@ const initialState = {
     user: null,
     token: typeof window !== "undefined" ? localStorage.getItem("token") : null,
     loading: false,
-    error: null,   // لازم تكون string
-    info: null,    // لازم تكون string
+    error: null,
+    info: null,
 };
 
 const authSlice = createSlice({
@@ -33,11 +33,9 @@ const authSlice = createSlice({
         clearInfo(state) { state.info = null; },
     },
     extraReducers: (builder) => {
-        // helper صغير لالتقاط الرسالة
         const msgOf = (a, fallback) =>
             a?.payload?.msg || a?.error?.message || fallback;
 
-        // helper يطلع data بشكل موحد
         const dataOf = (payload) => payload?.data ?? payload;
 
         // login
@@ -50,7 +48,7 @@ const authSlice = createSlice({
             if (d?.token && typeof window !== "undefined") {
                 localStorage.setItem("token", d.token);
             }
-            s.info = payload?.msg || null; // لو عايز تعرض “تم تسجيل الدخول”
+            s.info = payload?.msg || null;
         });
         builder.addCase(loginThunk.rejected, (s, a) => {
             s.loading = false;

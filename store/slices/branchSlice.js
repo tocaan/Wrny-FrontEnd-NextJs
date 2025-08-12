@@ -1,14 +1,7 @@
-// store/slices/branchSlice.js
 import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
 import api from '../../utils/api';
 
-/**
- * يجلب بيانات الفرع لو مش موجودة بالكاش، ويمنع الجلب المكرر.
- * - يستخدم condition لمنع dispatch لو:
- *   1) فيه طلب جارٍ بالفعل، أو
- *   2) نفس الـ id محمّل ومحدّث.
- * - يمرر signal لإلغاء الطلب عند تبديل الصفحات بسرعة.
- */
+
 export const fetchBranchDetails = createAsyncThunk(
     'branch/fetchBranchDetails',
     async (branchId, { rejectWithValue, signal }) => {
@@ -16,9 +9,7 @@ export const fetchBranchDetails = createAsyncThunk(
             const { data } = await api.get(`/companies/branch/${branchId}/details`, { signal });
             return { id: Number(branchId), data: data.data };
         } catch (err) {
-            // axios >=1 يدعم AbortError باسم CanceledError
             if (err.name === 'CanceledError' || err.code === 'ERR_CANCELED') {
-                // هنعتبر الإلغاء حالة هادئة بدون خطأ
                 return rejectWithValue(null);
             }
             return rejectWithValue(err?.response?.data?.message || err.message);
@@ -28,9 +19,7 @@ export const fetchBranchDetails = createAsyncThunk(
         condition: (branchId, { getState }) => {
             const state = getState().branch;
             const id = Number(branchId);
-            // لو فيه طلب جارٍ، متعملش dispatch تاني
             if (state.loading === 'pending') return false;
-            // لو نفس الفرع محمّل بالفعل بالكاش ومُعين كـ currentId، متطلبوش
             if (state.currentId === id && state.byId[id]) return false;
             return true;
         },
@@ -38,11 +27,10 @@ export const fetchBranchDetails = createAsyncThunk(
 );
 
 const initialState = {
-    byId: {},          // { [id]: { ...branch } }
-    currentId: null,   // آخر فرع تم فتحه
-    loading: 'idle',   // 'idle' | 'pending' | 'succeeded' | 'failed'
+    byId: {},
+    currentId: null,
+    loading: 'idle',
     error: null,
-    // ممكن تضيف lastFetched لكل id لو حابب تطبق TTL لاحقًا
 };
 
 const branchSlice = createSlice({
@@ -57,7 +45,6 @@ const branchSlice = createSlice({
         clearError(state) {
             state.error = null;
         },
-        // اختيارية: حقن بيانات جاهزة (SSR/Prefetch)
         upsertBranch(state, action) {
             const { id, data } = action.payload || {};
             if (!id || !data) return;
@@ -82,7 +69,6 @@ const branchSlice = createSlice({
                 }
             })
             .addCase(fetchBranchDetails.rejected, (state, action) => {
-                // لو الإلغاء، بلاش نعتبرها error
                 if (action.payload === null) {
                     state.loading = 'idle';
                     return;

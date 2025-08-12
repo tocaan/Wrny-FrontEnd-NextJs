@@ -66,13 +66,17 @@
             "title": "الشركات",
             "page_title": "اكتشف الشركات",
             "all_companies": "جميع الشركات",
-            "view_all": "عرض جميع الشركات"
+            "view_all": "عرض جميع الشركات",
+            "branches": "الأفرع"
         },
         "events": {
             "title": "الفعاليات",
             "page_title": "الفعاليات القادمة",
             "all_events": "جميع الفعاليات",
-            "view_all": "عرض جميع الفعاليات"
+            "view_all": "عرض جميع الفعاليات",
+            "show_filter": "عرض الفلتر",
+            "filter_regions": "المناطق",
+            "filter_categories": "الأقسام"
         },
         "regions": {
             "title": "المناطق",
@@ -110,12 +114,15 @@
             "send_message": "إرسال الرسالة"
         },
         "branch": {
-            "location": "الموقع",
-            "locationMap": "خريطة موقع الفرع",
-            "contactInfo": "معلومات التواصل",
-            "socialMedia": "التواصل الاجتماعي",
-            "workingHours": "ساعات العمل",
-            "closed": "مغلق"
+            "details": "تفاصيل الفرع"
+        },
+        "deleteAccount": {
+            "beforeYouGo": "قبل أن تذهب...",
+            "warningDataLost": "إذا قمت بحذف حسابك، فسوف تفقد جميع بياناتك.",
+            "confirmLabel": "نعم، أرغب في حذف حسابي",
+            "irreversible": "لا يمكن التراجع عن هذا الإجراء.",
+            "deleting": "جارٍ الحذف...",
+            "deleteMyAccount": "حذف حسابي"
         }
     },
     "common": {
@@ -127,7 +134,18 @@
         "no_results": "لم يتم العثور على نتائج",
         "loading": "جاري التحميل...",
         "opened": "مفتوح",
-        "closed": "مغلق"
+        "closed": "مغلق",
+        "location": "الموقع",
+        "locationMap": "خريطة موقع الفرع",
+        "contactInfo": "معلومات التواصل",
+        "socialMedia": "التواصل الإجتماعي",
+        "workingHours": "ساعات العمل",
+        "aboutCompany": "نبذة عن الشركة",
+        "noLocation": "لا توجد بيانات موقع",
+        "paidAds": "اعلان مدفوع",
+        "deleteAccount": "حذف الحساب",
+        "apply": "تطبيق",
+        "reset": "مسح"
     },
     "account": {
         "nav": {

@@ -41,7 +41,7 @@ export default function BranchCard({ branch, companyId }) {
                 </div>
                 <div className="mt-2 mt-sm-0 text-center">
                     <Link href={`/branches/${branch.id}`} className="btn btn-sm btn-primary mb-0 stretched-link">
-                        تفاصيل الفرع
+                        {t('pages.branch.details')}
                     </Link>
                 </div>
             </div>

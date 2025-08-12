@@ -82,7 +82,7 @@ export default function EventDetailsClient() {
 
     if (loading && !event) return <GlobalLoader />;
     if (error) {
-        return <div className="text-center py-5 text-danger">Error: {error}</div>;
+        return <div className="text-center py-5 text-danger">{error}</div>;
     }
     if (!event) return null;
 
@@ -186,7 +186,7 @@ export default function EventDetailsClient() {
 
                             <div className="card shadow mb-4">
                                 <div className="card-header border-bottom">
-                                    <h5 className="mb-0">الموقع</h5>
+                                    <h5 className="mb-0">{t('common.location')}</h5>
                                 </div>
                                 <div className="card-body">
                                     <p className="mb-3">
@@ -229,7 +229,7 @@ export default function EventDetailsClient() {
 
                             <div className="card shadow mb-4">
                                 <div className="card-header border-bottom">
-                                    <h5 className="mb-0">معلومات التواصل</h5>
+                                    <h5 className="mb-0">{t('common.contactInfo')}</h5>
                                 </div>
                                 <div className="card-body">
                                     <ul className="list-group list-group-borderless my-3">

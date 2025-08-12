@@ -5,7 +5,7 @@ import Head from 'next/head';
 export default function PageHead({ title, description }) {
     const appName = 'ورني';
     const pageTitle = title ? `${title} | ${appName}` : appName;
-    const pageDescription = description || 'تطبيق لاستكشاف الكويت';
+    const pageDescription = description || 'تطبيق لاستكشاف الفاعليات';
 
     return (
         <Head>

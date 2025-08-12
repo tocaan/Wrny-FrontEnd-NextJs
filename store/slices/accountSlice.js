@@ -115,7 +115,6 @@ const initialState = {
     updatingProfile: false,
     error: null,
 
-    // NEW: collections
     favoriteCollections: {
         loading: false,
         error: null,

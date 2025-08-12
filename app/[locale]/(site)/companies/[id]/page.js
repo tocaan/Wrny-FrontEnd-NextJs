@@ -67,12 +67,9 @@ export default function CompanyDetailsPageClient() {
 
     const [activeTab, setActiveTab] = useState("tab-1");
 
-    // منع التكرار: تتبّع الشركات اللي تم تحميل فروعها
-    const loadedCompaniesRef = useRef(new Set()); // Set<companyId>
-    // منع تكرار جلب تفاصيل الشركة بسبب StrictMode
+    const loadedCompaniesRef = useRef(new Set());
     const fetchedCompanyOnceRef = useRef(false);
 
-    // جلب تفاصيل الشركة
     useEffect(() => {
         if (!companyId) return;
         if (fetchedCompanyOnceRef.current) return;
@@ -80,7 +77,6 @@ export default function CompanyDetailsPageClient() {
         dispatch(fetchCompanyDetails(companyId));
     }, [dispatch, companyId]);
 
-    // عنوان الصفحة
     useEffect(() => {
         if (company?.name) {
             document.title = `${company.name} - ${t("app.title")}`;
@@ -91,7 +87,6 @@ export default function CompanyDetailsPageClient() {
 
     const loadBranches = (page = 1) => {
         if (!companyId) return;
-        // لو أول مرة نفتح تبويب الأفرع للشركة دي أو بنغيّر صفحة
         if (!loadedCompaniesRef.current.has(companyId) || page !== (pagination?.current_page || 1)) {
             dispatch(fetchCompanyBranches({ companyId, page }));
             loadedCompaniesRef.current.add(companyId);
@@ -101,14 +96,12 @@ export default function CompanyDetailsPageClient() {
     const handleTabChange = (tabId) => {
         setActiveTab(tabId);
         if (tabId === "tab-2") {
-            // حمّل الأفرع فقط أول مرة نفتح التبويب (و/أو لما مفيش بيانات)
             if (!branches?.length) loadBranches(1);
         }
     };
 
     const handlePageChange = (page) => {
         loadBranches(page);
-        // اختيارى: سكرول لأعلى القائمة
         try {
             window?.scrollTo?.({ top: 0, behavior: "smooth" });
         } catch { }
@@ -163,7 +156,7 @@ export default function CompanyDetailsPageClient() {
                                                 className={`nav-link mb-0 ${activeTab === "tab-1" ? "active" : ""}`}
                                                 onClick={() => handleTabChange("tab-1")}
                                             >
-                                                نبذة عن الشركة
+                                                {t('common.aboutCompany')}
                                             </button>
                                         </li>
                                         <li className="nav-item">
@@ -171,7 +164,7 @@ export default function CompanyDetailsPageClient() {
                                                 className={`nav-link mb-0 ${activeTab === "tab-2" ? "active" : ""}`}
                                                 onClick={() => handleTabChange("tab-2")}
                                             >
-                                                الأفرع
+                                                {t('pages.companies.branches')}
                                             </button>
                                         </li>
                                     </ul>
@@ -185,13 +178,13 @@ export default function CompanyDetailsPageClient() {
             <section className="pt-0">
                 <div className="container">
                     <div className="tab-content mb-0" id="tour-pills-tabContent">
-                        {/* تبويب نبذة */}
+
                         <div className={`tab-pane fade ${activeTab === "tab-1" ? "show active" : ""}`} id="tab-1" role="tabpanel">
                             <div className="row g-4 g-lg-5">
                                 <div className="col-lg-7 col-xl-8">
                                     <div className="card shadow mb-4">
                                         <div className="card-header bg-transparent border-bottom">
-                                            <h4 className="h5 mb-0">نبذة عن الشركة</h4>
+                                            <h4 className="h5 mb-0">{t('common.aboutCompany')}</h4>
                                         </div>
                                         <div className="card-body">
                                             <p className="mb-3">{company.description}</p>
@@ -200,7 +193,7 @@ export default function CompanyDetailsPageClient() {
 
                                     <div className="card shadow mb-4">
                                         <div className="card-header border-bottom">
-                                            <h5 className="mb-0">الموقع</h5>
+                                            <h5 className="mb-0">{t('common.location')}</h5>
                                         </div>
                                         <div className="card-body">
                                             <p className="mb-3">
@@ -219,7 +212,7 @@ export default function CompanyDetailsPageClient() {
                                                     title="company-location"
                                                 />
                                             ) : (
-                                                <div className="alert alert-warning mb-0">لا توجد بيانات موقع</div>
+                                                <div className="alert alert-warning mb-0">{t('common.noLocation')}</div>
                                             )}
                                         </div>
                                     </div>
@@ -228,7 +221,7 @@ export default function CompanyDetailsPageClient() {
                                 <div className="col-lg-5 col-xl-4">
                                     <div className="card shadow mb-4">
                                         <div className="card-header border-bottom">
-                                            <h5 className="mb-0">معلومات التواصل</h5>
+                                            <h5 className="mb-0">{t('common.contactInfo')}</h5>
                                         </div>
                                         <div className="card-body">
                                             <ul className="list-group list-group-borderless my-3">
@@ -274,7 +267,7 @@ export default function CompanyDetailsPageClient() {
 
                                             {Array.isArray(company?.social_media) && company.social_media.length > 0 && (
                                                 <>
-                                                    <p className="mt-3 mb-2">التواصل الاجتماعي</p>
+                                                    <p className="mt-3 mb-2">{t('common.socialMedia')}</p>
                                                     <ul className="list-inline mb-0">
                                                         {company.social_media.map((social) => {
                                                             if (!social?.url) return null;
@@ -301,7 +294,7 @@ export default function CompanyDetailsPageClient() {
 
                                     <div className="card shadow mb-4">
                                         <div className="card-header border-bottom">
-                                            <h5 className="mb-0">ساعات العمل</h5>
+                                            <h5 className="mb-0">{t('common.workingHours')}</h5>
                                         </div>
                                         <div className="card-body">
                                             <ul className="list-group list-group-borderless mb-0">
@@ -325,12 +318,11 @@ export default function CompanyDetailsPageClient() {
                             </div>
                         </div>
 
-                        {/* تبويب الأفرع */}
                         <div className={`tab-pane fade ${activeTab === "tab-2" ? "show active" : ""}`} id="tab-2" role="tabpanel">
                             {branchesLoading ? (
                                 <Loading />
                             ) : branchesError ? (
-                                <div className="text-center py-5 text-danger">Error: {branchesError}</div>
+                                <div className="text-center py-5 text-danger">{branchesError}</div>
                             ) : (
                                 <>
                                     <div className="row g-4">

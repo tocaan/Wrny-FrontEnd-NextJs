@@ -1,11 +1,14 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 export default function SubmitButton({
     loading,
     label,
     className = "",
     disabled = false
 }) {
+    const t = useTranslations();
     return (
         <button
             type="submit"
@@ -14,7 +17,6 @@ export default function SubmitButton({
             aria-busy={loading ? "true" : "false"}
             aria-live="polite"
         >
-            {/* سبينر صغير أثناء التحميل */}
             {loading && (
                 <span
                     className="spinner-border spinner-border-sm"
@@ -23,7 +25,7 @@ export default function SubmitButton({
                 />
             )}
             <span>{!loading && (label)}</span>
-            {loading && <span className="visually-hidden">Loading</span>}
+            {loading && <span className="visually-hidden">{t('common.loading')}</span>}
         </button>
     );
 }

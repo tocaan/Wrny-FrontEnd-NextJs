@@ -39,7 +39,6 @@ export default function Pagination({ meta, onPageChange }) {
         <div className="d-flex justify-content-center mt-4">
             <ul className="pagination pagination-primary-soft d-inline-block d-md-flex rounded mb-0">
 
-                {/* السابق */}
                 <li className={`page-item mb-0 ${current_page === 1 ? 'disabled' : ''}`}>
                     <button
                         className="page-link"
@@ -52,7 +51,6 @@ export default function Pagination({ meta, onPageChange }) {
                     </button>
                 </li>
 
-                {/* أرقام الصفحات */}
                 {visiblePages.map((page, index) => (
                     <li key={index} className={`page-item mb-0 ${page === current_page ? 'active' : ''}`}>
                         {page === '...' ? (
@@ -68,7 +66,6 @@ export default function Pagination({ meta, onPageChange }) {
                     </li>
                 ))}
 
-                {/* التالي */}
                 <li className={`page-item mb-0 ${current_page === last_page ? 'disabled' : ''}`}>
                     <button
                         className="page-link"

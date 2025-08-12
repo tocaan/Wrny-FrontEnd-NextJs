@@ -9,8 +9,8 @@ import { createFavoriteCollectionThunk } from "@/store/slices/accountSlice";
 
 export default function CreateCollectionModal({
     open,
-    onClose,             // onClose({ok?:boolean, created?:object})
-    defaultType = "companies" // "companies" | "events"
+    onClose,
+    defaultType = "companies"
 }) {
     const t = useTranslations("favorites");
     const dispatch = useDispatch();
@@ -36,7 +36,7 @@ export default function CreateCollectionModal({
             const res = await dispatch(
                 createFavoriteCollectionThunk({ name: name.trim(), type })
             ).unwrap();
-            toast.success(t("created_collection")); // تأكد من وجود المفتاح في الترجمات
+            toast.success(t("created_collection"));
             onClose?.({ ok: true, created: res });
         } catch {
             toast.error(t("errors.create_failed") || "Failed to create");

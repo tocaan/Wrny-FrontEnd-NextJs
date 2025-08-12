@@ -1,10 +1,12 @@
 import { Link } from "@/i18n/routing";
 import FavoriteHeart from "./ui/FavoriteHeart";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function EventCard({ event, eventType }) {
     const eventImage = event.images && event.images.length > 0 ? event.images[0] : '/assets/images/landmarks/01.jpg';
     const [c, setC] = useState(event);
+    const t = useTranslations();
     useEffect(() => setC(event), [event]);
     return (
         <div className="card shadow p-2 pb-0 h-100">
@@ -28,7 +30,7 @@ export default function EventCard({ event, eventType }) {
                 {
                     (eventType === 'events' || eventType === 'events_regions') && (
                         <div className="position-absolute top-0 start-0 p-3 z-index-9">
-                            <div className="badge text-bg-info fw-600">اعلان مدفوع</div>
+                            <div className="badge text-bg-info fw-600">{t("common.paidAds")}</div>
                         </div>
                     )
                 }

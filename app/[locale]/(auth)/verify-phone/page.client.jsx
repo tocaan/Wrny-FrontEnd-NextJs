@@ -8,7 +8,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
 import { verifyPhoneThunk, resendCodeThunk } from "@/store/slices/authThunks";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 import { Link, useRouter } from "@/i18n/routing";
 import toast from "react-hot-toast";

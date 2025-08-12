@@ -9,11 +9,9 @@ export default function GlobalLoader() {
     const pathname = usePathname();
 
     useEffect(() => {
-        // كل ما المسار يتغير → أظهر اللودينج
         setLoading(true);
 
-        // أوقف اللودينج بعد شوية (لما الصفحة تجهز)
-        const timeout = setTimeout(() => setLoading(false), 500); // تقدر تزود الوقت
+        const timeout = setTimeout(() => setLoading(false), 500);
         return () => clearTimeout(timeout);
     }, [pathname]);
 

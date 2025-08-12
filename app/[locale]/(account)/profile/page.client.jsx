@@ -24,6 +24,7 @@ const makeSchema = (t) =>
 
 export default function ProfileClientPage() {
     const t = useTranslations("account");
+    const y = useTranslations();
     const dispatch = useDispatch();
     const { profile, loadingProfile, updatingProfile } = useSelector(s => s.account);
     const isFetching = loadingProfile && !profile;
@@ -88,8 +89,8 @@ export default function ProfileClientPage() {
                                     <div className="card-body">
                                         {isFetching ? (
                                             <div className="py-5 text-center">
-                                                <div className="spinner-border" role="status" aria-label={t("misc.loading")}></div>
-                                                <div className="mt-2 small text-muted">{t("misc.loading")}</div>
+                                                <div className="spinner-border" role="status" aria-label={y("common.loading")}></div>
+                                                <div className="mt-2 small text-muted">{y("common.loading")}</div>
                                             </div>
                                         ) : (
                                             <form className="row g-3" onSubmit={handleSubmit(onSubmit)}>

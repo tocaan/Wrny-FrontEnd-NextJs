@@ -2,7 +2,13 @@
 
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useMemo } from 'react';
-import { fetchHomeData } from '@/store/slices/homeSlice';
+import {
+    fetchHomeData,
+    selectHomeStatus,
+    selectHomeError,
+    selectHomeForLocale,
+    selectHomeSection,
+} from '@/store/slices/homeSlice';
 import HeroSection from '@/components/HeroSection';
 import CategoryCard from '@/components/CategoryCard';
 import RegionCard from '@/components/RegionCard';
@@ -16,7 +22,6 @@ import EventsRegionSection from '@/components/sections/EventsRegionSection';
 
 export default function HomePage() {
     const dispatch = useDispatch();
-    const { data: homeData = [], loading, error } = useSelector((s) => s.home);
     const t = useTranslations();
     const locale = useLocale();
 
@@ -32,14 +37,24 @@ export default function HomePage() {
         dispatch(fetchHomeData(currentLang));
     }, [dispatch, currentLang]);
 
-    const getSectionData = (type) => (Array.isArray(homeData) ? homeData.find(s => s?.type === type) ?? {} : {});
+    const status = useSelector(selectHomeStatus);
+    const error = useSelector(selectHomeError);
+    const entry = useSelector(selectHomeForLocale(currentLang));
 
-    const adsData = getSectionData('ads');
-    const categoriesData = getSectionData('categories');
-    const regionsData = getSectionData('regions');
-    const companiesData = getSectionData('companies');
-    const eventsRegionsData = getSectionData('events_regions');
-    const eventsData = getSectionData('events');
+    const adsData = useSelector(selectHomeSection(currentLang, 'ads'));
+    const categoriesData = useSelector(selectHomeSection(currentLang, 'categories'));
+    const regionsData = useSelector(selectHomeSection(currentLang, 'regions'));
+    const companiesData = useSelector(selectHomeSection(currentLang, 'companies'));
+    const eventsRegionsData = useSelector(selectHomeSection(currentLang, 'events_regions'));
+    const eventsData = useSelector(selectHomeSection(currentLang, 'events'));
+
+    const hasCache = (entry?.data?.length || 0) > 0;
+    const loading = status === 'pending' && !hasCache;
+
+    const heroSlides = useMemo(
+        () => (adsData?.records || []).map(ad => ({ id: ad.id, image: ad.image, link: ad.link })),
+        [adsData?.records]
+    );
 
     if (loading) {
         return (
@@ -52,21 +67,19 @@ export default function HomePage() {
         );
     }
 
-    if (error) {
-        return <div className="text-center py-5 text-danger">Error: {error}</div>;
+    if (status === 'failed') {
+        return <div className="text-center py-5 text-danger">{error}</div>;
     }
 
     return (
         <div>
-            {adsData?.records?.length > 0 && (
+            {heroSlides.length > 0 && (
                 <section className="py-0 mb-0 home">
-                    <HeroSection
-                        slides={adsData.records.map(ad => ({ id: ad.id, image: ad.image, link: ad.link }))}
-                    />
+                    <HeroSection slides={heroSlides} />
                 </section>
             )}
 
-            {categoriesData?.records?.length > 0 && (
+            {Array.isArray(categoriesData?.records) && categoriesData.records.length > 0 && (
                 <section className="categories home pt-3 pt-md-5 pb-0 mb-3">
                     <div className="container px-lg-5">
                         <div className="row g-3">
@@ -83,7 +96,7 @@ export default function HomePage() {
                 </section>
             )}
 
-            {regionsData?.records?.length > 0 && (
+            {Array.isArray(regionsData?.records) && regionsData.records.length > 0 && (
                 <section className="governorates home">
                     <div className="container">
                         <div className="row mb-3">
@@ -102,9 +115,17 @@ export default function HomePage() {
                 </section>
             )}
 
-            {companiesData?.records?.length > 0 && <CompaniesSection companiesData={companiesData} />}
-            {eventsRegionsData?.records?.length > 0 && <EventsRegionSection eventsData={eventsRegionsData} type={'reg'} />}
-            {eventsData?.records?.length > 0 && <EventsSection eventsData={eventsData} />}
+            {Array.isArray(companiesData?.records) && companiesData.records.length > 0 && (
+                <CompaniesSection companiesData={companiesData} />
+            )}
+
+            {Array.isArray(eventsRegionsData?.records) && eventsRegionsData.records.length > 0 && (
+                <EventsRegionSection eventsData={eventsRegionsData} type="reg" />
+            )}
+
+            {Array.isArray(eventsData?.records) && eventsData.records.length > 0 && (
+                <EventsSection eventsData={eventsData} />
+            )}
         </div>
     );
 }

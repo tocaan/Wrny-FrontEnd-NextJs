@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import api from "@/utils/api";
 import { ok, fail, cc } from "@/utils/authApi";
 
-// 1) تسجيل الدخول
 export const loginThunk = createAsyncThunk(
     "auth/login",
     async ({ country_code, phone, password, remember }, { rejectWithValue }) => {
@@ -17,7 +16,6 @@ export const loginThunk = createAsyncThunk(
     }
 );
 
-// 2) إنشاء حساب (Company/User)
 export const registerThunk = createAsyncThunk(
     "auth/register",
     async (
@@ -31,7 +29,7 @@ export const registerThunk = createAsyncThunk(
                 phone,
                 email,
                 password,
-                type, // "company" أو "user" حسب المطلوب
+                type,
             };
             const { data } = await api.post("/sign-up", body);
             if (data?.key !== "success") return rejectWithValue({ key: data?.key || "fail", msg: data?.msg || "حدث خطأ", data: data?.data });
@@ -42,7 +40,6 @@ export const registerThunk = createAsyncThunk(
     }
 );
 
-// 3) إرسال كود نسيان كلمة المرور
 export const forgotThunk = createAsyncThunk(
     "auth/forgot",
     async ({ country_code, phone }, { rejectWithValue }) => {
@@ -57,7 +54,6 @@ export const forgotThunk = createAsyncThunk(
     }
 );
 
-// 4) إعادة تعيين كلمة المرور
 export const resetPasswordThunk = createAsyncThunk(
     "auth/resetPassword",
     async ({ country_code, phone, code, password }, { rejectWithValue }) => {
@@ -77,7 +73,6 @@ export const resetPasswordThunk = createAsyncThunk(
     }
 );
 
-// 5) تفعيل/تأكيد الهاتف بعد التسجيل
 export const verifyPhoneThunk = createAsyncThunk(
     "auth/verifyPhone",
     async ({ country_code, phone, code, device_id }, { rejectWithValue }) => {
@@ -88,7 +83,6 @@ export const verifyPhoneThunk = createAsyncThunk(
                 code,
                 device_id,
             };
-            // السيرفر يتوقع PATCH، وبعض الباك إند يقبل _method
             const { data } = await api.post("/activate?_method=patch", body);
             if (data?.key !== "success") return rejectWithValue({ key: data?.key || "fail", msg: data?.msg || "Verification failed", data: data?.data });
             return ok(data);
@@ -98,7 +92,6 @@ export const verifyPhoneThunk = createAsyncThunk(
     }
 );
 
-// 6) إعادة إرسال الكود
 export const resendCodeThunk = createAsyncThunk(
     "auth/resendCode",
     async ({ country_code, phone }, { rejectWithValue }) => {
@@ -113,7 +106,6 @@ export const resendCodeThunk = createAsyncThunk(
     }
 );
 
-// 7) تسجيل الخروج (DELETE)
 export const logoutThunk = createAsyncThunk(
     "auth/logout",
     async (_, { rejectWithValue }) => {

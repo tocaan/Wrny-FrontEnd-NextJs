@@ -16,7 +16,6 @@ export default function FavoritesSection() {
     const dispatch = useDispatch();
     const { list, loading, error } = useSelector(s => s.account.favoriteCollections);
 
-    // نوع افتراضي للإنشاء (لو هتعمل Tabs غيّره حسب التبويب النشط)
     const [createType, setCreateType] = useState("companies");
     const [createOpen, setCreateOpen] = useState(false);
 

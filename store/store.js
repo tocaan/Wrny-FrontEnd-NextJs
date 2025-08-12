@@ -10,6 +10,7 @@ import branchesReducer from './slices/branchesSlice';
 import branchReducer from './slices/branchSlice';
 import authReducer from "./slices/authSlice";
 import accountReducer from "./slices/accountSlice";
+import regionsReducer from "./slices/regionsSlice";
 import toast from "react-hot-toast";
 const listener = createListenerMiddleware();
 
@@ -49,6 +50,7 @@ export const store = configureStore({
         branch: branchReducer,
         auth: authReducer,
         account: accountReducer,
+        regions: regionsReducer,
     },
     middleware: (getDefault) => getDefault().concat(listener.middleware),
 });

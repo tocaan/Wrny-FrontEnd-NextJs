@@ -1,38 +1,58 @@
 'use client';
-import { useEffect } from 'react';
+
+import { useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchCategories } from '@/store/slices/categoriesSlice';
-import Navbar from '@/components/layouts/Navbar';
+import {
+    fetchCategories,
+    selectCategoriesStatus,
+    selectCategoriesError,
+    selectCategoriesForLocale,
+    selectCategoriesEntry,
+} from '@/store/slices/categoriesSlice';
 import CategoryCard from '@/components/CategoryCard';
 import Breadcrumb from '@/components/Breadcrumb';
-import { useTranslations } from 'next-intl';
-import Loading from '@/components/GlobalLoader';
+import { useTranslations, useLocale } from 'next-intl';
 import { CategoriesSkeleton } from '@/components/ui/Skeletons';
 
 export default function CategoriesPageClient() {
     const dispatch = useDispatch();
-    const { categories, loading, error } = useSelector((state) => state.categories);
     const t = useTranslations();
+    const locale = useLocale();
 
+    const currentLang = useMemo(() => {
+        if (typeof window !== 'undefined') {
+            const saved = localStorage.getItem('LANG');
+            if (saved) return saved;
+        }
+        return (locale || 'en').startsWith('ar') ? 'ar' : 'en';
+    }, [locale]);
+
+    // اطلب البيانات؛ الـ condition جوه الثنك بيمنع التكرار ويستخدم الكاش
     useEffect(() => {
-        dispatch(fetchCategories());
-    }, []);
+        dispatch(fetchCategories(currentLang));
+    }, [dispatch, currentLang]);
 
-    if (loading) {
-        return <CategoriesSkeleton />;
-    }
+    const status = useSelector(selectCategoriesStatus);
+    const error = useSelector(selectCategoriesError);
+    const cats = useSelector(selectCategoriesForLocale(currentLang));
+    const entry = useSelector(selectCategoriesEntry(currentLang));
 
-    if (error) {
-        return <div className="text-center py-5 text-danger">Error: {error}</div>;
+    const hasCache = (entry?.ids?.length || 0) > 0;
+    const loading = status === 'pending' && !hasCache;
+
+    if (loading) return <CategoriesSkeleton />;
+
+    if (status === 'failed' && !hasCache) {
+        return <div className="text-center py-5 text-danger">{error}</div>;
     }
 
     return (
-        <div>
+        <div aria-busy={status === 'pending' && hasCache}>
             <Breadcrumb items={[{ name: t('breadcrumb.categories') }]} />
-            {/* <Filter regions={regions} onFilterChange={handleFilterChange} /> */}
+
             <div className="container my-5">
                 <div className="row g-4">
-                    {categories.map((category) => (
+                    {cats.map((category) => (
                         <div key={category.id} className="col-4 col-md-4 col-xl-2">
                             <CategoryCard category={category} />
                         </div>

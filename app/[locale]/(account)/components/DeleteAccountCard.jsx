@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { deleteAccountThunk, resetAccount } from "@/store/slices/accountSlice";
 import { clearAuthArtifacts } from "@/utils/api";
 
@@ -14,6 +14,8 @@ export default function DeleteAccountCard() {
     const router = useRouter();
     const locale = useLocale();
 
+    const t = useTranslations("pages.deleteAccount");
+    const tc = useTranslations("common");
 
     const busyRef = useRef(false);
 
@@ -24,9 +26,7 @@ export default function DeleteAccountCard() {
     const finalizeLogout = useCallback(() => {
         try {
             clearAuthArtifacts();
-        } catch {
-
-        }
+        } catch { }
         dispatch(resetAccount());
         goLogin();
     }, [dispatch, goLogin]);
@@ -34,7 +34,6 @@ export default function DeleteAccountCard() {
     const handleDelete = useCallback(async () => {
         if (!confirmed || deleting || busyRef.current) return;
         busyRef.current = true;
-
         try {
             await dispatch(deleteAccountThunk()).unwrap();
             finalizeLogout();
@@ -54,13 +53,13 @@ export default function DeleteAccountCard() {
         <div className="vstack gap-4">
             <div className="card border">
                 <div className="card-header border-bottom">
-                    <h4 className="card-header-title">حذف الحساب</h4>
+                    <h4 className="card-header-title">{tc("deleteAccount")}</h4>
                 </div>
 
                 <div className="card-body">
-                    <h6>قبل أن تذهب...</h6>
+                    <h6>{t("beforeYouGo")}</h6>
                     <ul className="mb-3">
-                        <li>إذا قمت بحذف حسابك، فسوف تفقد جميع بياناتك</li>
+                        <li>{t("warningDataLost")}</li>
                     </ul>
 
                     <div className="form-check form-check-md my-4">
@@ -74,10 +73,10 @@ export default function DeleteAccountCard() {
                             aria-describedby="deleteaccountHelp"
                         />
                         <label className="form-check-label" htmlFor="deleteaccountCheck">
-                            نعم، أرغب في حذف حسابي
+                            {t("confirmLabel")}
                         </label>
                         <div id="deleteaccountHelp" className="form-text">
-                            لا يمكن التراجع عن هذا الإجراء.
+                            {t("irreversible")}
                         </div>
                     </div>
 
@@ -87,8 +86,9 @@ export default function DeleteAccountCard() {
                         className="btn btn-danger btn-sm mb-0"
                         disabled={!confirmed || deleting || busyRef.current}
                         aria-busy={deleting || busyRef.current}
+                        aria-label={t("deleteMyAccount")}
                     >
-                        {deleting || busyRef.current ? "جارٍ الحذف..." : "حذف حسابي"}
+                        {deleting || busyRef.current ? t("deleting") : t("deleteMyAccount")}
                     </button>
 
                     {deleteError && !deleteError.toLowerCase?.().includes("unauth") && (

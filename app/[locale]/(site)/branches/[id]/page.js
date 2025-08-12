@@ -89,7 +89,7 @@ const Header = ({ branch, t, y }) => (
                 </div>
                 <div>
                     <h1 className="h4 mt-2 mb-2">
-                        {branch?.name || t("common.loading")}
+                        {branch?.name || y("common.loading")}
                     </h1>
                     <p className="mb-2 mb-sm-0">
                         <FaMapMarkerAlt className="mx-1 text-primary" />
