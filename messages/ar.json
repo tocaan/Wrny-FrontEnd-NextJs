@@ -125,7 +125,11 @@
             }
         },
         "branch": {
-            "details": "تفاصيل الفرع"
+            "details": "تفاصيل الفرع",
+            "contactInfo": "معلومات التواصل",
+            "location": "الموقع",
+            "workingHours": "ساعات العمل",
+            "socialMedia": "وسائل التواصل الاجتماعي"
         },
         "deleteAccount": {
             "beforeYouGo": "قبل أن تذهب...",

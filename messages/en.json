@@ -125,7 +125,11 @@
             }
         },
         "branch": {
-            "details": "Branch Details"
+            "details": "Branch Details",
+            "contactInfo": "Contact information",
+            "location": "Location",
+            "workingHours": "Working hours",
+            "socialMedia": "Social media"
         },
         "deleteAccount": {
             "beforeYouGo": "Before You Go...",
