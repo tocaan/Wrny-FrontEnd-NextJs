@@ -59,7 +59,7 @@ export default function DeleteAccountCard() {
                 <div className="card-body">
                     <h6>{t("beforeYouGo")}</h6>
                     <ul className="mb-3">
-                        <li>{t("warningDataLost")}</li>
+                        <li>{t("WrnyngDataLost")}</li>
                     </ul>
 
                     <div className="form-check form-check-md my-4">

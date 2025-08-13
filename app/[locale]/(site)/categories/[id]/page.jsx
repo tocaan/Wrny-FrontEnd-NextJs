@@ -146,8 +146,8 @@ export default function CategoryDetailsPage() {
     const displayCatName =
         activeCategoryName || t("pages.categories.all_categories");
 
-    const companiesTitle = `أبرز شركات لخدمات ${displayCatName}`;
-    const eventsTitle = `أفضل الأماكن في قسم ${displayCatName}`;
+    const companiesTitle = t('pages.categories.top_companies_with_name', { name: displayCatName });
+    const eventsTitle = t('pages.categories.best_places_with_name', { name: displayCatName });
 
     useEffect(() => {
         if (displayCatName) {

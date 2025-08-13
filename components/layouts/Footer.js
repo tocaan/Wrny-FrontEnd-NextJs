@@ -18,6 +18,7 @@ function normalize(path) {
 
 export default function Footer() {
     const t = useTranslations('navbar');
+    const y = useTranslations();
 
     const { locale } = useParams();
     const [lang, setLang] = useState('en');
@@ -83,7 +84,7 @@ export default function Footer() {
                                     alt="logo"
                                 />
                             </Link>
-                            <p className="my-3 text-white w-60 lh-lg excerpt-20">ورني هو دليلك الشامل لاكتشاف الوجهات والأماكن مثل الحدائق العامة، المعالم السياحية، أماكن القراءة والمكتبات العامة، مراكز التسوق، الأماكن الترفيهية، والأحداث والفعاليات في الكويت.</p>
+                            <p className="my-3 text-white w-60 lh-lg excerpt-20">{y('app.description')}</p>
                         </div>
                     </div>
                     <div className="row mt-1">

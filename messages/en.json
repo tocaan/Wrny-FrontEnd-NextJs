@@ -1,7 +1,7 @@
 {
     "app": {
-        "title": "Warni",
-        "description": "An app to explore Warni and discover the best companies and events"
+        "title": "Wrny",
+        "description": "Wrny is your all-in-one guide to discovering destinations and places across Kuwait—from public parks and tourist attractions to reading spots and public libraries, shopping centers, entertainment venues, and events."
     },
     "page_titles": {
         "home": "Discover the Best Destinations and Activities",
@@ -51,8 +51,8 @@
         "home": {
             "title": "Home",
             "hero": {
-                "title": "Discover the Best Destinations and Activities in Warni",
-                "description": "Enjoy a comprehensive journey discovering tourist attractions and cultural activities throughout Warni.",
+                "title": "Discover the Best Destinations and Activities in Wrny",
+                "description": "Enjoy a comprehensive journey discovering tourist attractions and cultural activities throughout Wrny.",
                 "explore_button": "Explore Now"
             }
         },
@@ -60,7 +60,9 @@
             "title": "Categories",
             "page_title": "Browse Categories",
             "all_categories": "All Categories",
-            "view_all": "View All Categories"
+            "view_all": "View All Categories",
+            "top_companies_with_name": "Top companies for {name} services",
+            "best_places_with_name": "Best places in {name}"
         },
         "companies": {
             "title": "Companies",
@@ -86,13 +88,13 @@
         },
         "about": {
             "title": "About Us",
-            "page_title": "About Warni",
+            "page_title": "About Wrny",
             "description": "Learn more about our platform and mission",
             "lead": "If you want to see Kuwait's world, we'll help you",
             "leadSub": "Discover Kuwait like never before - we're here to take you on a magical journey through its most beautiful landmarks and unique experiences",
             "introHeading": "Our Vision and Mission",
-            "introBold": "Warni - your tourism and entertainment guide to explore Kuwait! Looking for fun tourist spots? Want to try a new restaurant? Or maybe attend a special event? Warni is the perfect app to discover the most beautiful destinations and activities in Kuwait easily and smoothly!",
-            "introText": "Warni is your comprehensive guide to discovering destinations and places like public parks, tourist attractions, reading places and public libraries, shopping centers, entertainment venues, and events in Kuwait. The app provides you with a seamless experience to find the best destinations easily, with accurate details, multiple photos, and user reviews to help you make the best decision."
+            "introBold": "Wrny - your tourism and entertainment guide to explore Kuwait! Looking for fun tourist spots? Want to try a new restaurant? Or maybe attend a special event? Wrny is the perfect app to discover the most beautiful destinations and activities in Kuwait easily and smoothly!",
+            "introText": "Wrny is your comprehensive guide to discovering destinations and places like public parks, tourist attractions, reading places and public libraries, shopping centers, entertainment venues, and events in Kuwait. The app provides you with a seamless experience to find the best destinations easily, with accurate details, multiple photos, and user reviews to help you make the best decision."
         },
         "contact": {
             "title": "Don't Hesitate to Contact Us",
@@ -127,7 +129,7 @@
         },
         "deleteAccount": {
             "beforeYouGo": "Before You Go...",
-            "warningDataLost": "If you delete your account, you will lose all your data.",
+            "WrnyngDataLost": "If you delete your account, you will lose all your data.",
             "confirmLabel": "Yes, I want to delete my account",
             "irreversible": "This action cannot be undone.",
             "deleting": "Deleting...",
