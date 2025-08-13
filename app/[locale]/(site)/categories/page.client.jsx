@@ -27,7 +27,6 @@ export default function CategoriesPageClient() {
         return (locale || 'en').startsWith('ar') ? 'ar' : 'en';
     }, [locale]);
 
-    // اطلب البيانات؛ الـ condition جوه الثنك بيمنع التكرار ويستخدم الكاش
     useEffect(() => {
         dispatch(fetchCategories(currentLang));
     }, [dispatch, currentLang]);

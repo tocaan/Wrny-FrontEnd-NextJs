@@ -1,7 +1,7 @@
 {
     "app": {
-        "title": "Wrny",
-        "description": "An app to explore Wrny and discover the best companies and events"
+        "title": "Warni",
+        "description": "An app to explore Warni and discover the best companies and events"
     },
     "page_titles": {
         "home": "Discover the Best Destinations and Activities",
@@ -12,6 +12,9 @@
         "about": "About Us",
         "contact": "Contact Us",
         "login": "Login",
+        "forgot_password": "Forgot Password?",
+        "reset_password": "Reset Password",
+        "verify": "Verify Phone",
         "register": "Create Account",
         "account": "Profile",
         "category_detail": "{category} - Categories",
@@ -33,7 +36,7 @@
         "register": "Register",
         "account": "Profile",
         "logout": "Logout",
-        "language": "العربية"
+        "language": "عربي"
     },
     "breadcrumb": {
         "home": "Home",
@@ -41,14 +44,15 @@
         "companies": "Companies",
         "events": "Events",
         "regions": "Regions",
-        "about": "About Us"
+        "about": "About Us",
+        "contact": "Contact Us"
     },
     "pages": {
         "home": {
             "title": "Home",
             "hero": {
-                "title": "Explore the Best Destinations and Activities in Wrny",
-                "description": "Experience a complete journey in discovering tourist spots and cultural activities in all parts of Wrny.",
+                "title": "Discover the Best Destinations and Activities in Warni",
+                "description": "Enjoy a comprehensive journey discovering tourist attractions and cultural activities throughout Warni.",
                 "explore_button": "Explore Now"
             }
         },
@@ -62,13 +66,17 @@
             "title": "Companies",
             "page_title": "Discover Companies",
             "all_companies": "All Companies",
-            "view_all": "View All Companies"
+            "view_all": "View All Companies",
+            "branches": "Branches"
         },
         "events": {
             "title": "Events",
             "page_title": "Upcoming Events",
             "all_events": "All Events",
-            "view_all": "View All Events"
+            "view_all": "View All Events",
+            "show_filter": "Show Filter",
+            "filter_regions": "Regions",
+            "filter_categories": "Categories"
         },
         "regions": {
             "title": "Regions",
@@ -78,31 +86,52 @@
         },
         "about": {
             "title": "About Us",
-            "page_title": "About Wrny",
+            "page_title": "About Warni",
             "description": "Learn more about our platform and mission",
-            "lead": "We are a leading platform in exploring local destinations and activities",
+            "lead": "If you want to see Kuwait's world, we'll help you",
+            "leadSub": "Discover Kuwait like never before - we're here to take you on a magical journey through its most beautiful landmarks and unique experiences",
             "introHeading": "Our Vision and Mission",
-            "introBold": "We strive to connect people with the best destinations and experiences in their area",
-            "introText": "Wrny platform is your ideal destination to discover everything new and distinctive in your area. We provide you with a comprehensive guide to companies, events, and tourist attractions, with updated and reliable information to help you make better decisions and have an enjoyable time."
+            "introBold": "Warni - your tourism and entertainment guide to explore Kuwait! Looking for fun tourist spots? Want to try a new restaurant? Or maybe attend a special event? Warni is the perfect app to discover the most beautiful destinations and activities in Kuwait easily and smoothly!",
+            "introText": "Warni is your comprehensive guide to discovering destinations and places like public parks, tourist attractions, reading places and public libraries, shopping centers, entertainment venues, and events in Kuwait. The app provides you with a seamless experience to find the best destinations easily, with accurate details, multiple photos, and user reviews to help you make the best decision."
         },
         "contact": {
-            "title": "Don't hesitate to contact us",
+            "title": "Don't Hesitate to Contact Us",
             "page_title": "Contact Us",
-            "subtitle": "We are always here to help — feel free to reach out for any inquiries or assistance",
+            "subtitle": "We're always here to help — don't hesitate to reach out for any inquiries or assistance",
             "call_us": "Call Us",
-            "call_us_text": "Your question matters – call us and we will answer",
+            "call_us_text": "Your question matters – call us and we'll answer",
             "email_us": "Email Us",
             "email_us_text": "Email is the fastest way to reach us",
             "follow_us": "Follow Us",
             "follow_us_text": "Don't miss any updates — follow our official accounts",
-            "form_title": "Send us a message",
-            "form_name": "Your Name *",
+            "form_title": "Send Us a Message",
+            "form_name": "Name *",
             "form_email": "Email *",
             "form_phone": "Phone Number *",
             "form_message": "Message *",
-            "form_terms": "By sending this form, you agree to",
-            "terms_and_conditions": "our Terms & Conditions",
-            "send_message": "Send Message"
+            "form_terms": "By submitting this form, you agree to the",
+            "terms_and_conditions": "Terms and Conditions",
+            "send_message": "Send Message",
+            "success": "Sent successfully",
+            "errors": {
+                "name_required": "Please enter a valid name",
+                "email_invalid": "Please enter a valid email address",
+                "phone_invalid": "Please enter a valid phone number",
+                "message_required": "Please write a message",
+                "agree_required": "You must agree to the terms",
+                "server_generic": "An unexpected error occurred. Please try again."
+            }
+        },
+        "branch": {
+            "details": "Branch Details"
+        },
+        "deleteAccount": {
+            "beforeYouGo": "Before You Go...",
+            "warningDataLost": "If you delete your account, you will lose all your data.",
+            "confirmLabel": "Yes, I want to delete my account",
+            "irreversible": "This action cannot be undone.",
+            "deleting": "Deleting...",
+            "deleteMyAccount": "Delete My Account"
         }
     },
     "common": {
@@ -112,58 +141,189 @@
         "filter": "Filter",
         "sort": "Sort",
         "no_results": "No results found",
-        "loading": "Loading..."
+        "loading": "Loading...",
+        "opened": "Open",
+        "closed": "Closed",
+        "location": "Location",
+        "locationMap": "Branch Location Map",
+        "contactInfo": "Contact Information",
+        "socialMedia": "Social Media",
+        "workingHours": "Working Hours",
+        "aboutCompany": "About Company",
+        "noLocation": "No location data",
+        "paidAds": "Paid Advertisement",
+        "deleteAccount": "Delete Account",
+        "apply": "Apply",
+        "reset": "Reset"
+    },
+    "account": {
+        "nav": {
+            "profile": "Profile",
+            "wishlist": "Wishlist",
+            "favorite": "Favorites",
+            "delete": "Delete Account",
+            "logout": "Logout",
+            "menu": "Menu"
+        },
+        "profile": {
+            "title": "Basic Information"
+        },
+        "labels": {
+            "name": "Name",
+            "email": "Email",
+            "phone": "Phone Number"
+        },
+        "buttons": {
+            "save_changes": "Save Changes"
+        },
+        "placeholders": {
+            "name": "Name",
+            "email": "example@email.com"
+        },
+        "misc": {
+            "guest": "Guest"
+        },
+        "toasts": {
+            "saved": "Changes saved successfully",
+            "something_wrong": "Something went wrong, try again",
+            "logged_out": "Logged out successfully"
+        },
+        "validation": {
+            "required": "This field is required",
+            "email": "Invalid email",
+            "phone": "Invalid phone number",
+            "min_chars": "Must be at least {count} characters"
+        }
     },
     "auth": {
         "register": {
-            "title": "إنشاء حساب جديد",
-            "have_account": "هل أنت عضو بالفعل؟"
+            "title": "Create New Account",
+            "have_account": "Already a member?"
         },
         "login": {
-            "title": "مرحبًا بعودتك",
-            "new_here": "زائر جديد هنا؟"
+            "title": "Welcome Back",
+            "new_here": "New visitor here?"
         },
         "forgot": {
-            "title": "هل نسيت كلمة المرور؟",
-            "subtitle_phone": "أدخل رقم الهاتف المرتبط بالحساب",
-            "sent_success": "تم إرسال الكود إلى هاتفك",
-            "back_to": "العودة إلى"
+            "title": "Forgot Password?",
+            "subtitle_phone": "Enter the phone number associated with your account",
+            "sent_success": "Code sent to your phone",
+            "back_to": "Back to"
         },
         "labels": {
             "name": "Full Name",
-            "email": "البريد الإلكتروني",
-            "phone": "رقم الهاتف",
-            "password": "كلمة المرور",
-            "password_confirmation": "تأكيد كلمة المرور",
-            "remember_me": "أبقني مسجلاً",
-            "remember_me_q": "تذكرني؟"
+            "email": "Email",
+            "phone": "Phone Number",
+            "password": "Password",
+            "password_confirmation": "Confirm Password",
+            "remember_me": "Keep me logged in",
+            "remember_me_q": "Remember me?",
+            "code": "Activation Code",
+            "new_password": "New Password",
+            "device_id": "Device ID"
         },
         "buttons": {
-            "register": "تسجيل جديد",
-            "login": "تسجيل دخول",
-            "reset_password": "إعادة تعيين كلمة المرور"
+            "register": "Register",
+            "login": "Login",
+            "reset_password": "Reset Password",
+            "verify": "Verify",
+            "resend_code": "Resend Code",
+            "resend_code_in": "You can resend after",
+            "seconds": "seconds"
         },
         "links": {
-            "login": "تسجيل دخول",
-            "register": "إنشاء حساب",
-            "forgot_password": "هل نسيت كلمة المرور؟"
+            "login": "Login",
+            "register": "Create Account",
+            "forgot_password": "Forgot Password?"
         },
         "placeholders": {
             "phone": "10xxxxxxxx"
         },
         "validation": {
-            "required": "هذا الحقل إجباري",
-            "email": "البريد الإلكتروني غير صالح",
-            "phone": "رقم الهاتف غير صالح",
-            "min_chars": "يجب ألا يقل الطول عن {count} أحرف",
-            "password_mismatch": "كلمتا المرور غير متطابقتين"
+            "required": "This field is required",
+            "email": "Invalid email",
+            "phone": "Invalid phone number",
+            "min_chars": "Must be at least {count} characters",
+            "password_mismatch": "Passwords do not match",
+            "fill_phone_first": "Please enter phone number first"
         },
         "misc": {
-            "loading": "جاري التحميل...",
-            "or": "أو"
+            "loading": "Loading...",
+            "or": "Or"
         },
         "errors": {
-            "countries_failed": "فشل تحميل الدول"
+            "countries_failed": "Failed to load countries"
+        },
+        "reset": {
+            "title": "Reset Password",
+            "subtitle": "Enter your phone number, code and new password"
+        },
+        "verify": {
+            "title": "Verify Phone Number",
+            "subtitle": "Enter your phone number and activation code to complete registration",
+            "back_to": "Back to"
+        },
+        "toasts": {
+            "login_success": "Logged in successfully",
+            "account_created": "Account created successfully",
+            "code_sent": "Code sent to your phone",
+            "phone_verified": "Phone number verified successfully",
+            "password_changed": "Password changed successfully",
+            "something_wrong": "Something went wrong, try again"
+        }
+    },
+    "favorites": {
+        "create_modal": {
+            "title": "Create Collection",
+            "name_label": "Collection Name",
+            "type_label": "Type"
+        },
+        "title": "Favorite Collections",
+        "create_placeholder": "Collection name (Example: Favorites)",
+        "type_companies": "Companies",
+        "type_events": "Events",
+        "create_button": "Create",
+        "no_collections": "No collections yet.",
+        "type_label": "Type",
+        "count_label": "Number of Items",
+        "delete_collection": "Delete Collection",
+        "company": "Company",
+        "event": "Event",
+        "no_items": "No items in this collection.",
+        "remove_item": "Remove",
+        "modal": {
+            "title": "Add to Favorites",
+            "select_collection": "Select Collection",
+            "new_collection_name": "New Collection Name"
+        },
+        "created_collection": "Collection created successfully",
+        "toast": {
+            "added": "Added to favorites",
+            "add_failed": "Failed to add to favorites",
+            "removed": "Removed from favorites",
+            "remove_failed": "Failed to remove from favorites"
+        },
+        "actions": {
+            "create_new": "Create New Collection",
+            "cancel": "Cancel",
+            "close": "Close",
+            "add": "Add",
+            "back": "Back",
+            "create_and_add": "Create and Add"
+        },
+        "placeholders": {
+            "collection_name": "Example: Company Favorites"
+        },
+        "loading": "Loading...",
+        "no_collections_for_type": "No collections of this type.",
+        "items": "items",
+        "errors": {
+            "create_failed": "Failed to create collection",
+            "missing_name": "Please enter collection name",
+            "no_collections_for_type": "No collection available for this type"
+        },
+        "aria": {
+            "toggle_favorite": "Toggle favorite status"
         }
     }
 }

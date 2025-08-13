@@ -144,7 +144,7 @@ export default function Navbar() {
                                 </li>
                             )}
                             {/* Search */}
-                            <li className="nav-item dropdown nav-search mx-2 d-none d-sm-flex">
+                            {/* <li className="nav-item dropdown nav-search mx-2 d-none d-sm-flex">
                                 <a
                                     className="nav-link mb-0 py-0"
                                     role="button"
@@ -175,7 +175,7 @@ export default function Navbar() {
                                         </button>
                                     </form>
                                 </div>
-                            </li>
+                            </li> */}
                             {/* Login */}
                             {!isLoggedIn && (
                                 <li className="nav-item ms-2 d-none d-sm-block">

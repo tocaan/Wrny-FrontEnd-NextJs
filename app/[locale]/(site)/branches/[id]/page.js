@@ -98,7 +98,7 @@ const Header = ({ branch, t, y }) => (
                 </div>
             </div>
             <ul className="list-inline mb-0">
-                <li class="list-inline-item">
+                <li className="list-inline-item">
                     {branch?.is_active ? (
                         <span className="text-success bg-success bg-opacity-10 px-2 rounded-1 fw-600">
                             {y("common.opened")}

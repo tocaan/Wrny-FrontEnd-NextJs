@@ -1,10 +1,10 @@
 import { Link } from "@/i18n/routing";
 
-export default function CategoryCard({ category }) {
+export default function CategoryCard({ category, isActive }) {
     const isAllCategories = category.id === "all";
 
     return (
-        <div className="card card-category card-body bg-light text-center align-items-center">
+        <div className={`card card-category card-body bg-light text-center align-items-center ${isActive ? 'dimmed' : ''}`}>
             <div className="icon-xl bg-mode rounded-circle mb-3">
                 <img
                     src={isAllCategories

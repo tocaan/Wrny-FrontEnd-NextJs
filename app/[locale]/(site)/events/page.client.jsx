@@ -32,7 +32,6 @@ export default function EventsClientPage() {
         return (locale || 'en').startsWith('ar') ? 'ar' : 'en';
     }, [locale]);
 
-    // --- اقرأ الفلاتر من الـ URL ---
     const page = useMemo(() => {
         const p = Number(searchParams.get('page') || '1');
         return Number.isFinite(p) && p > 0 ? p : 1;
@@ -57,7 +56,6 @@ export default function EventsClientPage() {
 
     const params = useMemo(() => ({ page, locale: currentLang, filters }), [page, currentLang, filters]);
 
-    // --- اجلب البيانات بناءً على الـ URL ---
     useEffect(() => {
         dispatch(fetchEvents(params));
     }, [dispatch, params]);
@@ -71,18 +69,15 @@ export default function EventsClientPage() {
     const loading = status === 'pending' && !hasCache;
     const meta = entry?.pagination || { current_page: page, last_page: 1, total: events.length, per_page: events.length || 12 };
 
-    // Prefetch للصفحة التالية (اختياري)
     useEffect(() => {
         if (meta?.current_page && meta?.last_page && meta.current_page < meta.last_page) {
             dispatch(fetchEvents({ page: meta.current_page + 1, locale: currentLang, filters }));
         }
     }, [dispatch, currentLang, filters, meta?.current_page, meta?.last_page]);
 
-    // --- كتابة الفلاتر في الـ URL ---
     const replaceUrl = useCallback((next) => {
         const sp = new URLSearchParams(searchParams.toString());
 
-        // page
         if (next.page && next.page > 1) sp.set('page', String(next.page));
         else sp.delete('page');
 
@@ -108,7 +103,7 @@ export default function EventsClientPage() {
         // newFilters: { 'region_ids[]': number[], category_id?: number }
         const nextRegionIds = Array.isArray(newFilters?.['region_ids[]']) ? newFilters['region_ids[]'] : [];
         const nextCategoryId = newFilters?.category_id ? Number(newFilters.category_id) : null;
-        // ارجّع للصفحة 1
+
         replaceUrl({ page: 1, categoryId: nextCategoryId, regionIds: nextRegionIds });
     }, [replaceUrl]);
 
@@ -119,7 +114,6 @@ export default function EventsClientPage() {
         <div aria-busy={status === 'pending' && hasCache}>
             <Breadcrumb items={[{ name: t('breadcrumb.events') }]} />
 
-            {/* الفلتر — مرّر القيمة الحالية من الـ URL ليتعرض مضبوط */}
             <EventsFilter
                 defaultCountryId={117}
                 initial={{ regionIds, categoryId }}

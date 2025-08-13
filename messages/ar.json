@@ -111,7 +111,16 @@
             "form_message": "الرسالة *",
             "form_terms": "بإرسال هذا النموذج، فإنك توافق على",
             "terms_and_conditions": "الشروط والأحكام",
-            "send_message": "إرسال الرسالة"
+            "send_message": "إرسال الرسالة",
+            "success": "تم الإرسال بنجاح",
+            "errors": {
+                "name_required": "من فضلك أدخل اسمًا صحيحًا",
+                "email_invalid": "رجاء إدخال بريد إلكتروني صحيح",
+                "phone_invalid": "رجاء إدخال رقم هاتف صحيح",
+                "message_required": "رجاء كتابة الرسالة",
+                "agree_required": "يجب الموافقة على الشروط",
+                "server_generic": "حدث خطأ غير متوقع. حاول مرة أخرى."
+            }
         },
         "branch": {
             "details": "تفاصيل الفرع"
@@ -151,6 +160,7 @@
         "nav": {
             "profile": "الملف الشخصي",
             "wishlist": "المفضلة",
+            "favorite": "المفضلة",
             "delete": "حذف الحساب",
             "logout": "الخروج",
             "menu": "القائمة"
