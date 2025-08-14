@@ -11,5 +11,6 @@ export async function createPageMetadata(locale, titleKey, params = {}) {
         title: `${pageTitle} - ${siteName}`,
         description: description,
         manifest: '../../manifest.webmanifest',
+        themeColor: '#ffffff',
     };
 }
