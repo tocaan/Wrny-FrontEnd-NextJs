@@ -67,7 +67,7 @@ export default function ProfileClientPage() {
 
     return (
         <>
-            <Breadcrumb items={[{ name: t('nav.profile') }]} />
+            {/* <Breadcrumb items={[{ name: t('nav.profile') }]} /> */}
 
             <section className="pt-3">
                 <div className="container">

@@ -113,12 +113,12 @@ export default function CompanyDetailsPageClient() {
 
     return (
         <div>
-            <Breadcrumb
+            {/* <Breadcrumb
                 items={[
                     { name: t("breadcrumb.companies"), href: "/companies" },
                     { name: company.name },
                 ]}
-            />
+            /> */}
 
             <section>
                 <div className="container">

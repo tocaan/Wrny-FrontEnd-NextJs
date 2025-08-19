@@ -7,7 +7,7 @@ export default function Favorite() {
     const t = useTranslations("account");
     return (
         <>
-            <Breadcrumb items={[{ name: t('nav.favorite') }]} />
+            {/* <Breadcrumb items={[{ name: t('nav.favorite') }]} /> */}
 
             <section className="pt-3">
                 <div className="container">

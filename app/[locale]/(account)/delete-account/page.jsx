@@ -7,7 +7,7 @@ export default function DeleteAccount() {
     const t = useTranslations("account");
     return (
         <>
-            <Breadcrumb items={[{ name: t('nav.delete') }]} />
+            {/* <Breadcrumb items={[{ name: t('nav.delete') }]} /> */}
             <section className="pt-3">
                 <div className="container">
                     <div className="row">

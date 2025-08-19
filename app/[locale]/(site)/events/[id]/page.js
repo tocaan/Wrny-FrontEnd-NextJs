@@ -88,12 +88,12 @@ export default function EventDetailsClient() {
 
     return (
         <>
-            <Breadcrumb
+            {/* <Breadcrumb
                 items={[
                     { name: t('breadcrumb.events'), href: '/events' },
                     { name: event.name }
                 ]}
-            />
+            /> */}
 
             {/* Slider + GLightbox */}
             <section className="py-0">

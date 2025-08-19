@@ -67,3 +67,21 @@
     padding-right: 0 !important;
     padding-left: 73px !important;
 }
+
+
+/* Region */
+
+.region.active{
+    border-radius: 20px;
+    background-color: #1836b2;
+    overflow: hidden;
+    border: 3px solid #4d70ff42;
+}
+
+.region.active .active-filter img{
+    filter: grayscale(1);
+}
+
+.region.active .active-filter .stretched-link{
+    color: #fff !important;
+}

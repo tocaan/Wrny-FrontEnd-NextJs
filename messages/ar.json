@@ -36,7 +36,8 @@
         "register": "إنشاء حساب",
         "account": "الملف الشخصي",
         "logout": "تسجيل الخروج",
-        "language": "English"
+        "language": "English",
+        "menu": "القائمة"
     },
     "breadcrumb": {
         "home": "الرئيسية",
@@ -69,7 +70,9 @@
             "page_title": "اكتشف الشركات",
             "all_companies": "جميع الشركات",
             "view_all": "عرض جميع الشركات",
-            "branches": "الأفرع"
+            "branches": "الأفرع",
+            "no_companies_title": "لا توجد شركات حالياً",
+            "no_companies_description": "جرّب تغيير الفلاتر أو المنطقة."
         },
         "events": {
             "title": "الفعاليات",
@@ -78,7 +81,9 @@
             "view_all": "عرض جميع الفعاليات",
             "show_filter": "عرض الفلتر",
             "filter_regions": "المناطق",
-            "filter_categories": "الأقسام"
+            "filter_categories": "الأقسام",
+            "no_events_title": "لا توجد فعاليات حالياً",
+            "no_events_description": "جرّب تغيير المنطقة أو تصفية مختلفة."
         },
         "regions": {
             "title": "المناطق",
@@ -160,7 +165,8 @@
         "paidAds": "اعلان مدفوع",
         "deleteAccount": "حذف الحساب",
         "apply": "تطبيق",
-        "reset": "مسح"
+        "reset": "مسح",
+        "refresh": "تحديث"
     },
     "account": {
         "nav": {

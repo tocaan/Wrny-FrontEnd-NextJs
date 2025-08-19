@@ -19,7 +19,7 @@ export default async function AboutPage() {
 
     return (
         <>
-            <Breadcrumb items={[{ name: title }]} />
+            {/* <Breadcrumb items={[{ name: title }]} /> */}
             <section>
                 <div className="container">
                     <div className="row mb-4">

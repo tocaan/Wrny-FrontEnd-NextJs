@@ -15,6 +15,8 @@ import Loading from '@/components/GlobalLoader';
 import Pagination from '@/components/Pagination';
 import EventsFilter from '@/components/EventsFilter';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import EmptyState from '@/components/ui/EmptyState';
+import InboxIllustration from '@/components/ui/illustrations/InboxIllustration';
 
 export default function EventsClientPage() {
     const dispatch = useDispatch();
@@ -112,13 +114,12 @@ export default function EventsClientPage() {
 
     return (
         <div aria-busy={status === 'pending' && hasCache}>
-            <Breadcrumb items={[{ name: t('breadcrumb.events') }]} />
+            {/* <Breadcrumb items={[{ name: t('breadcrumb.events') }]} /> */}
 
             <EventsFilter
                 defaultCountryId={117}
                 initial={{ regionIds, categoryId }}
-                onApply={handleApplyFilters}
-            />
+                onApply={handleApplyFilters} />
 
             <div className="container my-5">
                 <div className="row mb-3">
@@ -127,20 +128,35 @@ export default function EventsClientPage() {
                     </div>
                 </div>
 
-                <div className="row g-4">
-                    {events.map((event) => (
-                        <div key={event.id} className="unit col-12 col-md-4 col-xl-4">
-                            <EventSideCard event={event} />
-                        </div>
-                    ))}
-                </div>
-
-                <div className="row">
-                    <div className="col-12">
-                        <Pagination meta={meta} onPageChange={handlePageChange} />
+                {events.length === 0 ? (
+                    <EmptyState
+                        title={t('pages.events.no_events_title')}
+                        description={t('pages.events.no_events_description')}
+                        illustration={<InboxIllustration />}
+                        actions={[
+                            { label: t('common.refresh'), variant: 'outline', onClick: () => location.reload() },
+                            { label: t('navbar.home'), href: `/${locale}/`, variant: 'primary' },
+                        ]}
+                        size="lg"
+                    />
+                ) : (
+                    <div className="row g-4">
+                        {events.map((event) => (
+                            <div key={event.id} className="unit col-12 col-md-4 col-xl-4">
+                                <EventSideCard event={event} />
+                            </div>
+                        ))}
                     </div>
-                </div>
-
+                )}
+            
+                {events.length > 0 && (
+                    <div className="row">
+                        <div className="col-12">
+                            <Pagination meta={meta} onPageChange={handlePageChange} />
+                        </div>
+                    </div>
+                )}
+            
                 {status === 'failed' && hasCache && (
                     <div className="text-center py-3 text-danger small">{error}</div>
                 )}

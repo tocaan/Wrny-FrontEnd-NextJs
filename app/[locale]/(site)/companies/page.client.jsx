@@ -13,6 +13,8 @@ import Breadcrumb from '@/components/Breadcrumb';
 import { useTranslations, useLocale } from 'next-intl';
 import { BreadcrumbSkeleton, CompaniesListSkeleton } from '@/components/ui/Skeletons';
 import Pagination from '@/components/Pagination';
+import EmptyState from '@/components/ui/EmptyState';
+import InboxIllustration from '@/components/ui/illustrations/InboxIllustration';
 
 export default function CompaniesClientPage() {
     const dispatch = useDispatch();
@@ -50,7 +52,7 @@ export default function CompaniesClientPage() {
     if (loading) {
         return (
             <div>
-                <BreadcrumbSkeleton />
+                {/* <BreadcrumbSkeleton /> */}
                 <CompaniesListSkeleton />
             </div>
         );
@@ -64,7 +66,7 @@ export default function CompaniesClientPage() {
 
     return (
         <div aria-busy={status === 'pending' && hasCache}>
-            <Breadcrumb items={[{ name: t('pages.companies.all_companies') }]} />
+            {/* <Breadcrumb items={[{ name: t('pages.companies.all_companies') }]} /> */}
 
             <div className="container my-5">
                 <div className="row mb-3">
@@ -73,13 +75,26 @@ export default function CompaniesClientPage() {
                     </div>
                 </div>
 
-                <div className="row g-4">
-                    {list.map((company) => (
-                        <div key={company.id} className="col-md-6 col-lg-3">
-                            <CompanyCard company={company} />
-                        </div>
-                    ))}
-                </div>
+                {list.length === 0 ? (
+                    <EmptyState
+                        title={t('pages.companies.no_companies_title')}
+                        description={t('pages.companies.no_companies_description')}
+                        illustration={<InboxIllustration />}
+                        actions={[
+                            { label: t('common.refresh'), variant: 'outline', onClick: () => location.reload() },
+                            { label: t('navbar.home'), href: `/${locale}/`, variant: 'primary' },
+                        ]}
+                        size="lg"
+                    />
+                ) : (
+                    <div className="row g-4">
+                        {list.map((company) => (
+                            <div key={company.id} className="col-md-6 col-lg-3">
+                                <CompanyCard company={company} />
+                            </div>
+                        ))}
+                    </div>
+                )}
 
                 <div className="row">
                     <div className="col-12">

@@ -12,7 +12,7 @@ export default function ContactClientPage() {
 
     return (
         <>
-            <Breadcrumb items={[{ name: t('contact.page_title') }]} />
+            {/* <Breadcrumb items={[{ name: t('contact.page_title') }]} /> */}
 
             {/* Header */}
             <section className="pt-4 pt-md-5">

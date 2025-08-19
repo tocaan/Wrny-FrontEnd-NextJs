@@ -329,12 +329,12 @@ export default function BranchDetails() {
 
     return (
         <div>
-            <Breadcrumb
+            {/* <Breadcrumb
                 items={[
                     { name: y("breadcrumb.companies"), href: "/companies" },
                     { name: branch?.name || y("common.loading") },
                 ]}
-            />
+            /> */}
 
             <section>
                 <div className="container">

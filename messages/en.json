@@ -36,7 +36,8 @@
         "register": "Register",
         "account": "Profile",
         "logout": "Logout",
-        "language": "عربي"
+        "language": "عربي",
+        "menu": "Menu"
     },
     "breadcrumb": {
         "home": "Home",
@@ -69,7 +70,9 @@
             "page_title": "Discover Companies",
             "all_companies": "All Companies",
             "view_all": "View All Companies",
-            "branches": "Branches"
+            "branches": "Branches",
+            "no_companies_title": "No companies at the moment",
+            "no_companies_description": "Try adjusting filters or region."
         },
         "events": {
             "title": "Events",
@@ -78,7 +81,9 @@
             "view_all": "View All Events",
             "show_filter": "Show Filter",
             "filter_regions": "Regions",
-            "filter_categories": "Categories"
+            "filter_categories": "Categories",
+            "no_events_title": "No events at the moment",
+            "no_events_description": "Try changing the region or a different filter."
         },
         "regions": {
             "title": "Regions",
@@ -160,7 +165,8 @@
         "paidAds": "Paid Advertisement",
         "deleteAccount": "Delete Account",
         "apply": "Apply",
-        "reset": "Reset"
+        "reset": "Reset",
+        "refresh": "Refresh"
     },
     "account": {
         "nav": {

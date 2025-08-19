@@ -47,7 +47,7 @@ export default function CategoriesPageClient() {
 
     return (
         <div aria-busy={status === 'pending' && hasCache}>
-            <Breadcrumb items={[{ name: t('breadcrumb.categories') }]} />
+            {/* <Breadcrumb items={[{ name: t('breadcrumb.categories') }]} /> */}
 
             <div className="container my-5">
                 <div className="row g-4">

@@ -161,7 +161,7 @@ export default function CategoryDetailsPage() {
     return (
         <div>
             {/* Breadcrumb */}
-            {categoriesLoading && !activeCategoryName ? (
+            {/* {categoriesLoading && !activeCategoryName ? (
                 <BreadcrumbSkeleton />
             ) : (
                 <Breadcrumb
@@ -173,7 +173,7 @@ export default function CategoryDetailsPage() {
                         },
                     ]}
                 />
-            )}
+            )} */}
 
             <section className="categories">
                 <div className="container">
