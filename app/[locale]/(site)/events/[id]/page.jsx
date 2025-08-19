@@ -5,12 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'next/navigation';
 import { fetchEventDetails } from '@/store/slices/eventSlice';
 import Image from 'next/image';
-import 'glightbox/dist/css/glightbox.css';
-import Slider from '@/components/ui/Slider';
+import dynamic from 'next/dynamic';
 import Breadcrumb from '@/components/Breadcrumb';
 import { useTranslations } from 'next-intl';
 import { usePathname } from '@/i18n/routing';
 import GlobalLoader from '@/components/GlobalLoader';
+const Slider = dynamic(() => import('@/components/ui/Slider'), { ssr: false });
 
 export default function EventDetailsClient() {
     const pathname = usePathname();
@@ -106,7 +106,7 @@ export default function EventDetailsClient() {
                                 <a
                                     key={i}
                                     href={src}
-                                    className="glightbox4 w-100 h-100"           // دمج الكلاسات هنا
+                                    className="glightbox4 w-100 h-100"
                                     data-gallery="event-gallery"
                                     data-glightbox={`title: ${event?.name || ''};`}
                                 >

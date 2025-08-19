@@ -1,6 +1,8 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 @import '@/public/assets/css/functions.min.css';
+@import 'glightbox/dist/css/glightbox.css';
+
 /* html {
     overflow: auto;
 } */
