@@ -47,7 +47,7 @@ export default function EventDetailsClient() {
 
     // cover images (عرّفها قبل useEffect بتاع GLightbox)
     const coverImages = useMemo(
-        () => (event?.images?.length ? event.images : ['/assets/images/placeholder.jpg']),
+        () => (event?.images?.length ? event.images : ['/assets/images/placeholder.svg']),
         [event?.images]
     );
 
