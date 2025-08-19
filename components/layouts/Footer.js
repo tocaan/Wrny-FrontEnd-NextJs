@@ -50,7 +50,6 @@ export default function Footer() {
     setIsLoggedIn(isUserLoggedIn());
   }, []);
 
-  // NOTE: نفس كودك الأصلي – يفترض وجود dispatch/logout/toast/router في نطاق المشروع
   const onLogout = async () => {
     try {
       await api.delete('sign-out');

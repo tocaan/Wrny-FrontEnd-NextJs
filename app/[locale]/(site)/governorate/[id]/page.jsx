@@ -26,7 +26,7 @@ import {
   selectEventsStatus,
 } from "@/store/slices/eventsSlice";
 
-// ⬇️ سلايس المناطق
+
 import {
   fetchCountries,
   fetchRegionsByCountry,

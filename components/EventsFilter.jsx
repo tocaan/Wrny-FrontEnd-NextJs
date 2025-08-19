@@ -21,7 +21,7 @@ export default function EventsFilter({ defaultCountryId = 117, initial = {}, onA
     const [selectedRegionIds, setSelectedRegionIds] = useState(initial.regionIds || []);
     const [selectedCategoryId, setSelectedCategoryId] = useState(initial.categoryId || null);
 
-    // مزامنة مع الـ URL لما يتغير (Back/Forward/Link share)
+    
     useEffect(() => {
         setSelectedRegionIds(Array.isArray(initial.regionIds) ? initial.regionIds : []);
         setSelectedCategoryId(initial.categoryId || null);

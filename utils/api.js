@@ -13,7 +13,7 @@ const api = axios.create({
 function deleteCookie(name) {
     if (typeof document === "undefined") return;
     const expire = "Expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    const paths = ["/", ""]; // جرّب أكثر من path
+    const paths = ["/", ""];
     const host = typeof location !== "undefined" ? location.hostname : "";
     const parts = host ? host.split(".") : [];
     const domains = [];
@@ -24,12 +24,11 @@ function deleteCookie(name) {
         }
     }
 
-    // بدون domain
     for (const p of paths) {
         document.cookie = `${name}=; Max-Age=0; ${p ? `path=${p};` : ""}`;
         document.cookie = `${name}=; ${expire}; ${p ? `path=${p};` : ""}`;
     }
-    // مع domain
+
     for (const d of domains) {
         for (const p of paths) {
             document.cookie = `${name}=; Max-Age=0; ${p ? `path=${p};` : ""} domain=${d};`;

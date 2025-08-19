@@ -19,7 +19,7 @@ export const fetchHomeData = createAsyncThunk(
             return { locale, data: arr, byType, fetchedAt: Date.now() };
         } catch (e) {
             if (e.name === 'CanceledError' || e.code === 'ERR_CANCELED') {
-                return rejectWithValue(null); // إلغاء هادئ
+                return rejectWithValue(null);
             }
             return rejectWithValue(e?.response?.data?.message || e.message);
         }

@@ -47,7 +47,6 @@ export default function CategoryDetailsPage() {
     const locale = useLocale();
     const t = useTranslations();
 
-    // لغة الواجهة الحالية
     const currentLang = useMemo(() => {
         if (typeof window !== "undefined") {
             const saved = localStorage.getItem("LANG");
@@ -56,13 +55,11 @@ export default function CategoryDetailsPage() {
         return (locale || "en").startsWith("ar") ? "ar" : "en";
     }, [locale]);
 
-    // الـ id النشط من الـ params
     const activeCategoryId = useMemo(() => {
         const n = Number(idParam);
         return Number.isFinite(n) && n > 0 ? n : null;
     }, [idParam]);
 
-    // الأقسام
     useEffect(() => {
         dispatch(fetchCategories(currentLang));
     }, [dispatch, currentLang]);
@@ -74,7 +71,6 @@ export default function CategoryDetailsPage() {
         categories.find((c) => Number(c.id) === Number(activeCategoryId))?.name ||
         null;
 
-    // الشركات (Slider)
     const companiesParams = useMemo(
         () => ({
             page: 1,
@@ -94,11 +90,9 @@ export default function CategoryDetailsPage() {
     const companiesLoading = companiesStatus === "pending" && !companiesEntry;
     const companiesUpdating = companiesStatus === "pending" && !!companiesEntry;
 
-    // الفعاليات (Grid + Pagination)
     const [eventsPage, setEventsPage] = useState(1);
 
     useEffect(() => {
-        // لما يتغير القسم نرجّع للصفحة الأولى
         setEventsPage(1);
     }, [activeCategoryId]);
 

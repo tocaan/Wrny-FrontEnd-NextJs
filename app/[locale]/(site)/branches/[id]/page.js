@@ -296,7 +296,7 @@ const ErrorState = ({ error, t }) => (
 
 /* ================= Page ================= */
 export default function BranchDetails() {
-    const params = useParams(); // يدعم string | string[]
+    const params = useParams();
     const id = useMemo(() => {
         const raw = Array.isArray(params?.id) ? params.id[0] : params?.id;
         return raw ?? null;
@@ -304,7 +304,6 @@ export default function BranchDetails() {
 
     const dispatch = useDispatch();
 
-    // استخدم selectors من الـ slice (كاش + حالة تحميل موحّدة)
     const branch = useSelector(selectCurrentBranch);
     const loading = useSelector(selectBranchLoading);
     const error = useSelector(selectBranchError);
@@ -312,12 +311,10 @@ export default function BranchDetails() {
     const t = useTranslations("pages");
     const y = useTranslations();
 
-    // جلب البيانات عند تغيّر الـ id (الـ thunk نفسه بيمنع التكرار وبيكنسل القديم)
     useEffect(() => {
         if (id) dispatch(fetchBranchDetails(id));
     }, [dispatch, id]);
 
-    // عنوان الصفحة
     useEffect(() => {
         document.title = branch?.name
             ? `${branch.name} - ${t("app.title")}`
