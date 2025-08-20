@@ -22,6 +22,20 @@ const almarai = Almarai({
   variable: '--font-almarai',
 });
 
+export const viewport = {
+    width: 'device-width',
+    initialScale: 1,
+    viewportFit: 'cover',
+    themeColor: '#ffffff',
+  };
+  
+  export const metadata = {
+    appleWebApp: {
+        capable: true,
+        statusBarStyle: 'default',
+    },
+  };
+
 export default async function RootLayout({ children, params }) {
   const { locale } = await params;
   const messages = await getMessages();

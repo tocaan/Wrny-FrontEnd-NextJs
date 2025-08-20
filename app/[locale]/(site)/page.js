@@ -6,6 +6,7 @@ export async function generateMetadata(props) {
     const { locale } = await props.params;
     return createPageMetadata(locale, 'home');
 }
+
 export default function Page() {
     return <HomePage />;
 }
