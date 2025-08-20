@@ -57,7 +57,7 @@ export default function FavoriteCollectionModal({ open, onClose, type, itemId })
                 addFavoriteItemThunk({ type, id: itemId, collection_id: targetCollectionId })
             ).unwrap();
 
-            toast.success(t("added_to_favorites"));
+            toast.success(t("toast.added"));
             onClose?.({ ok: true });
         } catch {
             onClose?.({ ok: false });

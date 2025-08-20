@@ -1,16 +1,17 @@
-"use client";
+'use client';
 
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'next/navigation';
 import { fetchEventDetails } from '@/store/slices/eventSlice';
 import Image from 'next/image';
-import dynamic from 'next/dynamic';
-import Breadcrumb from '@/components/Breadcrumb';
-import { useTranslations } from 'next-intl';
+import Slider from '@/components/ui/Slider';
+import { useTranslations, useLocale } from 'next-intl';
 import { usePathname } from '@/i18n/routing';
 import GlobalLoader from '@/components/GlobalLoader';
-const Slider = dynamic(() => import('@/components/ui/Slider'), { ssr: false });
+import SafeImage from '@/components/SafeImage';
+import { HeartIcon } from 'lucide-react';
+import FavoriteHeart from '@/components/ui/FavoriteHeart';
 
 export default function EventDetailsClient() {
     const pathname = usePathname();
@@ -18,7 +19,9 @@ export default function EventDetailsClient() {
     const dispatch = useDispatch();
     const { event, loading, error } = useSelector((s) => s.event);
     const t = useTranslations();
+    const locale = useLocale();
     const lightboxRef = useRef(null);
+    const rafRef = useRef(null);
 
     // fetch
     useEffect(() => {
@@ -39,68 +42,76 @@ export default function EventDetailsClient() {
         if (!d) return '—';
         try {
             const date = new Date(d.replace(' ', 'T'));
-            return date.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+            const localeForDate = locale === 'ar' ? 'ar-EG' : 'en-US';
+            return date.toLocaleDateString(localeForDate, { year: 'numeric', month: 'long', day: 'numeric' });
         } catch {
             return d;
         }
     };
 
-    // cover images (عرّفها قبل useEffect بتاع GLightbox)
     const coverImages = useMemo(
         () => (event?.images?.length ? event.images : ['/assets/images/placeholder.svg']),
         [event?.images]
     );
 
-    // init GLightbox على العناصر ذات الكلاس glightbox4
+
     useEffect(() => {
-        let mounted = true;
-        if (!coverImages.length) return;
+        if (typeof window === 'undefined') return;
+        if (!coverImages?.length) return;
 
-        (async () => {
-            if (typeof window === 'undefined') return;
-            const GLightbox = (await import('glightbox')).default;
 
-            if (lightboxRef.current) {
-                try { lightboxRef.current.destroy(); } catch { }
-                lightboxRef.current = null;
+        const nodes = document.querySelectorAll('.glightbox4');
+        if (!nodes || nodes.length === 0) return;
+
+
+        if (lightboxRef.current) {
+            try { lightboxRef.current.destroy(); } catch { }
+            lightboxRef.current = null;
+        }
+
+        let cancelled = false;
+
+        rafRef.current = window.requestAnimationFrame(async () => {
+            try {
+                const GLightbox = (await import('glightbox')).default;
+                if (cancelled) return;
+
+                lightboxRef.current = GLightbox({ selector: '.glightbox4' });
+            } catch (e) {
+                console.error('GLightbox init failed:', e);
             }
-            if (!mounted) return;
-
-            lightboxRef.current = GLightbox({
-                selector: '.glightbox4',
-            });
-        })();
+        });
 
         return () => {
-            mounted = false;
+            cancelled = true;
+            if (rafRef.current) {
+                window.cancelAnimationFrame(rafRef.current);
+                rafRef.current = null;
+            }
             if (lightboxRef.current) {
                 try { lightboxRef.current.destroy(); } catch { }
                 lightboxRef.current = null;
             }
         };
-    }, [coverImages]);
+    }, [coverImages, pathname]);
+
+    const [isFavorited, setIsFavorited] = useState(false);
+
+    useEffect(() => {
+        setIsFavorited(!!event?.is_favorited);
+    }, [event?.is_favorited]);
+
 
     if (loading && !event) return <GlobalLoader />;
-    if (error) {
-        return <div className="text-center py-5 text-danger">{error}</div>;
-    }
+    if (error) return <div className="text-center py-5 text-danger">{error}</div>;
     if (!event) return null;
 
     return (
         <>
-            {/* <Breadcrumb
-                items={[
-                    { name: t('breadcrumb.events'), href: '/events' },
-                    { name: event.name }
-                ]}
-            /> */}
-
-            {/* Slider + GLightbox */}
             <section className="py-0">
                 <div className="container-fluid px-0">
                     <div className="tiny-slider arrow-round arrow-blur">
                         <Slider
-                            key={`${pathname}-${coverImages.length}`}
                             data={coverImages}
                             renderItem={(src, i) => (
                                 <a
@@ -111,7 +122,7 @@ export default function EventDetailsClient() {
                                     data-glightbox={`title: ${event?.name || ''};`}
                                 >
                                     <div className="card card-element-hover card-overlay-hover rounded-0 overflow-hidden event-img">
-                                        <Image src={src} alt={event?.name || 'event'} width={1200} height={700} />
+                                        <SafeImage src={src} alt={event?.name || 'event'} width={1200} height={700} />
                                         <div className="hover-element w-100 h-100">
                                             <i className="bi bi-fullscreen fs-6 text-white position-absolute top-50 start-50 translate-middle bg-dark rounded-1 p-2 lh-1"></i>
                                         </div>
@@ -158,9 +169,15 @@ export default function EventDetailsClient() {
 
                                 <ul className="list-inline mb-0">
                                     <li className="list-inline-item heart-icon">
-                                        <button className="btn btn-sm btn-white px-2" type="button">
-                                            <i className={`bi fa-fw ${event.is_favorited ? 'bi-heart-fill text-danger' : 'bi-heart'}`}></i>
-                                        </button>
+                                        <FavoriteHeart
+                                            type="events"
+                                            itemId={event.id}
+                                            isFavorited={event.is_favorited}
+                                            onChange={(val) => setIsFavorited(val)}
+                                        />
+                                        {/* <button className="btn btn-sm btn-white px-2" type="button">
+                      <i className={`bi fa-fw ${event.is_favorited ? 'bi-heart-fill text-danger' : 'bi-heart'}`}></i>
+                    </button> */}
                                     </li>
                                 </ul>
                             </div>
@@ -177,7 +194,7 @@ export default function EventDetailsClient() {
                         <div className="col-lg-7 col-xl-8">
                             <div className="card shadow mb-4">
                                 <div className="card-header bg-transparent border-bottom">
-                                    <h4 className="h5 mb-0">نبذة عن الفعالية</h4>
+                                    <h4 className="h5 mb-0">{t('pages.events.aboutEvent')}</h4>
                                 </div>
                                 <div className="card-body">
                                     <p className="mb-3">{event.description || '—'}</p>
@@ -194,7 +211,7 @@ export default function EventDetailsClient() {
                                     </p>
                                     {(event.lat && event.lng) && (
                                         <iframe
-                                            src={`https://www.google.com/maps?q=${event.lat},${event.lng}&hl=ar&z=14&output=embed`}
+                                            src={`https://www.google.com/maps?q=${event.lat},${event.lng}&hl=${locale}&z=14&output=embed`}
                                             width="100%" height="300" style={{ border: 0 }} loading="lazy"
                                             referrerPolicy="no-referrer-when-downgrade" allowFullScreen
                                         />
@@ -203,19 +220,18 @@ export default function EventDetailsClient() {
                             </div>
                         </div>
 
-                        {/* التذاكر + التواصل */}
                         <div className="col-lg-5 col-xl-4">
                             <div className="card shadow mb-4">
                                 <div className="card-header border-bottom">
-                                    <h5 className="mb-0">فئات التذاكر</h5>
+                                    <h5 className="mb-0">{t('pages.events.ticketCategories')}</h5>
                                 </div>
                                 <div className="card-body">
                                     {event.tickets?.length ? (
                                         <ul className="list-group list-group-borderless mb-0">
-                                            {event.tickets.map((t, i) => (
-                                                <div key={t.id ?? i}>
+                                            {event.tickets.map((tic, i) => (
+                                                <div key={tic.id ?? i}>
                                                     <li className="list-group-item d-flex justify-content-between">
-                                                        <span>{t.category}: {Number(t.price).toLocaleString('ar-EG')} د.ك</span>
+                                                        <span>{tic.category}: {Number(tic.price).toLocaleString(locale === 'ar' ? 'ar-EG' : 'en-US')} {t('common.currency.kd')}</span>
                                                     </li>
                                                     {i < event.tickets.length - 1 && (
                                                         <li className="list-group-item py-0"><hr className="my-1" /></li>
@@ -223,7 +239,7 @@ export default function EventDetailsClient() {
                                                 </div>
                                             ))}
                                         </ul>
-                                    ) : <div className="text-muted">لا توجد تذاكر متاحة حالياً</div>}
+                                    ) : <div className="text-muted">{t('pages.events.no_tickets')}</div>}
                                 </div>
                             </div>
 

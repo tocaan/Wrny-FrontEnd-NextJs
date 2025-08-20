@@ -83,7 +83,10 @@
             "filter_regions": "Regions",
             "filter_categories": "Categories",
             "no_events_title": "No events at the moment",
-            "no_events_description": "Try changing the region or a different filter."
+            "no_events_description": "Try changing the region or a different filter.",
+            "aboutEvent": "About the Event",
+            "ticketCategories": "Ticket Categories",
+            "no_tickets": "No tickets available at the moment"
         },
         "regions": {
             "title": "Regions",
@@ -166,7 +169,10 @@
         "deleteAccount": "Delete Account",
         "apply": "Apply",
         "reset": "Reset",
-        "refresh": "Refresh"
+        "refresh": "Refresh",
+        "currency": {
+            "kd": "KD"
+        }
     },
     "account": {
         "nav": {

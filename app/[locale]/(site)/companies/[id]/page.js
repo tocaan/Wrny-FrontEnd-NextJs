@@ -27,6 +27,7 @@ import BranchCard from "@/components/BranchCard";
 import Loading from "@/components/GlobalLoader";
 import { CompanyDetailsSkeleton } from "@/components/ui/Skeletons";
 import Pagination from "@/components/Pagination";
+import FavoriteHeart from "@/components/ui/FavoriteHeart";
 
 function getSocialMediaInfo(name) {
     const socialMediaMap = {
@@ -107,6 +108,12 @@ export default function CompanyDetailsPageClient() {
         } catch { }
     };
 
+    const [isFavorited, setIsFavorited] = useState(false);
+
+    useEffect(() => {
+    setIsFavorited(!!company?.is_favorited);
+    }, [company?.is_favorited]);
+
     if (companyLoading) return <CompanyDetailsSkeleton />;
 
     if (!company) return <CompanyDetailsSkeleton />;
@@ -142,9 +149,12 @@ export default function CompanyDetailsPageClient() {
                                     </div>
                                     <ul className="list-inline mb-0">
                                         <li className="list-inline-item heart-icon">
-                                            <button className="btn btn-sm btn-white px-2" aria-label={t("actions.favorite")}>
-                                                {company.is_favorited ? <FaHeart className="text-danger" /> : <FaHeart className="text-black" />}
-                                            </button>
+                                            <FavoriteHeart
+                                                type="companies"
+                                                itemId={company.id}
+                                                isFavorited={company.is_favorited}
+                                                onChange={(val) => setIsFavorited(val)}
+                                            />
                                         </li>
                                     </ul>
                                 </div>
