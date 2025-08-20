@@ -7,6 +7,7 @@ import { IconContext } from "react-icons";
 
 export default function Layout({ children }) {
     return (
+        
         <IconContext.Provider value={{ color: "blue", className: "global-class-name" }}>
             <Navbar />
             <main>

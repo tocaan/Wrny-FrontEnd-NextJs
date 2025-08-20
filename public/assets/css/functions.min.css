@@ -8788,7 +8788,7 @@ fieldset:disabled .btn {
 
 .offcanvas-header .btn-close {
     padding: calc(var(--bs-offcanvas-padding-y) * .5) calc(var(--bs-offcanvas-padding-x) * .5);
-    margin: calc(-0.5 * var(--bs-offcanvas-padding-y)) calc(-0.5 * var(--bs-offcanvas-padding-x)) calc(-0.5 * var(--bs-offcanvas-padding-y)) auto
+    margin: unset !important;
 }
 
 .offcanvas-title {
