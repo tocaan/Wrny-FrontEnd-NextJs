@@ -17,6 +17,8 @@
         "verify": "Verify Phone",
         "register": "Create Account",
         "account": "Profile",
+        "favorite": "Favorites",
+        "deleteAccount": "Delete Account",
         "category_detail": "{category} - Categories",
         "company_detail": "{company} - Companies",
         "event_detail": "{event} - Events",

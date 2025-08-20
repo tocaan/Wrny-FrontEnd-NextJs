@@ -17,6 +17,8 @@
         "verify": "تأكيد الهاتف",
         "register": "إنشاء حساب",
         "account": "الملف الشخصي",
+        "favorite": "المفضلة",
+        "deleteAccount": "حذف الحساب",
         "category_detail": "{category} - الفئات",
         "company_detail": "{company} - الشركات",
         "event_detail": "{event} - الفعاليات",
