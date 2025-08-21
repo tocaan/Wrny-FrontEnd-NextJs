@@ -25,7 +25,7 @@ export default function AuthLayout({ children, illustration = "/assets/images/si
                                         <Link href="/">
                                             <Image className="mb-0" src="/assets/images/logo.png" alt="logo" width={110} height={50} />
                                         </Link>
-                                        <BackButton mobileOnly width="30%" important  size="btn-sm w-25" className="btn-light text-gray py-2" />
+                                        <BackButton width="30%" important  size="btn-sm w-25" className="btn-light text-gray py-2" />
                                         </div>
 
                                         {children}
