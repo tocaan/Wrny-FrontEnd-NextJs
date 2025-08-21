@@ -7,6 +7,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { LogIn, UserRound } from 'lucide-react';
 import { isUserLoggedIn } from '@/utils/auth';
+import BackButton from '../ui/BackButton';
 
 function normalize(path) {
   if (!path) return '/';
@@ -40,7 +41,8 @@ export default function Navbar() {
   useEffect(() => {
     setIsLoggedIn(isUserLoggedIn());
   }, []);
-
+  
+  
   return (
     <>
       <header className={`navbar-light header-sticky ${isSticky ? 'header-sticky-on' : ''}`}>
@@ -128,6 +130,7 @@ export default function Navbar() {
         </nav>
       </header>
 
+      <BackButton mobileOnly preferReplaceOnFallback hideOnHome={true} width="25%" important  size="btn-md" className={`btn-light text-gray py-3 mt-3 ${locale === 'ar' ? 'me-4' : 'ms-3'} rounded-3`} />
       <div id="sticky-space" style={{ height: isSticky ? '100px' : '0px' }} className={isSticky ? 'active' : ''} />
     </>
   );

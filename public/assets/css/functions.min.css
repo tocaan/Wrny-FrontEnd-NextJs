@@ -23161,7 +23161,7 @@ body.dashboard main {
     display: none
 }
 
-@media(max-width:575.98px) {
+@media(max-width:768px) {
     .navbar-mobile {
         display: block;
         background-color: var(--bs-mode);

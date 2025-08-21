@@ -190,8 +190,8 @@ export default function Footer() {
             <div className="back-top"></div>
 
             {/* ===== Mobile bottom navbar (ONLY on small screens) ===== */}
-            <div style={{ marginTop: '140px' }} className="d-md-none"></div>
-            <nav className="navbar navbar-mobile d-md-none">
+            <div style={{ marginTop: '140px' }} className="d-lg-none"></div>
+            <nav className="navbar navbar-mobile d-lg-none">
                 <ul className="navbar-nav">
                     <li className="nav-item">
                         <Link className={`nav-link ${isActive('/', { exact: true }) ? 'active' : ''}`} href="/">
