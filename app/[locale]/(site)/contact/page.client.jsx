@@ -272,7 +272,7 @@ function ContactForm() {
                         aria-invalid={fieldInvalid('agree')}
                     />
                     <label className="form-check-label" htmlFor="termsCheck">
-                        {t('contact.form_terms')} <a href="/terms" target="_blank" rel="noopener noreferrer">{t('contact.terms_and_conditions')}</a>.
+                        {t('contact.form_terms')} <a href="#" target="_blank" rel="noopener noreferrer">{t('contact.terms_and_conditions')}</a>.
                     </label>
                     {fieldInvalid('agree') && <div className="invalid-feedback d-block">{errors.agree}</div>}
                 </div>
