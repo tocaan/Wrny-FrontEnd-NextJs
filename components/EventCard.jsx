@@ -2,6 +2,7 @@ import { Link } from "@/i18n/routing";
 import FavoriteHeart from "./ui/FavoriteHeart";
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import SafeImage from "./SafeImage";
 
 export default function EventCard({ event, eventType }) {
     const eventImage = event.images && event.images.length > 0 ? event.images[0] : '/assets/images/landmarks/01.jpg';
@@ -13,7 +14,7 @@ export default function EventCard({ event, eventType }) {
             <div className="position-relative arrow-round arrow-xs arrow-dark rounded-2 overflow-hidden">
                 <div className="bg-overlay bg-dark opacity-1"></div>
                 <div className="img-company">
-                    <img src={eventImage} alt="Card image" />
+                    <SafeImage src={eventImage} alt="Card image" width={400} height={300} style={{objectFit: 'cover'}} />
                 </div>
             </div>
             <div className="card-body px-3 pb-0">

@@ -1,3 +1,28 @@
+/* Splash Screen Styles */
+body.splash-active::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  background: #fff url('/assets/images/logo.png') center center / 180px no-repeat;
+  opacity: 1;
+  transition: opacity .22s ease;
+}
+
+body.splash-active.splash-hiding::before { 
+  opacity: 0; 
+}
+
+body.splash-active { 
+  overflow: hidden; 
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.splash-active::before { 
+    transition: none; 
+  }
+}
+
 body {
     font-family: var(--font-almarai), sans-serif;
     font-size: 14px;
@@ -172,22 +197,7 @@ h5.card-title {
     border-bottom-right-radius: 0px;
 }
 
-.tiny-slider {
-    direction: ltr;
-    overflow: hidden;
-}
-
-[dir="rtl"] #tns2-mw {
-    direction: rtl;
-}
-
-.tns-ovh {
-    overflow: unset !important;
-}
-
-/* .tiny-slider-inner {
-    direction: rtl;
-} */
+/* Old tiny-slider styles removed - using Swiper now */
 
 .text-primary {
     color: rgb(118 36 179) !important;
@@ -253,9 +263,7 @@ h5.card-title {
     padding-left: 1rem;
 }
 
-.landmarks .tns-item {
-    padding-right: 0 !important;
-}
+/* Removed tns-item styles - using Swiper now */
 
 .landmarks .unit {
     margin-bottom: 15px;
@@ -332,9 +340,7 @@ h5.card-title {
         width: 100% !important;
     }
 
-    .landmarks .tns-item {
-        padding-right: 25px !important;
-    }
+    /* Removed tns-item styles - using Swiper now */
 
     .section-title,
     .btn-link {
@@ -357,18 +363,7 @@ h5.card-title {
         height: 40px;
     }
 
-    .tiny-slider .card-title {
-        font-size: 10px;
-    }
-
-    .companies .tiny-slider .card-title,
-    .landmarks .tiny-slider .card-title {
-        font-size: 13px !important;
-    }
-
-    #tns2>.tns-item {
-        padding-right: 25px !important;
-    }
+    /* Removed tiny-slider styles - using Swiper now */
 
     .w-60 {
         width: 90%;

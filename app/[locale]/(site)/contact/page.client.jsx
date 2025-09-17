@@ -259,21 +259,23 @@ function ContactForm() {
                 <input type="text" name="website" value={website} onChange={(e) => setWebsite(e.target.value)} />
             </div>
 
-            <div className="col-12 form-check ms-2">
-                <input
-                    type="checkbox"
-                    id="termsCheck"
-                    name="agree"
-                    className={`form-check-input ${fieldInvalid('agree') ? 'is-invalid' : ''}`}
-                    checked={values.agree}
-                    onChange={onChange}
-                    disabled={submitting}
-                    aria-invalid={fieldInvalid('agree')}
-                />
-                <label className="form-check-label" htmlFor="termsCheck">
-                    {t('contact.form_terms')} <a href="/terms" target="_blank" rel="noopener noreferrer">{t('contact.terms_and_conditions')}</a>.
-                </label>
-                {fieldInvalid('agree') && <div className="invalid-feedback d-block">{errors.agree}</div>}
+            <div className="col-12">
+                <div className="form-check">
+                    <input
+                        type="checkbox"
+                        id="termsCheck"
+                        name="agree"
+                        className={`form-check-input ${fieldInvalid('agree') ? 'is-invalid' : ''}`}
+                        checked={values.agree}
+                        onChange={onChange}
+                        disabled={submitting}
+                        aria-invalid={fieldInvalid('agree')}
+                    />
+                    <label className="form-check-label" htmlFor="termsCheck">
+                        {t('contact.form_terms')} <a href="/terms" target="_blank" rel="noopener noreferrer">{t('contact.terms_and_conditions')}</a>.
+                    </label>
+                    {fieldInvalid('agree') && <div className="invalid-feedback d-block">{errors.agree}</div>}
+                </div>
             </div>
 
             <div className="col-12">

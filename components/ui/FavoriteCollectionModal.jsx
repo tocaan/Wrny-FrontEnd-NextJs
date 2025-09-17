@@ -8,6 +8,7 @@ import {
     createFavoriteCollectionThunk,
     addFavoriteItemThunk,
 } from "@/store/slices/accountSlice";
+import { X } from "lucide-react";
 
 export default function FavoriteCollectionModal({ open, onClose, type, itemId }) {
     const t = useTranslations("favorites");
@@ -30,6 +31,13 @@ export default function FavoriteCollectionModal({ open, onClose, type, itemId })
         }
     }, [open, dispatch]);
 
+    useEffect(() => {
+        const filteredCollections = (list || []).filter((c) => c.type === type);
+        if (filteredCollections.length > 0 && selectedId === null) {
+            setSelectedId(filteredCollections[0].id);
+        }
+    }, [list, type, selectedId]);
+
     const collections = (list || []).filter((c) => c.type === type);
 
     const onConfirm = async () => {
@@ -49,6 +57,7 @@ export default function FavoriteCollectionModal({ open, onClose, type, itemId })
             }
 
             if (!targetCollectionId) {
+                console.log("No targetCollectionId:", { selectedId, createMode, collections: collections.length });
                 toast.error(t("errors.no_collections_for_type"));
                 return;
             }
@@ -70,9 +79,16 @@ export default function FavoriteCollectionModal({ open, onClose, type, itemId })
         <div className="modal fade show d-block" tabIndex="-1" role="dialog" style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
             <div className="modal-dialog modal-dialog-centered" role="document" onClick={() => onClose?.({ ok: false })}>
                 <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                    <div className="modal-header">
+                    <div className="modal-header d-flex justify-content-between align-items-center">
                         <h5 className="modal-title">{t("modal.title")}</h5>
-                        <button type="button" className="btn-close" onClick={() => onClose?.({ ok: false })}></button>
+                        <button 
+                            type="button" 
+                            className="btn border-1 border-secondary btn-sm py-1 px-2" 
+                            onClick={() => onClose?.({ ok: false })}
+                            aria-label={t("actions.close") || "إغلاق"}
+                        >
+                            <X className="text-danger" size={16} />
+                        </button>
                     </div>
                     <div className="modal-body">
                         {!createMode ? (
@@ -86,6 +102,9 @@ export default function FavoriteCollectionModal({ open, onClose, type, itemId })
                                         value={selectedId ?? ""}
                                         onChange={(e) => setSelectedId(Number(e.target.value))}
                                     >
+                                        <option value="" disabled>
+                                            {t("modal.select_collection")}
+                                        </option>
                                         {collections.map((c) => (
                                             <option key={c.id} value={c.id}>
                                                 {c.name} — {c.items_count ?? 0} {t("items")}
@@ -112,19 +131,25 @@ export default function FavoriteCollectionModal({ open, onClose, type, itemId })
                     <div className="modal-footer">
                         {!createMode ? (
                             <>
-                                <button className="btn btn-outline-secondary" onClick={() => setCreateMode(true)}>
+                                <button className="btn btn-outline-secondary" onClick={() => onClose?.({ ok: false })}>
+                                    {t("actions.cancel")}
+                                </button>
+                                <button className="btn btn-outline-primary" onClick={() => setCreateMode(true)}>
                                     {t("actions.create_new")}
                                 </button>
-                                <button className="btn btn-primary" onClick={onConfirm}>
+                                <button className="btn btn-primary" onClick={onConfirm} disabled={!selectedId}>
                                     {t("actions.add")}
                                 </button>
                             </>
                         ) : (
                             <>
-                                <button className="btn btn-outline-secondary" onClick={() => setCreateMode(false)}>
+                                <button className="btn btn-outline-secondary" onClick={() => onClose?.({ ok: false })}>
+                                    {t("actions.cancel")}
+                                </button>
+                                <button className="btn btn-outline-primary" onClick={() => setCreateMode(false)}>
                                     {t("actions.back")}
                                 </button>
-                                <button className="btn btn-primary" onClick={onConfirm}>
+                                <button className="btn btn-primary" onClick={onConfirm} disabled={!newName.trim()}>
                                     {t("actions.create_and_add")}
                                 </button>
                             </>

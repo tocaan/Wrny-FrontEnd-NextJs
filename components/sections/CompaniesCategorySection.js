@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import Slider from '../ui/Slider';
+import SwiperSlider from '../ui/SwiperSlider';
 import CompanyCard from '../CompanyCard';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
@@ -20,31 +20,31 @@ export default function CompaniesCategorySection({ companiesData, title }) {
                         <h2 className="h4 mb-1 section-title category-title" data-type="companies">{title}</h2>
                     </div>
                 </div>
-                <div className="tiny-slider arrow-round arrow-blur arrow-hover">
-                    <Slider
+                <div className="companies-category-slider">
+                    <SwiperSlider
                         key={`${pathname}-${companiesData.length}`}
+                        uniqueId={`companies-category-${title?.replace(/\s+/g, '-').toLowerCase()}`}
                         data={companiesData}
                         renderItem={(company) => (
-                            <div className="h-100">
-                                <CompanyCard company={company} />
-                            </div>
+                            <CompanyCard company={company} />
                         )}
                         options={{
-
-                            autoplay: true,
+                            spaceBetween: 16,
+                            autoplay: {
+                                delay: 3000,
+                                disableOnInteraction: false,
+                            },
                             loop: false,
-                            mouseDrag: true,
-                            gutter: 16,
-                            nav: false,
-                            controls: true,
-                            items: 1,
-                            responsive: {
-                                576: { items: 2 },
-                                768: { items: 2 },
-                                992: { items: 3 },
-                                1200: { items: 4 },
+                            breakpoints: {
+                                576: { slidesPerView: 2 },
+                                768: { slidesPerView: 2 },
+                                992: { slidesPerView: 3 },
+                                1200: { slidesPerView: 4 },
                             },
                         }}
+                        showNavigation={true}
+                        showPagination={false}
+                        className="companies-category-swiper"
                     />
                 </div>
             </div>

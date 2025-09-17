@@ -112,7 +112,7 @@ export default function LoginClientPage() {
                 <PasswordField label={t("labels.password")} name="password" register={register} errors={errors} />
 
                 <div className="mb-3 d-sm-flex justify-content-between">
-                    <div>
+                    <div className="d-flex gap-2 align-items-center">
                         <input type="checkbox" className="form-check-input" id="rememberCheck" {...register("remember")} />
                         <label className="form-check-label" htmlFor="rememberCheck">
                             {t("labels.remember_me_q")}

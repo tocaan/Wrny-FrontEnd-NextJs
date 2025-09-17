@@ -23,11 +23,13 @@ import {
     FaLinkedinIn,
 } from "react-icons/fa";
 import { Link } from "@/i18n/routing";
+import SafeImage from "@/components/SafeImage";
 import BranchCard from "@/components/BranchCard";
 import Loading from "@/components/GlobalLoader";
 import { CompanyDetailsSkeleton } from "@/components/ui/Skeletons";
 import Pagination from "@/components/Pagination";
 import FavoriteHeart from "@/components/ui/FavoriteHeart";
+import GoogleMap from "@/components/ui/GoogleMap";
 
 function getSocialMediaInfo(name) {
     const socialMediaMap = {
@@ -65,6 +67,15 @@ export default function CompanyDetailsPageClient() {
         (s) => s.branches
     );
     const t = useTranslations();
+
+    const getAboutTitle = () => {
+        const categoryName = company?.category?.name || company?.category_name || company?.category;
+        console.log(categoryName);
+        if (categoryName && typeof categoryName === 'string') {
+            return t('common.aboutCategory', { categoryName });
+        }
+        return t('common.aboutCompany');
+    };
 
     const [activeTab, setActiveTab] = useState("tab-1");
 
@@ -136,7 +147,7 @@ export default function CompanyDetailsPageClient() {
                                     <div className="d-flex justify-content-between align-items-center">
                                         <div className="mx-2">
                                             <div className="avatar avatar-xl logo-company">
-                                                <img className="avatar-img rounded-2" src={company.logo_url} alt={company.name} />
+                                                <SafeImage className="avatar-img rounded-2" src={company.logo_url} alt={company.name} width={80} height={80} style={{objectFit: 'cover'}} />
                                             </div>
                                         </div>
                                         <div>
@@ -166,7 +177,7 @@ export default function CompanyDetailsPageClient() {
                                                 className={`nav-link mb-0 ${activeTab === "tab-1" ? "active" : ""}`}
                                                 onClick={() => handleTabChange("tab-1")}
                                             >
-                                                {t('common.aboutCompany')}
+                                                {getAboutTitle()}
                                             </button>
                                         </li>
                                         <li className="nav-item">
@@ -194,7 +205,7 @@ export default function CompanyDetailsPageClient() {
                                 <div className="col-lg-7 col-xl-8">
                                     <div className="card shadow mb-4">
                                         <div className="card-header bg-transparent border-bottom">
-                                            <h4 className="h5 mb-0">{t('common.aboutCompany')}</h4>
+                                            <h4 className="h5 mb-0">{getAboutTitle()}</h4>
                                         </div>
                                         <div className="card-body">
                                             <p className="mb-3">{company.description}</p>
@@ -211,15 +222,13 @@ export default function CompanyDetailsPageClient() {
                                                 {company.address}
                                             </p>
                                             {company?.lat && company?.lng ? (
-                                                <iframe
-                                                    src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3478.821428591848!2d${company.lng}!3d${company.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fcff6c640d622e1%3A0x6a34709e9d0a1d3c!2z2LfYsdmK2YLYjCDYp9mE2KzZh9ix2KfYodiMINin2YTZg9mI2YrYquKAjg!5e0!3m2!1sar!2seg!4v1751869544033!5m2!1sar!2seg`}
-                                                    width="100%"
-                                                    height="300"
-                                                    style={{ border: 0 }}
-                                                    allowFullScreen=""
-                                                    loading="lazy"
-                                                    referrerPolicy="no-referrer-when-downgrade"
-                                                    title="company-location"
+                                                <GoogleMap
+                                                    lat={company.lat}
+                                                    lng={company.lng}
+                                                    height={300}
+                                                    zoom={15}
+                                                    markerColor="red"
+                                                    title="Company Location"
                                                 />
                                             ) : (
                                                 <div className="alert alert-warning mb-0">{t('common.noLocation')}</div>

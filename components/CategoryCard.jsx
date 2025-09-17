@@ -1,4 +1,5 @@
 import { Link } from "@/i18n/routing";
+import SafeImage from "./SafeImage";
 
 export default function CategoryCard({ category, isActive }) {
     const isAllCategories = category.id === "all";
@@ -6,11 +7,14 @@ export default function CategoryCard({ category, isActive }) {
     return (
         <div className={`card card-category card-body bg-light text-center align-items-center ${isActive ? 'dimmed' : ''}`}>
             <div className="icon-xl bg-mode rounded-circle mb-3">
-                <img
+                <SafeImage
                     src={isAllCategories
                         ? '/assets/images/category/all.png'
                         : category.image || '/assets/images/category/all.png'}
                     alt={category.name}
+                    width={100}
+                    height={100}
+                    style={{objectFit: 'cover'}}
                 />
             </div>
             <h6 className="mb-0">

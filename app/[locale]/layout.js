@@ -4,7 +4,6 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import BootstrapClient from '@/helpers/bootstrap-client';
 import { Toaster } from 'react-hot-toast';
-import 'tiny-slider/dist/tiny-slider.css';
 import SplashScreen from '@/components/SplashScreen';
 
 async function loadLocaleStyles(locale) {
@@ -51,25 +50,6 @@ export default async function RootLayout({ children, params }) {
       >
         <head>
           <link rel="preload" as="image" href="/assets/images/logo.png" />
-          <style>{`
-            body.splash-active::before {
-              content: '';
-              position: fixed;
-              inset: 0;
-              z-index: 2147483647;
-              background: #fff url('/assets/images/logo.png') center center / 180px no-repeat;
-              opacity: 1;
-              transition: opacity .22s ease;
-            }
-
-            body.splash-active.splash-hiding::before { opacity: 0; }
-
-            body.splash-active { overflow: hidden; }
-
-            @media (prefers-reduced-motion: reduce) {
-              body.splash-active::before { transition: none; }
-            }
-          `}</style>
         </head>
         <body className="has-navbar-mobile splash-active" suppressHydrationWarning>
           <Toaster position={locale === 'ar' ? 'top-left' : 'top-right'} />

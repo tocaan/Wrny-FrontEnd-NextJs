@@ -65,7 +65,11 @@
             "all_categories": "جميع الفئات",
             "view_all": "عرض جميع الفئات",
             "top_companies_with_name": "أبرز شركات لخدمات {name}",
-            "best_places_with_name": "أفضل الأماكن في قسم {name}"
+            "best_places_with_name": "أفضل الأماكن في قسم {name}",
+            "no_items_title": "لا توجد عناصر في هذه الفئة",
+            "no_items_description": "لم نجد أي شركات أو أحداث في {categoryName} حالياً. يرجى المحاولة مرة أخرى لاحقاً أو تصفح فئات أخرى.",
+            "this_category": "هذه الفئة",
+            "browse_all": "تصفح جميع الفئات"
         },
         "companies": {
             "title": "الشركات",
@@ -166,6 +170,7 @@
         "socialMedia": "التواصل الإجتماعي",
         "workingHours": "ساعات العمل",
         "aboutCompany": "نبذة عن الشركة",
+        "aboutCategory": "نبذة عن {categoryName}",
         "noLocation": "لا توجد بيانات موقع",
         "paidAds": "اعلان مدفوع",
         "deleteAccount": "حذف الحساب",
@@ -205,8 +210,26 @@
         },
         "toasts": {
             "saved": "تم حفظ التغييرات بنجاح",
+            "phone_updated": "تم تحديث رقم الهاتف بنجاح",
             "something_wrong": "حدث خطأ، حاول مرة أخرى",
             "logged_out": "تم تسجيل الخروج"
+        },
+        "otp": {
+            "verify_phone_title": "تحقق من رقم الهاتف الجديد",
+            "verify_phone_message": "تم إرسال رمز التحقق إلى {phone}. يرجى إدخال الرمز للمتابعة.",
+            "enter_code": "أدخل رمز التحقق",
+            "sent_success": "تم إرسال رمز التحقق بنجاح",
+            "send_failed": "فشل في إرسال رمز التحقق",
+            "verify_failed": "رمز التحقق غير صحيح",
+            "code_required": "يرجى إدخال رمز التحقق",
+            "sending": "جارٍ الإرسال...",
+            "verifying": "جارٍ التحقق...",
+            "resend": "إعادة إرسال",
+            "verify_and_save": "تحقق واحفظ"
+        },
+        "buttons": {
+            "save_changes": "حفظ التغيير",
+            "cancel": "إلغاء"
         },
         "validation": {
             "required": "هذا الحقل إجباري",

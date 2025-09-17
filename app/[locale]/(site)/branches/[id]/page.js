@@ -11,6 +11,7 @@ import {
     selectBranchLoading,
     selectBranchError,
 } from "@/store/slices/branchSlice";
+import GoogleMap from "@/components/ui/GoogleMap";
 import {
     FaMapMarkerAlt,
     FaPhone,
@@ -115,14 +116,7 @@ const Header = ({ branch, t, y }) => (
 );
 
 const LocationMap = ({ branch, t }) => {
-    const mapUrl = useMemo(() => {
-        const lat = branch?.lat;
-        const lng = branch?.lng;
-        if (!lat || !lng) return null;
-        return `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3478.821428591848!2d${lng}!3d${lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fcff6c640d622e1%3A0x6a34709e9d0a1d3c!2z2LfYsdmK2YLYjCDYp9mE2KzZh9ix2KfYodiMINin2YTZg9mI2YrYquKAjg!5e0!3m2!1sar!2seg!4v1751869544033!5m2!1sar!2seg`;
-    }, [branch?.lat, branch?.lng]);
-
-    if (!mapUrl) {
+    if (!branch?.lat || !branch?.lng) {
         return (
             <div className="card shadow mb-4">
                 <div className="card-header border-bottom">
@@ -151,14 +145,12 @@ const LocationMap = ({ branch, t }) => {
                     <FaMapMarkerAlt className="mx-1 text-primary" />
                     {branch?.address}
                 </p>
-                <iframe
-                    src={mapUrl}
-                    width="100%"
-                    height="300"
-                    style={{ border: 0 }}
-                    allowFullScreen=""
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
+                <GoogleMap
+                    lat={branch?.lat}
+                    lng={branch?.lng}
+                    height={300}
+                    zoom={15}
+                    markerColor="red"
                     title={t("branch.locationMap")}
                 />
             </div>

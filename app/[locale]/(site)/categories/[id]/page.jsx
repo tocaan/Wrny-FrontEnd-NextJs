@@ -10,7 +10,7 @@ import CategoryCard from "@/components/CategoryCard";
 import CompanyCard from "@/components/CompanyCard";
 import EventSideCard from "@/components/EventSideCard";
 import Pagination from "@/components/Pagination";
-import Slider from "@/components/ui/Slider";
+import SwiperSlider from "@/components/ui/SwiperSlider";
 
 import {
     fetchCategories,
@@ -39,6 +39,8 @@ import {
     CardSkeleton,
 } from "@/components/ui/Skeletons";
 import CompaniesCategorySection from "@/components/sections/CompaniesCategorySection";
+import EmptyState from "@/components/ui/EmptyState";
+import InboxIllustration from "@/components/ui/illustrations/InboxIllustration";
 
 export default function CategoryDetailsPage() {
     const dispatch = useDispatch();
@@ -154,8 +156,7 @@ export default function CategoryDetailsPage() {
 
     return (
         <div>
-            {/* Breadcrumb */}
-            {/* {categoriesLoading && !activeCategoryName ? (
+            {categoriesLoading && !activeCategoryName ? (
                 <BreadcrumbSkeleton />
             ) : (
                 <Breadcrumb
@@ -167,7 +168,7 @@ export default function CategoryDetailsPage() {
                         },
                     ]}
                 />
-            )} */}
+            )}
 
             <section className="categories">
                 <div className="container">
@@ -175,43 +176,42 @@ export default function CategoryDetailsPage() {
                         <CategoriesSkeleton />
                     ) : (
                         <div
-                            className="tiny-slider arrow-round arrow-blur arrow-hover"
+                            className="categories-slider"
                             aria-busy={categoriesLoading}
                         >
-                            <Slider
+                            <SwiperSlider
                                 key={`cats-${categories.length}`}
+                                uniqueId="categories-filter"
                                 data={categories}
                                 renderItem={(category) => {
                                     const isActive =
                                         Number(category.id) === Number(activeCategoryId);
                                     return (
-                                        <div className="h-100">
-                                            <div
-                                                role="button"
-                                                onClick={() => handleSelectCategory(category.id)}
-                                                className={isActive ? "ring-2 ring-primary" : ""}
-                                                data-active={isActive ? "true" : "false"}
-                                            >
-                                                <CategoryCard category={category} isActive={isActive} />
-                                            </div>
+                                        <div
+                                            role="button"
+                                            onClick={() => handleSelectCategory(category.id)}
+                                            className={isActive ? "ring-2 ring-primary" : ""}
+                                            data-active={isActive ? "true" : "false"}
+                                        >
+                                            <CategoryCard category={category} isActive={isActive} />
                                         </div>
                                     );
                                 }}
                                 options={{
+                                    spaceBetween: 16,
                                     autoplay: false,
                                     loop: false,
-                                    mouseDrag: true,
-                                    gutter: 16,
-                                    nav: false,
-                                    controls: true,
-                                    items: 2,
-                                    responsive: {
-                                        576: { items: 3 },
-                                        768: { items: 4 },
-                                        992: { items: 5 },
-                                        1200: { items: 6 },
+                                    breakpoints: {
+                                        0: { slidesPerView: 2 },
+                                        576: { slidesPerView: 3 },
+                                        768: { slidesPerView: 4 },
+                                        992: { slidesPerView: 5 },
+                                        1200: { slidesPerView: 6 },
                                     },
                                 }}
+                                showNavigation={true}
+                                showPagination={false}
+                                className="categories-swiper"
                             />
                         </div>
                     )}
@@ -221,6 +221,7 @@ export default function CategoryDetailsPage() {
             {companies.length > 0 && (
                 <CompaniesCategorySection companiesData={companies} title={companiesTitle} />
             )}
+
             <section className="pt-4">
                 <div className="container" aria-busy={eventsUpdating}>
                     <div className="d-flex justify-content-between align-items-center mb-3">
@@ -229,7 +230,7 @@ export default function CategoryDetailsPage() {
 
                     {eventsLoading && events.length === 0 ? (
                         <CompaniesListSkeleton />
-                    ) : (
+                    ) : events.length > 0 ? (
                         <>
                             <div className="row g-4">
                                 {events.map((ev) => (
@@ -248,9 +249,39 @@ export default function CategoryDetailsPage() {
                                 </div>
                             </div>
                         </>
-                    )}
+                    ) : null}
                 </div>
             </section>
+
+            {!companiesLoading && !eventsLoading && companies.length === 0 && events.length === 0 && (
+                <section className="py-5">
+                    <div className="container">
+                        <EmptyState
+                            title={t('pages.categories.no_items_title') || 'لا توجد عناصر في هذه الفئة'}
+                            description={t('pages.categories.no_items_description', { 
+                                categoryName: activeCategoryName || t('pages.categories.this_category') || 'هذه الفئة' 
+                            }) || `لم نجد أي شركات أو أحداث في ${activeCategoryName || 'هذه الفئة'} حالياً.`}
+                            illustration={<InboxIllustration />}
+                            actions={[
+                                { 
+                                    label: t('common.refresh') || 'تحديث', 
+                                    variant: 'outline', 
+                                    onClick: () => {
+                                        dispatch(fetchCompanies(companiesParams));
+                                        dispatch(fetchEvents(eventsParams));
+                                    }
+                                },
+                                { 
+                                    label: t('pages.categories.browse_all') || 'تصفح جميع الفئات', 
+                                    href: `/${locale}/categories`, 
+                                    variant: 'primary' 
+                                },
+                            ]}
+                            size="lg"
+                        />
+                    </div>
+                </section>
+            )}
         </div>
     );
 }

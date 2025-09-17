@@ -1,6 +1,6 @@
 // components/EventsFilter.jsx
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocale, useTranslations } from "next-intl";
 import { fetchCountries, fetchRegionsByCountry, selectCountries, selectRegionsForCountry, selectRegionsStatus } from "@/store/slices/regionsSlice";
@@ -20,6 +20,9 @@ export default function EventsFilter({ defaultCountryId = 117, initial = {}, onA
 
     const [selectedRegionIds, setSelectedRegionIds] = useState(initial.regionIds || []);
     const [selectedCategoryId, setSelectedCategoryId] = useState(initial.categoryId || null);
+    
+    const collapseRef = useRef(null);
+    const checkboxRef = useRef(null);
 
     
     useEffect(() => {
@@ -44,12 +47,26 @@ export default function EventsFilter({ defaultCountryId = 117, initial = {}, onA
         if (selectedRegionIds.length) filters['region_ids[]'] = selectedRegionIds;
         if (selectedCategoryId) filters['category_id'] = selectedCategoryId;
         onApply?.(filters);
+        
+        const collapseElement = document.getElementById('collapseFilter');
+        const checkboxElement = document.getElementById('btn-check-soft');
+        if (collapseElement && checkboxElement) {
+            checkboxElement.checked = false;
+            collapseElement.classList.remove('show');
+        }
     };
 
     const reset = () => {
         setSelectedRegionIds([]);
         setSelectedCategoryId(null);
         onApply?.({});
+        
+        const collapseElement = document.getElementById('collapseFilter');
+        const checkboxElement = document.getElementById('btn-check-soft');
+        if (collapseElement && checkboxElement) {
+            checkboxElement.checked = false;
+            collapseElement.classList.remove('show');
+        }
     };
 
     return (
@@ -57,7 +74,7 @@ export default function EventsFilter({ defaultCountryId = 117, initial = {}, onA
             <div className="container">
                 <div className="row"><div className="col-12">
                     <div className="d-flex">
-                        <input type="checkbox" className="btn-check" id="btn-check-soft" />
+                        <input type="checkbox" className="btn-check" id="btn-check-soft" ref={checkboxRef} />
                         <label className="btn btn-100 btn-primary-soft btn-primary-check mb-0 me-auto"
                             htmlFor="btn-check-soft" data-bs-toggle="collapse" data-bs-target="#collapseFilter" aria-controls="collapseFilter">
                             <i className="bi fa-fe bi-sliders mx-2"></i>{t('pages.events.show_filter') || 'عرض الفلتر'}
@@ -65,7 +82,7 @@ export default function EventsFilter({ defaultCountryId = 117, initial = {}, onA
                     </div>
                 </div></div>
 
-                <div className="collapse" id="collapseFilter">
+                <div className="collapse" id="collapseFilter" ref={collapseRef}>
                     <div className="card card-body bg-light p-4 mt-4 z-index-9">
                         <form className="row g-4" onSubmit={(e) => { e.preventDefault(); apply(); }}>
                             {/* المحافظات */}
@@ -118,7 +135,7 @@ export default function EventsFilter({ defaultCountryId = 117, initial = {}, onA
                             </div>
 
                             <div className="text-center align-items-center mt-5">
-                                <button type="submit" className="btn btn-dark mb-0 mx-2 w-25">{t('common.apply') || 'تطبيق'}</button>
+                                <button type="submit" className="btn btn-dark mb-0 mx-2 w-25 mb-2">{t('common.apply') || 'تطبيق'}</button>
                                 <button type="button" className="btn btn-outline-secondary mb-0 mx-2 w-25" onClick={reset}>
                                     {t('common.reset') || 'إعادة ضبط'}
                                 </button>

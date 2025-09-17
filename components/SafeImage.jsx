@@ -8,5 +8,5 @@ export default function SafeImage({ src, ...props }) {
     return false;
   }, [src]);
 
-  return <Image src={src} unoptimized={unoptimized} {...props} onError={(e)=>{ e.currentTarget.src='/assets/images/placeholder.svg'; }} />;
+  return <Image src={src} unoptimized={unoptimized} referrerPolicy="no-referrer" {...props} onError={(e)=>{ e.currentTarget.src='/assets/images/placeholder.svg'; }} />;
 }

@@ -1,7 +1,33 @@
-@import 'bootstrap/dist/css/bootstrap.min.css';
-@import 'bootstrap-icons/font/bootstrap-icons.css';
-@import '@/public/assets/css/functions.min.css';
-@import 'glightbox/dist/css/glightbox.css';
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+@import "@/public/assets/css/functions.min.css";
+@import "glightbox/dist/css/glightbox.css";
+
+/* Splash Screen Styles */
+body.splash-active::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  background: #fff url("/assets/images/logo.png") center center / 180px
+    no-repeat;
+  opacity: 1;
+  transition: opacity 0.22s ease;
+}
+
+body.splash-active.splash-hiding::before {
+  opacity: 0;
+}
+
+body.splash-active {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.splash-active::before {
+    transition: none;
+  }
+}
 
 /* html {
     overflow: auto;
@@ -9,81 +35,146 @@
 
 /* تخصيص مظهر الـ Skeleton */
 .react-loading-skeleton {
-    --base-color: #ebebeb;
-    --highlight-color: #f5f5f5;
-    --animation-duration: 1.5s;
-    --animation-direction: normal;
-    --animation-timing-function: ease-in-out;
+  --base-color: #ebebeb;
+  --highlight-color: #f5f5f5;
+  --animation-duration: 1.5s;
+  --animation-direction: normal;
+  --animation-timing-function: ease-in-out;
 }
-
 
 /* جعل الـ Skeleton أكثر واقعية */
 .react-loading-skeleton {
-    opacity: 0.7;
-    border-radius: 0.25rem;
+  opacity: 0.7;
+  border-radius: 0.25rem;
 }
 
 /* تأثير التحميل المتموج */
 @keyframes shimmer {
-    0% {
-        background-position: -1000px 0;
-    }
+  0% {
+    background-position: -1000px 0;
+  }
 
-    100% {
-        background-position: 1000px 0;
-    }
+  100% {
+    background-position: 1000px 0;
+  }
 }
 
 .react-loading-skeleton {
-    background-image: linear-gradient(90deg,
-            var(--base-color) 0px,
-            var(--highlight-color) 40px,
-            var(--base-color) 80px);
-    background-size: 1000px;
-    animation: shimmer var(--animation-duration) infinite;
-    animation-timing-function: var(--animation-timing-function);
+  background-image: linear-gradient(
+    90deg,
+    var(--base-color) 0px,
+    var(--highlight-color) 40px,
+    var(--base-color) 80px
+  );
+  background-size: 1000px;
+  animation: shimmer var(--animation-duration) infinite;
+  animation-timing-function: var(--animation-timing-function);
 }
 
 .header-sticky {
-    position: sticky;
-    position: -webkit-sticky;
-    top: 0;
-    inset-inline: 0;
-    z-index: 1030;
-    background-color: var(--bs-body-bg, #fff);
-    transition: background-color .2s ease, box-shadow .2s ease, height .2s ease;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  inset-inline: 0;
+  z-index: 1030;
+  background-color: var(--bs-body-bg, #fff);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, height 0.2s ease;
 }
 
-
-[dir='ltr'] .text-end {
-    text-align: start !important;
+[dir="ltr"] .text-end {
+  text-align: start !important;
 }
 
 .iti__country-container {
-    left: 0 !important;
+  left: 0 !important;
 }
 
 .iti input.iti__tel-input,
-.iti input.iti__tel-input[type=text],
-.iti input.iti__tel-input[type=tel] {
-    padding-right: 0 !important;
-    padding-left: 73px !important;
+.iti input.iti__tel-input[type="text"],
+.iti input.iti__tel-input[type="tel"] {
+  padding-right: 0 !important;
+  padding-left: 80px !important;
 }
-
 
 /* Region */
 
-.region.active{
-    border-radius: 20px;
-    background-color: #1836b2;
-    overflow: hidden;
-    border: 3px solid #4d70ff42;
+.region.active {
+  border-radius: 20px;
+  background-color: #1836b2;
+  overflow: hidden;
+  border: 3px solid #4d70ff42;
 }
 
-.region.active .active-filter img{
-    filter: grayscale(1);
+.region.active .active-filter img {
+  filter: grayscale(1);
 }
 
-.region.active .active-filter .stretched-link{
-    color: #fff !important;
+.region.active .active-filter .stretched-link {
+  color: #fff !important;
+}
+
+/* Swiper Slider Custom Styles */
+.swiper-container {
+  position: relative;
+}
+
+/* Custom navigation buttons */
+[class*="swiper-button-next"],
+[class*="swiper-button-prev"] {
+  width: 50px !important;
+  height: 50px !important;
+  background: rgb(0 0 0 / 57%) !important;
+  border-radius: 50% !important;
+  box-shadow: 0 2px 12px rgb(0 0 0 / 10%) !important;
+  color: #333 !important;
+  margin-top: -30px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.3s ease !important;
+  font-size: 12px !important;
+  padding: 17px !important;
+}
+
+[class*="swiper-button-next"] svg,
+[class*="swiper-button-prev"] svg {
+  font-size: 12px !important;
+  color: #f1f1f1 !important;
+}
+
+/* Hide default swiper arrows */
+[class*="swiper-button-next"]:after,
+[class*="swiper-button-prev"]:after {
+  display: none !important;
+}
+
+[class*="swiper-button-next"]:hover,
+[class*="swiper-button-prev"]:hover {
+    background: #7624b2db !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* RTL Support */
+.swiper-container.rtl {
+  direction: rtl;
+}
+
+.swiper-container.rtl [class*="swiper-button-next"] {
+  left: 10px !important;
+  right: auto !important;
+}
+
+.swiper-container.rtl [class*="swiper-button-prev"] {
+  right: 10px !important;
+  left: auto !important;
+}
+
+/* Pagination styles */
+[class*="swiper-pagination"] .swiper-pagination-bullet {
+  background: rgba(0, 0, 0, 0.3) !important;
+  opacity: 1 !important;
+}
+
+[class*="swiper-pagination"] .swiper-pagination-bullet-active {
+  background: #007bff !important;
 }

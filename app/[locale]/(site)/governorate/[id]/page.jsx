@@ -6,10 +6,10 @@ import { useLocale, useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 
 import Breadcrumb from "@/components/Breadcrumb";
-import CategoryCard from "@/components/CategoryCard"; // سنستخدمه لعرض المنطقة كبطاقة
+import CategoryCard from "@/components/CategoryCard";
 import EventSideCard from "@/components/EventSideCard";
 import Pagination from "@/components/Pagination";
-import Slider from "@/components/ui/Slider";
+import SwiperSlider from "@/components/ui/SwiperSlider";
 import EmptyState from "@/components/ui/EmptyState";
 import InboxIllustration from "@/components/ui/illustrations/InboxIllustration";
 
@@ -43,7 +43,6 @@ export default function GovernmentDetailsPage() {
   const locale = useLocale();
   const t = useTranslations();
 
-  // اللغة الحالية
   const currentLang = useMemo(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("LANG");
@@ -61,7 +60,6 @@ export default function GovernmentDetailsPage() {
 
   const defaultCountryId = 117;
 
-  // ——— جلب المناطق للدولة المختارة ———
   useEffect(() => {
     if (defaultCountryId) {
       dispatch(fetchRegionsByCountry(defaultCountryId));
@@ -125,8 +123,7 @@ export default function GovernmentDetailsPage() {
 
   return (
     <div>
-      {/* Breadcrumb */}
-      {/* {eventsLoading ? (
+      {eventsLoading ? (
         <BreadcrumbSkeleton />
       ) : (
         <Breadcrumb
@@ -136,7 +133,7 @@ export default function GovernmentDetailsPage() {
             },
           ]}
         />
-      )} */}
+      )}
 
       <section className="categories">
         <div className="container">
@@ -144,43 +141,41 @@ export default function GovernmentDetailsPage() {
             <CategoriesSkeleton />
           ) : (
             <div
-              className="tiny-slider arrow-round arrow-blur arrow-hover"
+              className="regions-slider"
               aria-busy={regionsLoading}
             >
-              <Slider
+              <SwiperSlider
                 key={`regions-${regions.length}`}
+                uniqueId="governorate-regions"
                 data={regions}
                 renderItem={(region) => {
                   const isActive = Number(region.id) === Number(regionId);
                   return (
-                    <div className="h-100">
-                      <div
-                        role="button"
-                        onClick={() => handleSelectRegion(region.id)}
-                        className={isActive ? "ring-2 ring-primary region active" : ""}
-                        data-active={isActive ? "true" : "false"}
-                      >
-                        
-                        <RegionCard region={region} isActive={isActive} />
-                      </div>
+                    <div
+                      role="button"
+                      onClick={() => handleSelectRegion(region.id)}
+                      className={isActive ? "ring-2 ring-primary region active" : ""}
+                      data-active={isActive ? "true" : "false"}
+                    >
+                      <RegionCard region={region} isActive={isActive} />
                     </div>
                   );
                 }}
                 options={{
+                  spaceBetween: 16,
                   autoplay: false,
                   loop: false,
-                  mouseDrag: true,
-                  gutter: 16,
-                  nav: false,
-                  controls: true,
-                  items: 2,
-                  responsive: {
-                    576: { items: 3 },
-                    768: { items: 4 },
-                    992: { items: 5 },
-                    1200: { items: 6 },
+                  breakpoints: {
+                    0: { slidesPerView: 2 },
+                    576: { slidesPerView: 3 },
+                    768: { slidesPerView: 4 },
+                    992: { slidesPerView: 5 },
+                    1200: { slidesPerView: 6 },
                   },
                 }}
+                showNavigation={true}
+                showPagination={false}
+                className="regions-swiper"
               />
             </div>
           )}

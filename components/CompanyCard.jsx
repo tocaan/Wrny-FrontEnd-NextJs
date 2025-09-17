@@ -2,6 +2,7 @@ import { Link } from "@/i18n/routing";
 import { useLocale } from "next-intl";
 import FavoriteHeart from "./ui/FavoriteHeart";
 import { useEffect, useState } from "react";
+import SafeImage from "./SafeImage";
 
 export default function CompanyCard({ company }) {
     const locale = useLocale();
@@ -13,7 +14,7 @@ export default function CompanyCard({ company }) {
             <div className="position-relative arrow-round arrow-xs arrow-dark rounded-2">
                 <div className="bg-overlay bg-dark opacity-2 rounded-3"></div>
                 <div className="img-company">
-                    <img src={company.cover_url || '/assets/images/city/03.jpg'} alt="Card image" />
+                    <SafeImage src={company.cover_url || '/assets/images/city/03.jpg'} alt="Card image" width={400} height={300} style={{objectFit: 'cover'}} />
                 </div>
             </div>
             <div className="card-body px-0 pb-0">
@@ -31,10 +32,13 @@ export default function CompanyCard({ company }) {
                 <div className="d-flex justify-content-between pb-2">
                     <div className={`m-0 ${locale === 'ar' ? 'ms-2' : 'me-2'}`}>
                         <div className="avatar logo-company border border-1 rounded-circle">
-                            <img
+                            <SafeImage
                                 className="avatar-img rounded-circle"
                                 src={company.logo_url || '/assets/images/company/logo1.png'}
                                 alt="avatar"
+                                width={60}
+                                height={60}
+                                style={{objectFit: 'cover'}}
                             />
                         </div>
                     </div>

@@ -5,13 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'next/navigation';
 import { fetchEventDetails } from '@/store/slices/eventSlice';
 import Image from 'next/image';
-import Slider from '@/components/ui/Slider';
+import SwiperSlider from '@/components/ui/SwiperSlider';
 import { useTranslations, useLocale } from 'next-intl';
 import { usePathname } from '@/i18n/routing';
 import GlobalLoader from '@/components/GlobalLoader';
 import SafeImage from '@/components/SafeImage';
 import { HeartIcon } from 'lucide-react';
 import FavoriteHeart from '@/components/ui/FavoriteHeart';
+import GoogleMap from '@/components/ui/GoogleMap';
 
 export default function EventDetailsClient() {
     const pathname = usePathname();
@@ -110,8 +111,9 @@ export default function EventDetailsClient() {
         <>
             <section className="py-0">
                 <div className="container-fluid px-0">
-                    <div className="tiny-slider arrow-round arrow-blur">
-                        <Slider
+                    <div className="event-images-slider">
+                        <SwiperSlider
+                            uniqueId="event-images"
                             data={coverImages}
                             renderItem={(src, i) => (
                                 <a
@@ -130,18 +132,21 @@ export default function EventDetailsClient() {
                                 </a>
                             )}
                             options={{
-                                items: 3,
-                                slideBy: 'page',
-                                autoplay: true,
-                                controls: true,
-                                nav: false,
+                                spaceBetween: 10,
+                                autoplay: {
+                                    delay: 3000,
+                                    disableOnInteraction: false,
+                                },
                                 loop: true,
-                                responsive: {
-                                    0: { items: 1 },
-                                    576: { items: 2 },
-                                    992: { items: 3 }
+                                breakpoints: {
+                                    0: { slidesPerView: 1 },
+                                    576: { slidesPerView: 2 },
+                                    992: { slidesPerView: 3 }
                                 }
                             }}
+                            showNavigation={true}
+                            showPagination={false}
+                            className="event-images-swiper"
                         />
                     </div>
                 </div>
@@ -210,10 +215,13 @@ export default function EventDetailsClient() {
                                         <i className="bi bi-geo-alt mx-1 text-primary"></i>{event.address || '—'}
                                     </p>
                                     {(event.lat && event.lng) && (
-                                        <iframe
-                                            src={`https://www.google.com/maps?q=${event.lat},${event.lng}&hl=${locale}&z=14&output=embed`}
-                                            width="100%" height="300" style={{ border: 0 }} loading="lazy"
-                                            referrerPolicy="no-referrer-when-downgrade" allowFullScreen
+                                        <GoogleMap
+                                            lat={event.lat}
+                                            lng={event.lng}
+                                            height={300}
+                                            zoom={15}
+                                            markerColor="red"
+                                            title="Event Location"
                                         />
                                     )}
                                 </div>

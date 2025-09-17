@@ -65,7 +65,11 @@
             "all_categories": "All Categories",
             "view_all": "View All Categories",
             "top_companies_with_name": "Top companies for {name} services",
-            "best_places_with_name": "Best places in {name}"
+            "best_places_with_name": "Best places in {name}",
+            "no_items_title": "No Items in This Category",
+            "no_items_description": "We couldn't find any companies or events in {categoryName} right now. Please try again later or browse other categories.",
+            "this_category": "this category",
+            "browse_all": "Browse All Categories"
         },
         "companies": {
             "title": "Companies",
@@ -166,6 +170,7 @@
         "socialMedia": "Social Media",
         "workingHours": "Working Hours",
         "aboutCompany": "About Company",
+        "aboutCategory": "About {categoryName}",
         "noLocation": "No location data",
         "paidAds": "Paid Advertisement",
         "deleteAccount": "Delete Account",
@@ -205,8 +210,26 @@
         },
         "toasts": {
             "saved": "Changes saved successfully",
+            "phone_updated": "Phone number updated successfully",
             "something_wrong": "Something went wrong, try again",
             "logged_out": "Logged out successfully"
+        },
+        "otp": {
+            "verify_phone_title": "Verify New Phone Number",
+            "verify_phone_message": "Verification code sent to {phone}. Please enter the code to continue.",
+            "enter_code": "Enter verification code",
+            "sent_success": "Verification code sent successfully",
+            "send_failed": "Failed to send verification code",
+            "verify_failed": "Invalid verification code",
+            "code_required": "Please enter verification code",
+            "sending": "Sending...",
+            "verifying": "Verifying...",
+            "resend": "Resend",
+            "verify_and_save": "Verify and Save"
+        },
+        "buttons": {
+            "save_changes": "Save Changes",
+            "cancel": "Cancel"
         },
         "validation": {
             "required": "This field is required",
