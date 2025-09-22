@@ -326,7 +326,7 @@
         "type_companies": "شركات",
         "type_events": "فعاليات",
         "create_button": "إنشاء",
-        "no_collections": "لا توجد مجموعات بعد.",
+        "no_collections": "لا توجد مجموعات بعد , يرجى إنشاء مجموعة",
         "type_label": "النوع",
         "count_label": "عدد العناصر",
         "delete_collection": "حذف المجموعة",
@@ -358,12 +358,12 @@
             "collection_name": "مثال: مفضلة الشركات"
         },
         "loading": "جارٍ التحميل…",
-        "no_collections_for_type": "لا توجد مجموعات من هذا النوع.",
+        "no_collections_for_type": "لا توجد مجموعات من هذا النوع, يرجى إنشاء مجموعة",
         "items": "عنصر",
         "errors": {
             "create_failed": "فشل إنشاء المجموعة",
             "missing_name": "يرجى إدخال اسم المجموعة",
-            "no_collections_for_type": "لا توجد مجموعة متاحة لهذا النوع"
+            "no_collections_for_type": "لا توجد مجموعة متاحة لهذا النوع, يرجى إنشاء مجموعة"
         },
         "aria": {
             "toggle_favorite": "تبديل حالة المفضلة"

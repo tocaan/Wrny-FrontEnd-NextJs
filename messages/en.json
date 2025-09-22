@@ -326,7 +326,7 @@
         "type_companies": "Companies",
         "type_events": "Events",
         "create_button": "Create",
-        "no_collections": "No collections yet.",
+            "no_collections": "No groups available. Please create a group",
         "type_label": "Type",
         "count_label": "Number of Items",
         "delete_collection": "Delete Collection",
@@ -358,12 +358,12 @@
             "collection_name": "Example: Company Favorites"
         },
         "loading": "Loading...",
-        "no_collections_for_type": "No collections of this type.",
+        "no_collections_for_type": "No groups available. Please create a group.",
         "items": "items",
         "errors": {
             "create_failed": "Failed to create collection",
             "missing_name": "Please enter collection name",
-            "no_collections_for_type": "No collection available for this type"
+            "no_collections_for_type": "No groups available. Please create a group."
         },
         "aria": {
             "toggle_favorite": "Toggle favorite status"

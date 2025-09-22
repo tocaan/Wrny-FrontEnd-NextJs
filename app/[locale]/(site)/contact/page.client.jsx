@@ -260,7 +260,7 @@ function ContactForm() {
             </div>
 
             <div className="col-12">
-                <div className="form-check">
+                <div className="form-check d-flex align-items-center gap-4">
                     <input
                         type="checkbox"
                         id="termsCheck"
@@ -271,11 +271,11 @@ function ContactForm() {
                         disabled={submitting}
                         aria-invalid={fieldInvalid('agree')}
                     />
-                    <label className="form-check-label" htmlFor="termsCheck">
+                    <label className="form-check-label mb-0" htmlFor="termsCheck">
                         {t('contact.form_terms')} <a href="#" target="_blank" rel="noopener noreferrer">{t('contact.terms_and_conditions')}</a>.
                     </label>
-                    {fieldInvalid('agree') && <div className="invalid-feedback d-block">{errors.agree}</div>}
                 </div>
+                {fieldInvalid('agree') && <div className="invalid-feedback d-block">{errors.agree}</div>}
             </div>
 
             <div className="col-12">

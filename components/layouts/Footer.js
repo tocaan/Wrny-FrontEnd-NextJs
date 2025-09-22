@@ -8,6 +8,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { isUserLoggedIn } from '@/utils/auth';
 import { LogOut } from 'lucide-react';
 import api from '@/utils/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchSettings, selectSocialsByLocale } from '@/store/slices/settingsSlice';
 
 function normalize(path) {
     if (!path) return '/';
@@ -18,9 +20,14 @@ function normalize(path) {
 
 export default function Footer() {
     const t = useTranslations('navbar');
-    const y = useTranslations();
-
     const { locale } = useParams();
+    const dispatch = useDispatch();
+    const socials = useSelector((s) => selectSocialsByLocale(s, locale || 'ar'));
+
+    useEffect(() => {
+        if (locale) dispatch(fetchSettings(locale));
+    }, [dispatch, locale]);
+    const y = useTranslations();
     const [lang, setLang] = useState('en');
     const pathnameRaw = usePathname();
     const pathname = useMemo(() => normalize(pathnameRaw), [pathnameRaw]);
@@ -147,26 +154,19 @@ export default function Footer() {
                     <div className="row g-4 justify-content-center mt-0">
                         <div className="col-sm-5 col-md-6 col-lg-3">
                             <ul className="list-inline mb-0 mt-0">
-                                <li className="list-inline-item">
-                                    <Link className="btn btn-sm px-2 bg-facebook mb-0" href="#">
-                                        <FaFacebookF className="text-white" />
-                                    </Link>
-                                </li>
-                                <li className="list-inline-item">
-                                    <Link className="btn btn-sm shadow px-2 bg-instagram mb-0" href="#">
-                                        <FaInstagram className="text-white" />
-                                    </Link>
-                                </li>
-                                <li className="list-inline-item">
-                                    <Link className="btn btn-sm shadow px-2 bg-twitter mb-0" href="#">
-                                        <FaTwitter className="text-white" />
-                                    </Link>
-                                </li>
-                                <li className="list-inline-item">
-                                    <Link className="btn btn-sm shadow px-2 bg-linkedin mb-0" href="#">
-                                        <FaLinkedin className="text-white" />
-                                    </Link>
-                                </li>
+                                {(Array.isArray(socials) ? socials : []).map((s, idx) => {
+                                    const name = (s?.name || '').toLowerCase();
+                                    const url = s?.url || '#';
+                                    const Icon = name.includes('instagram') ? FaInstagram : name.includes('twitter') ? FaTwitter : name.includes('linkedin') ? FaLinkedin : FaFacebookF;
+                                    const btnClass = name.includes('instagram') ? 'bg-instagram' : name.includes('twitter') ? 'bg-twitter' : name.includes('linkedin') ? 'bg-linkedin' : 'bg-facebook';
+                                    return (
+                                        <li className="list-inline-item" key={idx}>
+                                            <Link className={`btn btn-sm shadow px-2 ${btnClass} mb-0`} href={url} target="_blank">
+                                                <Icon className="text-white" />
+                                            </Link>
+                                        </li>
+                                    );
+                                })}
                             </ul>
                         </div>
                     </div>

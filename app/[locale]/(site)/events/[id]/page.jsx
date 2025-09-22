@@ -110,7 +110,7 @@ export default function EventDetailsClient() {
     return (
         <>
             <section className="py-0">
-                <div className="container-fluid px-0">
+                <div className="container">
                     <div className="event-images-slider">
                         <SwiperSlider
                             uniqueId="event-images"
