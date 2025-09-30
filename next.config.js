@@ -14,7 +14,7 @@ const nextConfig = {
         return [
             {
                 source: '/api/:path*',
-                destination: 'https://wrny.tocaan.net/api/:path*',
+                destination: 'https://app.wrnykw.com/api/:path*',
             },
         ];
     },
@@ -22,7 +22,7 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: 'https',
-                hostname: 'wrny.tocaan.net',
+                hostname: 'app.wrnykw.com',
             },
         ],
     },
