@@ -65,7 +65,7 @@
             "all_categories": "All Categories",
             "view_all": "View All Categories",
             "top_companies_with_name": "Top companies for {name} services",
-            "best_places_with_name": "Best places in {name}",
+            "best_places_with_name": "Best Events in {name}",
             "no_items_title": "No Items in This Category",
             "no_items_description": "We couldn't find any companies or events in {categoryName} right now. Please try again later or browse other categories.",
             "this_category": "this category",

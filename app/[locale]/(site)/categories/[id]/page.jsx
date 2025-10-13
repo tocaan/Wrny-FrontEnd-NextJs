@@ -221,7 +221,7 @@ export default function CategoryDetailsPage() {
             {companies.length > 0 && (
                 <CompaniesCategorySection companiesData={companies} title={companiesTitle} />
             )}
-
+            {events.length > 0 && (
             <section className="pt-4">
                 <div className="container" aria-busy={eventsUpdating}>
                     <div className="d-flex justify-content-between align-items-center mb-3">
@@ -252,7 +252,7 @@ export default function CategoryDetailsPage() {
                     ) : null}
                 </div>
             </section>
-
+            )}
             {!companiesLoading && !eventsLoading && companies.length === 0 && events.length === 0 && (
                 <section className="py-5">
                     <div className="container">
