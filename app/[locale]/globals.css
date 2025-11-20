@@ -113,6 +113,10 @@ body.splash-active {
   color: #fff !important;
 }
 
+.swiper{
+  overflow: visible !important;
+}
+
 /* Swiper Slider Custom Styles */
 .swiper-container {
   position: relative;
