@@ -43,7 +43,18 @@ export default function middleware(req) {
         return NextResponse.redirect(url);
     }
 
-    return res;
+    // Add security headers to response
+    const response = res || NextResponse.next();
+    
+    // Ensure security headers are set (they may already be set in next.config.js)
+    // This adds an extra layer of protection
+    response.headers.set('X-Frame-Options', 'DENY');
+    response.headers.set('X-Content-Type-Options', 'nosniff');
+    response.headers.set('X-XSS-Protection', '1; mode=block');
+    response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+    response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+
+    return response;
 }
 
 export const config = {

@@ -1,11 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSettings, selectSettingsByLocale } from '@/store/slices/settingsSlice';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
+import { sanitizeHTML } from '@/utils/sanitize';
 
 export default function AboutClientPage() {
     const t = useTranslations();
@@ -18,7 +19,10 @@ export default function AboutClientPage() {
     }, [dispatch, locale, settings]);
 
     const lead = t('pages.about.lead');
-    const aboutHtml = (locale === 'ar' ? settings?.about_ar : settings?.about_en) || '';
+    const rawHtml = (locale === 'ar' ? settings?.about_ar : settings?.about_en) || '';
+    
+    // Sanitize HTML to prevent XSS attacks
+    const aboutHtml = useMemo(() => sanitizeHTML(rawHtml), [rawHtml]);
 
     return (
         <section>
