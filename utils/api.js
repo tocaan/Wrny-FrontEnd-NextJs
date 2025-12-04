@@ -48,6 +48,10 @@ export function clearAuthArtifacts() {
 }
 
 // ---- Interceptors ----
+// SECURITY NOTE: Storing authentication tokens in localStorage is not ideal from a security standpoint
+// as it's accessible to XSS attacks. A future improvement would be to rely fully on httpOnly cookies
+// set by the backend API, which are not accessible to JavaScript and provide better XSS protection.
+// The current implementation uses both localStorage and cookies (auth_token) for compatibility.
 api.interceptors.request.use((config) => {
     if (typeof window !== "undefined") {
         const lang = localStorage.getItem("LANG") || "ar";

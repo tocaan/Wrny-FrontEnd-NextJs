@@ -110,6 +110,8 @@ export default function PhoneFieldIntl({
             nationalMode: true,
             autoPlaceholder: "polite",
             formatOnDisplay: true,
+            // External script from Cloudflare CDN - allowed via CSP (script-src https://cdnjs.cloudflare.com)
+            // TODO: Consider refactoring to use npm package or self-hosted version for better CSP compliance
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/25.3.2/js/utils.js",
         });
 

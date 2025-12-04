@@ -34,12 +34,12 @@ const nextConfig = {
         // If you encounter CSP violations, check browser console and add specific sources
         const cspHeader = [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' https://maps.googleapis.com https://maps.gstatic.com",
+            "script-src 'self' 'unsafe-inline' https://maps.googleapis.com https://maps.gstatic.com https://cdnjs.cloudflare.com",
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
             "img-src 'self' data: https: blob:",
             "font-src 'self' data: https://fonts.gstatic.com",
             "connect-src 'self' https://app.wrnykw.com https://maps.googleapis.com wss:",
-            "frame-src 'self' https://www.google.com",
+            "frame-src 'self' https://www.google.com https://maps.google.com",
             "object-src 'none'",
             "base-uri 'self'",
             "form-action 'self'",
